@@ -5,11 +5,14 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class JwtUtil {
@@ -24,23 +27,27 @@ public class JwtUtil {
     public void init() {
         key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
-    public String generateToken(String id) {
+    public String generateToken(long id) {
         Date currentDate = new Date();
         long expiration = currentDate.getTime() + jwtExpiration;
+        Map<String, Object> body = new HashMap<>();
+        body.put("id", id);
         return Jwts.builder()
-                .setId(id)
+                .setClaims(body)
                 .setIssuedAt(currentDate)
                 .setExpiration(new Date(expiration))
-                .signWith(key, SignatureAlgorithm.ES512)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .compact();
     }
 
-    public String getIdFromToken(String token) {
-        return Jwts.parserBuilder()
+    public long getIdFromToken(String token) {
+        Number value = (Number) Jwts.parserBuilder()
                 .setSigningKey(key).build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getId();
+                .get("id");
+        long id = value.longValue();
+        return id;
     }
 
     public boolean validateToken(String token) {
