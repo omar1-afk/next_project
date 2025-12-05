@@ -1,0 +1,111 @@
+package com.noteam.next.entities;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name="shipments")
+public class Shipment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer shipment_id;
+    @Column(name="total_wight")
+    private Integer total_wight;
+    @Column(name="shipping_date")
+    private Date shipping_date;
+    @Column(name="is_complete")
+    private Boolean isComplete;
+    @Column(name="created_at")
+    private LocalDateTime created_at ;
+    @Column(name="updated_at ")
+    private LocalDateTime updated_at ;
+    @ManyToOne
+    @JoinColumn(name="vehicle_id")
+    private Vehicle vehicle;
+    @ManyToOne
+    @JoinColumn(name="admin_id")
+    private Admin admin;
+    @ManyToOne
+    @JoinColumn(name="driver_id")
+    private Driver driver;
+    @OneToMany(mappedBy = "shipment", cascade = CascadeType.PERSIST, orphanRemoval = false)
+    private List<Orders> ordersList;
+
+
+    public List<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
+    }
+
+
+
+
+    public Integer getShipment_id() {
+        return shipment_id;
+    }
+    public Vehicle  getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle  vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public Admin getAdmin() {return admin;}
+
+    public void setAdmin(Admin admin) {this.admin = admin;}
+
+    public Integer getTotal_wight() {
+        return total_wight;
+    }
+
+    public void setTotal_wight(Integer total_wight) {
+        this.total_wight = total_wight;
+    }
+
+    public Date getShipping_date() {
+        return shipping_date;
+    }
+
+    public void setShipping_date(Date shipping_date) {
+        this.shipping_date = shipping_date;
+    }
+
+    public Boolean getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(Boolean isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
+    }
+
+
+}
