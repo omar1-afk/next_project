@@ -4,8 +4,14 @@ import com.noteam.next.dto.OrderRequest;
 import com.noteam.next.entities.Order;
 import com.noteam.next.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -32,5 +38,21 @@ public class OrderService {
         }
     }
     //--------------------------------------------------------------------------------------------------------
+
+    //Get orders
+    public List<Order> getAllOrders(String sortBy, String sortDir){
+        log.info("Order service: getting all orders sorted by "+ sortBy+",("+ sortDir+")");
+        return orderRepository.findAll(Sort.by(Sort.Direction.fromString(sortDir),sortBy));
+    }
+    public Page<Order> getOrdersByPage(int page, int size, String sortBy, String sortDir){
+        Pageable pageable = PageRequest.of(page,size,Sort.by(Sort.Direction.fromString(sortDir),sortBy));
+        log.info("Order service: getting orders by page: "+page+" with size "+size+" sorted by "+ sortBy+",("+ sortDir+")");
+        return orderRepository.findAll(pageable);
+    }
+    public Optional<Order> getOrderById(int id){
+        log.info("Order service: getting order by id: "+ id);
+        return orderRepository.findById(id);
+    }
+    //-------------------------------------------------------------------------------------------------------
 
 }
