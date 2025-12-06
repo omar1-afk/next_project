@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "receivers") // to specifies the name of the database table
 public class Receiver {
 
-    @Id // Primary Key
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // for Auto-increment
     private Integer receiverId;
 
