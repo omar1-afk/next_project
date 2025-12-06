@@ -2,6 +2,7 @@ package com.noteam.next.services;
 
 import com.noteam.next.dto.OrderRequest;
 import com.noteam.next.entities.Order;
+import com.noteam.next.entities.Receiver;
 import com.noteam.next.entities.Sender;
 import com.noteam.next.entities.Shipment;
 import com.noteam.next.repositories.OrderRepository;
@@ -162,7 +163,7 @@ public class OrderService {
         }
     }
     //----------------------------------------------------------------------------------------------
-// attach or deattach senders
+    // attach or deattach senders
     public boolean attachSenderById(int id, Sender sender){
         Optional<Order> orderOptional= getOrderById(id);
         if(orderOptional.isEmpty()){
@@ -216,6 +217,66 @@ public class OrderService {
             log.info("Order service: deattach sender to the orders with ids: "+id);
             for (Order order : orderList){
                 order.setSender(null);
+            }
+            orderRepository.saveAll(orderList);
+            return true;
+        }
+    }
+    //----------------------------------------------------------------------------------------------
+    // attach or deattach receivers
+    public boolean attachReceiverById(int id, Receiver receiver){
+        Optional<Order> orderOptional= getOrderById(id);
+        if(orderOptional.isEmpty()){
+            log.info("Order service: The Order with id: "+id+" is not found!");
+            return false;
+        }
+        else {
+            log.info("Order service: attach receiver to the order with id: "+id);
+            Order order =orderOptional.get();
+            order.setReceiver(receiver);
+            orderRepository.save(order);
+            return true;
+        }
+    }
+    public boolean attachReceiverByIds(List<Integer> id, Receiver receiver){
+        List<Order> orderList= orderRepository.findAllById(id);
+        if(orderList.isEmpty()){
+            log.info("Order service: The Orders with ids: "+id+" are not found!");
+            return false;
+        }
+        else {
+            log.info("Order service: attach receiver to the orders with ids: "+id);
+            for (Order order : orderList){
+                order.setReceiver(receiver);
+            }
+            orderRepository.saveAll(orderList);
+            return true;
+        }
+    }
+    public boolean deattachReceiverById(int id) {
+        Optional<Order> orderOptional= getOrderById(id);
+        if(orderOptional.isEmpty()){
+            log.info("Order service: The Order with id: "+id+" is not found!");
+            return false;
+        }
+        else {
+            log.info("Order service: Updating the order with id: "+id);
+            Order order =orderOptional.get();
+            order.setReceiver(null);
+            orderRepository.save(order);
+            return true;
+        }
+    }
+    public boolean deattachReceiverByIds(List<Integer> id){
+        List<Order> orderList= orderRepository.findAllById(id);
+        if(orderList.isEmpty()){
+            log.info("Order service: The Orders with ids: "+id+" are not found!");
+            return false;
+        }
+        else {
+            log.info("Order service: deattach receiver to the orders with ids: "+id);
+            for (Order order : orderList){
+                order.setReceiver(null);
             }
             orderRepository.saveAll(orderList);
             return true;
