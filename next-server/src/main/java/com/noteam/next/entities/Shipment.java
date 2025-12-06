@@ -1,6 +1,5 @@
 package com.noteam.next.entities;
 
-import com.noteam.next.entities.Order;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
