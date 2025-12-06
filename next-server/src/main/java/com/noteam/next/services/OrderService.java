@@ -54,5 +54,38 @@ public class OrderService {
         return orderRepository.findById(id);
     }
     //-------------------------------------------------------------------------------------------------------
+    //update order
+    public int updateOrderById(int id,OrderRequest request) {
+        int maxWeight = 250;
+        Optional<Order> orderOptional= getOrderById(id);
+        if(orderOptional.isEmpty()){
+            log.info("Order service: The Order with id: "+id+" is not found!");
+            return -1;
+        }
+        else if (request.weight() > maxWeight) {
+            log.info("Order service: Error: Invalid weight (more than " + maxWeight + ")!");
+            return 0;
+        } else {
+            log.info("Order service: Updating the order with id: "+id);
+            Order order = orderOptional.get();
+            order.setCountry(request.country());
+            order.setCity(request.city());
+            order.setRegion(request.region());
+            order.setAddress(request.address());
+            order.setFlameable(request.flameable());
+            order.setBreakable(request.breakable());
+            order.setPrice(request.price());
+            order.setState(request.state());
+            order.setWeight(request.weight());
+            order.setShippingDate(request.shippingDate());
+            order.setBoxesCount(request.boxesCount());
+            order.setReceiver(request.receiver());
+            order.setSender(request.sender());
+            order.setShipment(request.shipment());
 
+            orderRepository.save(order);
+            return 1;
+        }
+    }
+    //----------------------------------------------------------------------------------------------------------
 }
