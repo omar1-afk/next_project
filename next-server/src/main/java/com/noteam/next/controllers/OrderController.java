@@ -70,4 +70,20 @@ public class OrderController {
             return ResponseEntity.ok(orderOptional.get());
         }
     }
+
+    @PutMapping("/{id}")
+    ResponseEntity<String> updateOrderById(@PathVariable("id") int id,
+                                           @RequestBody OrderRequest request){
+        log.info("Order controller: Updating order by id: "+ id);
+        int result = orderService.updateOrderById(id, request);
+        if(result==-1){
+            return ResponseEntity.notFound().build();
+        }
+        else if(result==0){
+            return ResponseEntity.badRequest().body("The weight is more than 250 KG!");
+        }
+        else {
+            return ResponseEntity.ok("The order with id: " + id + " is updated successfully!");
+        }
+    }
 }
