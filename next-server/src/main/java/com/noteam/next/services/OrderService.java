@@ -88,4 +88,17 @@ public class OrderService {
         }
     }
     //----------------------------------------------------------------------------------------------------------
+    //delete order
+    public boolean deleteOrderById(int id){
+        Optional<Order> orderOptional = getOrderById(id);
+        if (orderOptional.isEmpty()){
+            return false;
+        }
+        else {
+            orderRepository.deleteById(id);
+            return true;
+        }
+    }
+    //-------------------------------------------------------------------------------------------------------------
+
 }
