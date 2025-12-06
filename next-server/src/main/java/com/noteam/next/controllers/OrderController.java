@@ -86,4 +86,15 @@ public class OrderController {
             return ResponseEntity.ok("The order with id: " + id + " is updated successfully!");
         }
     }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deleteOrderById(@PathVariable("id") int id){
+        log.info("Order controller: Deleting order by id: "+ id);
+        if(orderService.deleteOrderById(id)){
+            return ResponseEntity.ok("The order with id: " + id + " is deleted successfully!");
+        }
+        else{
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
