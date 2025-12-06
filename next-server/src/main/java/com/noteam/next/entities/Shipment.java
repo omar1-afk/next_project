@@ -1,4 +1,5 @@
 package com.noteam.next.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -10,15 +11,15 @@ public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer shipment_id;
-    @Column(name="total_wight")
-    private Integer total_wight;
+    @Column(name="total_weight")
+    private Integer total_weight;
     @Column(name="shipping_date")
     private Date shipping_date;
     @Column(name="is_complete")
     private Boolean isComplete;
     @Column(name="created_at")
     private LocalDateTime created_at ;
-    @Column(name="updated_at ")
+    @Column(name="updated_at")
     private LocalDateTime updated_at ;
     @ManyToOne
     @JoinColumn(name="vehicle_id")
@@ -29,7 +30,8 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name="driver_id")
     private Driver driver;
-    @OneToMany(mappedBy = "shipment", cascade = CascadeType.PERSIST, orphanRemoval = false)
+    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Orders> ordersList;
 
 
@@ -67,12 +69,12 @@ public class Shipment {
 
     public void setAdmin(Admin admin) {this.admin = admin;}
 
-    public Integer getTotal_wight() {
-        return total_wight;
+    public Integer getTotal_weight() {
+        return total_weight;
     }
 
-    public void setTotal_wight(Integer total_wight) {
-        this.total_wight = total_wight;
+    public void setTotal_weight(Integer total_weight) {
+        this.total_weight = total_weight;
     }
 
     public Date getShipping_date() {

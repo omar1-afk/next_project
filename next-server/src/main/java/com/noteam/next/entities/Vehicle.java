@@ -4,22 +4,22 @@ import jakarta.persistence.*;
 
 @Entity
 
-@Table(name="vehicle")
+@Table(name="vehicles")
 public class Vehicle {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int vehicle_id;
 
-    @Column(name="wight")
-    private int wight;
+    @Column(name="weight")
+    private int weight;
 
 
-    public int getWight() {
-        return wight;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setWight(int wight) {
-        this.wight = wight;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
 

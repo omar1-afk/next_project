@@ -1,5 +1,4 @@
 package com.noteam.next.repositories;
-
 import com.noteam.next.entities.Admin;
 import com.noteam.next.entities.Driver;
 import com.noteam.next.entities.Shipment;
