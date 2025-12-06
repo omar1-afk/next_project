@@ -120,7 +120,7 @@ public class ShipmentController {
         }
     }
 
-    @GetMapping("/complete/{is_complete}")
+    @GetMapping("/complete/{isComplete}")
     public  ResponseEntity<List<Shipment>> getAllShipmentsByIs_complete(@PathVariable boolean isComplete) {
         logger.info("Getting all shipments  by IsComplete:" + isComplete);
         try {
