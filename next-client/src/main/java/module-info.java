@@ -4,5 +4,7 @@ module org.noteam.nextclient {
 
 
     opens org.noteam.nextclient to javafx.fxml;
+    exports org.noteam.nextclient.scene to javafx.graphics;
+    opens org.noteam.nextclient.controller to javafx.fxml;
     exports org.noteam.nextclient;
 }

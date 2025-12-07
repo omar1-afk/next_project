@@ -1,9 +1,11 @@
 package org.noteam.nextclient;
 
+import org.noteam.nextclient.scene.LoginScene;
+
 import javafx.application.Application;
 
 public class Launcher {
-    public static void main(String[] args) {
-        Application.launch(HelloApplication.class, args);
-    }
+  public static void main(String[] args) {
+    Application.launch(LoginScene.class, args);
+  }
 }

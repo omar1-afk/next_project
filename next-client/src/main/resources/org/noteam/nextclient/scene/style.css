@@ -1,0 +1,7 @@
+.container {
+    -fx-min-width: 1280px;
+    -fx-min-height: 720px;
+    -fx-max-height: 2160px;
+    -fx-max-width: 3840px;
+    -fx-background-color: #D9D9D9;
+}
