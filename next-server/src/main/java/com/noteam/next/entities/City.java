@@ -1,5 +1,6 @@
 package com.noteam.next.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class City {
     @JoinColumn(name = "country_id")
     private Country country;
     @OneToMany(mappedBy = "city",cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private List<Order> orders;
     public int getId() {
         return id;

@@ -31,10 +31,10 @@ public class OrderService {
             return false;
         } else {
             log.info("Order service: Creating new order...");
-            Order newOrder = new Order(request.country(), request.city(), request.region()
+            Order newOrder = new Order(request.city(), request.region()
                     , request.address(), request.flameable(), request.breakable()
                     , request.price(), request.state(), request.weight()
-                    , request.shippingDate(), null, request.receiver()
+                    , null, request.receiver()
                     , request.sender(), request.boxesCount());
             orderRepository.save(newOrder);
             return true;
@@ -71,7 +71,6 @@ public class OrderService {
         } else {
             log.info("Order service: Updating the order with id: "+id);
             Order order = orderOptional.get();
-            order.setCountry(request.country());
             order.setCity(request.city());
             order.setRegion(request.region());
             order.setAddress(request.address());
@@ -80,7 +79,6 @@ public class OrderService {
             order.setPrice(request.price());
             order.setState(request.state());
             order.setWeight(request.weight());
-            order.setShippingDate(request.shippingDate());
             order.setBoxesCount(request.boxesCount());
             order.setReceiver(request.receiver());
             order.setSender(request.sender());

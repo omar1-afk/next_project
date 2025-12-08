@@ -19,10 +19,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ManyToOne
     @Column(nullable = false)
-    private String country;
-    @Column(nullable = false)
-    private String city;
+    private City city;
     @Column(nullable = false)
     private String region;
     @Column(nullable = false)
@@ -37,8 +36,6 @@ public class Order {
     private State state;
     @Column(nullable = false)
     private int weight;
-    @Column(name = "shipping_date") //can be null!!!!!!!!!!!!!!!!1
-    private LocalDate shippingDate;
     @ManyToOne
     @JoinColumn(name = "shipment_id",nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
@@ -61,8 +58,7 @@ public class Order {
     @LastModifiedDate
     private LocalDateTime updatedAt;
     public Order(){}
-    public Order(String country, String city, String region, String address, boolean flameable, boolean breakable, int price, State state, int weight, LocalDate shippingDate, Shipment shipment, Receiver receiver, Sender sender, int boxesCount) {
-        this.country = country;
+    public Order( City city, String region, String address, boolean flameable, boolean breakable, int price, State state, int weight, Shipment shipment, Receiver receiver, Sender sender, int boxesCount) {
         this.city = city;
         this.region = region;
         this.address = address;
@@ -71,7 +67,6 @@ public class Order {
         this.price = price;
         this.state = state;
         this.weight = weight;
-        this.shippingDate = shippingDate;
         this.shipment = shipment;
         this.receiver = receiver;
         this.sender = sender;
@@ -87,17 +82,10 @@ public class Order {
         this.id = id;
     }
 
-    public String getCountry() {
-        return country;
-    }
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
+    public City getCity() {
         return city;
     }
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -148,13 +136,6 @@ public class Order {
     }
     public void setWeight(int weight) {
         this.weight = weight;
-    }
-
-    public LocalDate getShippingDate() {
-        return shippingDate;
-    }
-    public void setShippingDate(LocalDate shippingDate) {
-        this.shippingDate = shippingDate;
     }
 
     public Receiver getReceiver() {
