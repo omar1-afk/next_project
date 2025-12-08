@@ -27,9 +27,21 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name="admin_id")
     private Admin admin;
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
+    }
+
     @ManyToOne
     @JoinColumn(name="driver_id")
     private Driver driver;
+    @ManyToOne
+    @JoinColumn(name="city_id")
+    private City city;
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private List<Orders> ordersList;
