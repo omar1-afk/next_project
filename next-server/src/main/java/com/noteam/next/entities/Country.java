@@ -11,7 +11,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "country_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
     @OneToMany(mappedBy = "country",cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<City> cities = new ArrayList<>();
