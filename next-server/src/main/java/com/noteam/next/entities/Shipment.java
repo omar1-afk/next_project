@@ -12,6 +12,7 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String shipmentName;
+    private Integer total_weight;
     @OneToMany(mappedBy = "shipment",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
     private List<Order> orders = new ArrayList<>();
 
@@ -33,6 +34,14 @@ public class Shipment {
 
     public List<Order> getOrders() {
         return orders;
+    }
+
+    public Integer getTotal_weight() {
+        return total_weight;
+    }
+
+    public void setTotal_weight(Integer total_weight) {
+        this.total_weight = total_weight;
     }
 
     public void setOrders(List<Order> orders) {

@@ -20,7 +20,7 @@ public class Order {
     private Integer id;
 
     @ManyToOne
-    @Column(nullable = false)
+    @JoinColumn(name = "city_id",nullable = false)
     private City city;
     @Column(nullable = false)
     private String region;

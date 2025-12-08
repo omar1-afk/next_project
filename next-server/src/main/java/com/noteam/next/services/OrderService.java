@@ -6,6 +6,7 @@ import com.noteam.next.entities.Receiver;
 import com.noteam.next.entities.Sender;
 import com.noteam.next.entities.Shipment;
 import com.noteam.next.repositories.OrderRepository;
+import com.noteam.next.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,8 @@ import java.util.logging.Logger;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private ShipmentRepository shipmentRepository;
     private static final Logger log = Logger.getLogger(OrderService.class.getName());
 
     //Create new order
@@ -111,7 +114,9 @@ public class OrderService {
         else {
             log.info("Order service: attach shipment to the order with id: "+id);
             Order order =orderOptional.get();
+            shipment.setTotal_weight(shipment.getTotal_weight()+order.getWeight());
             order.setShipment(shipment);
+
             orderRepository.save(order);
             return true;
         }
@@ -140,6 +145,9 @@ public class OrderService {
         else {
             log.info("Order service: deattach shipment to the orders with id: "+id);
             Order order =orderOptional.get();
+            Shipment shipment = order.getShipment();
+            shipment.setTotal_weight(shipment.getTotal_weight()-order.getWeight());
+            shipmentRepository.save(shipment);
             order.setShipment(null);
             orderRepository.save(order);
             return true;
