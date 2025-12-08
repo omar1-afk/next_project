@@ -2,6 +2,7 @@ package com.noteam.next.controllers;
 
 import com.noteam.next.dto.OrderRequest;
 import com.noteam.next.entities.Order;
+import com.noteam.next.entities.Shipment;
 import com.noteam.next.services.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,8 +50,9 @@ public class OrderController {
             @RequestParam(defaultValue = "0") int page
             ,@RequestParam(defaultValue = "10") int size
             , @RequestParam(defaultValue ="createdAt" )String sortBy
-            ,@RequestParam(defaultValue = "DESC")String sortDir){
-        Page<Order> orderPage=orderService.getOrdersByPage(page, size, sortBy, sortDir);
+            ,@RequestParam(defaultValue = "DESC")String sortDir
+            ,@RequestParam(defaultValue = "ALL")String state){
+        Page<Order> orderPage=orderService.getOrdersByPage(page, size, sortBy, sortDir,state);
         if (orderPage.isEmpty()){
             return ResponseEntity.notFound().build();
         }
@@ -84,6 +86,31 @@ public class OrderController {
         }
         else {
             return ResponseEntity.ok("The order with id: " + id + " is updated successfully!");
+        }
+    }
+    @PatchMapping("/{id}")
+    ResponseEntity<String> attachOrDeattachShipmentById(@PathVariable("id") int id, @RequestBody Shipment shipment){
+        Optional<Order> orderOptional= orderService.getOrderById(id);
+        if(orderOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        else {
+            if(shipment.getId()!=null){
+                if(orderService.attachShipmentById(id,shipment)) {
+                    return ResponseEntity.ok("Shipment is attached to order successfully!");
+                }
+                else {
+                    return ResponseEntity.notFound().build();
+                }
+            }
+            else {
+                if(orderService.deattachShipmentById(id)) {
+                    return ResponseEntity.ok("Shipment is deattached to order successfully!");
+                }
+                else {
+                    return ResponseEntity.notFound().build();
+                }
+            }
         }
     }
 
