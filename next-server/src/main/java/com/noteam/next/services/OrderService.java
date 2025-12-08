@@ -1,10 +1,7 @@
 package com.noteam.next.services;
 
 import com.noteam.next.dto.OrderRequest;
-import com.noteam.next.entities.Order;
-import com.noteam.next.entities.Receiver;
-import com.noteam.next.entities.Sender;
-import com.noteam.next.entities.Shipment;
+import com.noteam.next.entities.*;
 import com.noteam.next.repositories.OrderRepository;
 import com.noteam.next.repositories.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -50,10 +48,17 @@ public class OrderService {
         log.info("Order service: getting all orders sorted by "+ sortBy+",("+ sortDir+")");
         return orderRepository.findAll(Sort.by(Sort.Direction.fromString(sortDir),sortBy));
     }
-    public Page<Order> getOrdersByPage(int page, int size, String sortBy, String sortDir){
+    public Page<Order> getOrdersByPage(int page, int size, String sortBy, String sortDir,String state){
         Pageable pageable = PageRequest.of(page,size,Sort.by(Sort.Direction.fromString(sortDir),sortBy));
         log.info("Order service: getting orders by page: "+page+" with size "+size+" sorted by "+ sortBy+",("+ sortDir+")");
-        return orderRepository.findAll(pageable);
+        if(state.equals("ALL")){
+                return orderRepository.findAll(pageable);
+        }else if (state.equals(State.PICKED.name()) || state.equals(State.PACKAGING.name())
+                || state.equals(State.DELEVERED.name()) || state.equals(State.RETURNED.name()) || state.equals(State.SHIPPING.name())){
+                return orderRepository.findAllByState(State.valueOf(state),pageable);
+        }else{
+            return null;
+        }
     }
     public Optional<Order> getOrderById(int id){
         log.info("Order service: getting order by id: "+ id);
@@ -115,6 +120,7 @@ public class OrderService {
             log.info("Order service: attach shipment to the order with id: "+id);
             Order order =orderOptional.get();
             shipment.setTotal_weight(shipment.getTotal_weight()+order.getWeight());
+            shipmentRepository.save(shipment);
             order.setShipment(shipment);
 
             orderRepository.save(order);
@@ -146,7 +152,7 @@ public class OrderService {
             log.info("Order service: deattach shipment to the orders with id: "+id);
             Order order =orderOptional.get();
             Shipment shipment = order.getShipment();
-            shipment.setTotal_weight(shipment.getTotal_weight()-order.getWeight());
+            shipment.setTotal_weight((shipment.getTotal_weight()-order.getWeight()));
             shipmentRepository.save(shipment);
             order.setShipment(null);
             orderRepository.save(order);
