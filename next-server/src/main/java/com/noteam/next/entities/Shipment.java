@@ -1,40 +1,73 @@
 package com.noteam.next.entities;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "Shipments")
+@Table(name="shipments")
 public class Shipment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String shipmentName;
+    private Integer shipment_id;
+    @Column(name="total_weight")
     private Integer total_weight;
-    @OneToMany(mappedBy = "shipment",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
-    private List<Order> orders = new ArrayList<>();
+    @Column(name="shipping_date")
+    private Date shipping_date;
+    @Column(name="is_complete")
+    private Boolean isComplete;
+    @Column(name="created_at")
+    private LocalDateTime created_at ;
+    @Column(name="updated_at")
+    private LocalDateTime updated_at ;
+    @ManyToOne
+    @JoinColumn(name="vehicle_id")
+    private Vehicle vehicle;
+    @ManyToOne
+    @JoinColumn(name="admin_id")
+    private Admin admin;
+    @ManyToOne
+    @JoinColumn(name="driver_id")
+    private Driver driver;
+    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Orders> ordersList;
 
-    public Integer getId() {
-        return id;
+
+    public List<Orders> getOrdersList() {
+        return ordersList;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrdersList(List<Orders> ordersList) {
+        this.ordersList = ordersList;
     }
 
-    public String getShipmentName() {
-        return shipmentName;
+
+
+
+    public Integer getShipment_id() {
+        return shipment_id;
+    }
+    public Vehicle  getVehicle() {
+        return vehicle;
     }
 
-    public void setShipmentName(String shipmentName) {
-        this.shipmentName = shipmentName;
+    public void setVehicle(Vehicle  vehicle) {
+        this.vehicle = vehicle;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public Driver getDriver() {
+        return driver;
     }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public Admin getAdmin() {return admin;}
+
+    public void setAdmin(Admin admin) {this.admin = admin;}
 
     public Integer getTotal_weight() {
         return total_weight;
@@ -44,7 +77,37 @@ public class Shipment {
         this.total_weight = total_weight;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public Date getShipping_date() {
+        return shipping_date;
     }
+
+    public void setShipping_date(Date shipping_date) {
+        this.shipping_date = shipping_date;
+    }
+
+    public Boolean getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(Boolean isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    public LocalDateTime getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(LocalDateTime updated_at) {
+        this.updated_at = updated_at;
+    }
+
+
 }
