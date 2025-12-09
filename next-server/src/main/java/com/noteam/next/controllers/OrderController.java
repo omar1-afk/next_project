@@ -95,7 +95,7 @@ public class OrderController {
             return ResponseEntity.notFound().build();
         }
         else {
-            if(shipment.getId()!=null){
+            if(shipment.getShipment_id()!=null){
                 if(orderService.attachShipmentById(id,shipment)) {
                     return ResponseEntity.ok("Shipment is attached to order successfully!");
                 }

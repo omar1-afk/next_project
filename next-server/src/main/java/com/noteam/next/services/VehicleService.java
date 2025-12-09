@@ -1,7 +1,7 @@
 package com.noteam.next.services;
 
 
-import com.noteam.next.entities.VehicleEntity;
+import com.noteam.next.entities.Vehicle;
 import com.noteam.next.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,19 +15,19 @@ public class VehicleService {
     @Autowired
     private VehicleRepository repository;
 
-    public List<VehicleEntity> getAllVehicles() {
+    public List<Vehicle> getAllVehicles() {
         return repository.findAll();
     }
 
-    public Optional<VehicleEntity> getVehicleById(int id) {
+    public Optional<Vehicle> getVehicleById(int id) {
         return repository.findById(id);
     }
 
-    public VehicleEntity addVehicle(VehicleEntity vehicle) {
+    public Vehicle addVehicle(Vehicle vehicle) {
         return repository.save(vehicle);
     }
 
-    public VehicleEntity updateVehiclePartial(VehicleEntity existing, VehicleEntity updates) {
+    public Vehicle updateVehiclePartial(Vehicle existing, Vehicle updates) {
 
         if (updates.getType() != null) {
             existing.setType(updates.getType());
@@ -54,7 +54,7 @@ public class VehicleService {
         return true;
     }
 
-    public List<VehicleEntity> getAvailableVehicles() {
+    public List<Vehicle> getAvailableVehicles() {
         return repository.findByAvailable(true);
     }
 }

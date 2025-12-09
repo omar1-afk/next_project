@@ -1,7 +1,7 @@
 package com.noteam.next.controllers;
 
 
-import com.noteam.next.entities.VehicleEntity;
+import com.noteam.next.entities.Vehicle;
 import com.noteam.next.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,11 +28,11 @@ public class VehicleController {
             @RequestParam(required = false) Boolean used
     ) {
         try {
-            List<VehicleEntity> vehicles = vehicleService.getAllVehicles();
+            List<Vehicle> vehicles = vehicleService.getAllVehicles();
 
             if (type != null) {
                 try {
-                    VehicleEntity.VehicleType vt = VehicleEntity.VehicleType.valueOf(type.toUpperCase());
+                    Vehicle.VehicleType vt = Vehicle.VehicleType.valueOf(type.toUpperCase());
                     vehicles = vehicles.stream()
                             .filter(v -> v.getType() == vt)
                             .toList();
@@ -63,7 +63,7 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getVehicleById(@PathVariable int id) {
-        Optional<VehicleEntity> vehicle = vehicleService.getVehicleById(id);
+        Optional<Vehicle> vehicle = vehicleService.getVehicleById(id);
 
         return vehicle.<ResponseEntity<?>>map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -71,30 +71,30 @@ public class VehicleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createVehicle(@RequestBody VehicleEntity vehicle) {
+    public ResponseEntity<?> createVehicle(@RequestBody Vehicle vehicle) {
         if (vehicle.getType() == null)
             return ResponseEntity.badRequest().body("Vehicle type is required");
 
         if (vehicle.getLicensePlate() == null || vehicle.getLicensePlate().isBlank())
             return ResponseEntity.badRequest().body("License plate is required");
 
-        VehicleEntity saved = vehicleService.addVehicle(vehicle);
+        Vehicle saved = vehicleService.addVehicle(vehicle);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateVehicle(
             @PathVariable int id,
-            @RequestBody VehicleEntity updates
+            @RequestBody Vehicle updates
     ) {
-        Optional<VehicleEntity> existingOpt = vehicleService.getVehicleById(id);
+        Optional<Vehicle> existingOpt = vehicleService.getVehicleById(id);
 
         if (existingOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Vehicle not found");
         }
 
-        VehicleEntity updated = vehicleService.updateVehiclePartial(existingOpt.get(), updates);
+        Vehicle updated = vehicleService.updateVehiclePartial(existingOpt.get(), updates);
         return ResponseEntity.ok(updated);
     }
 

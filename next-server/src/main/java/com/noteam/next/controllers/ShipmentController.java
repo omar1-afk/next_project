@@ -1,5 +1,5 @@
 package com.noteam.next.controllers;
-import com.noteam.next.entities.Orders;
+import com.noteam.next.entities.Order;
 import com.noteam.next.entities.Shipment;
 import com.noteam.next.services.ShipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,15 +137,15 @@ public class ShipmentController {
     }
 
     @GetMapping("/{shipment_id}/orders")
-    public ResponseEntity<List<Orders>> getAllOrdersInShipment(@PathVariable int shipment_id) {
+    public ResponseEntity<List<Order>> getAllOrdersInShipment(@PathVariable int shipment_id) {
         logger.info("Getting all orders  by shipment_id" + shipment_id);
         try {
             Optional<Shipment > shipment= shipmentService.getShipmentById(shipment_id);
             if(shipment.isEmpty()){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-                List<Orders> ordersList = shipmentService.getAllOrdersInShipment(shipment.get());
-                return ResponseEntity.status(HttpStatus.OK).body(ordersList);
+                List<Order> orderList = shipmentService.getAllOrdersInShipment(shipment.get());
+                return ResponseEntity.status(HttpStatus.OK).body(orderList);
 
         }
         catch (Exception e){
