@@ -1,0 +1,50 @@
+package com.noteam.next.entities;
+
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "Shipments")
+public class Shipment {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String shipmentName;
+    private Integer total_weight;
+    @OneToMany(mappedBy = "shipment",cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
+    private List<Order> orders = new ArrayList<>();
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getShipmentName() {
+        return shipmentName;
+    }
+
+    public void setShipmentName(String shipmentName) {
+        this.shipmentName = shipmentName;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public Integer getTotal_weight() {
+        return total_weight;
+    }
+
+    public void setTotal_weight(Integer total_weight) {
+        this.total_weight = total_weight;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+}
