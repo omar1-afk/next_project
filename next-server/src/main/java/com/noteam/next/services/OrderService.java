@@ -296,7 +296,7 @@ public class OrderService {
     }
     //----------------------------------------------------------------------------------------------
 
-//    this what Nesma did in the
+//    Nesma test file
     public void assignOrDeleteShipment(List<Integer> orders, Shipment shipment){
         System.out.println("assigning orders to shipment ");
     }
