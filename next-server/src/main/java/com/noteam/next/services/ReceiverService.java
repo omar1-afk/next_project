@@ -1,9 +1,7 @@
 package com.noteam.next.services;
-
 import com.noteam.next.entities.Receiver;
 import com.noteam.next.repositories.ReceiverRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional; // Used for findById
@@ -18,7 +16,7 @@ public class ReceiverService {
     }
 
     // create & update
-    public Receiver save(Receiver receiver) {
+    public Receiver save (Receiver receiver) {
         receiver.setUpdatedAt(LocalDateTime.now()); // Update timestamp
         return receiverRepository.save(receiver);
     }
