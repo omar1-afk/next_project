@@ -1,5 +1,6 @@
 package org.noteam.nextclient;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.noteam.nextclient.scene.LoginScene;
 
 import javafx.application.Application;

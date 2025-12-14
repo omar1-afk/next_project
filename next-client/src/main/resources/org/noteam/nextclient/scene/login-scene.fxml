@@ -26,7 +26,7 @@
                         <Image url="@../assets/login-canvas.png" />
                      </image>
                   </ImageView>
-                  <VBox layoutY="472.0" style="-fx-alignment: top-center;">
+                  <VBox layoutY="420.0" style="-fx-alignment: top-center;">
                      <children>
                         <HBox alignment="CENTER" prefHeight="48.0" prefWidth="1277.0" style="-fx-min-width: 100%; -fx-alignment: center; -fx-padding: 16 0;" styleClass="form-field" stylesheets="@style.css">
                            <children>
@@ -62,7 +62,7 @@
                               <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-min-width: 8; -fx-max-width: 16;" />
                               <StackPane fx:id="passwordFieldsStack" alignment="CENTER_RIGHT">
                                  <children>
-                                     <TextField fx:id="passwordVisibleField" focusTraversable="false"  prefHeight="48.0" prefWidth="451.0" style="-fx-background-radius: 64;" visible="false">
+                                     <TextField fx:id="passwordVisibleField" focusTraversable="false" prefHeight="48.0" prefWidth="451.0" style="-fx-background-radius: 64;" visible="false">
                                        <cursor>
                                           <Cursor fx:constant="TEXT" />
                                        </cursor>
