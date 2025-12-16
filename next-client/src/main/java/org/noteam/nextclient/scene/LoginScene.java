@@ -17,7 +17,6 @@ public class LoginScene extends Application {
         LoginScene.class.getResource("login-scene.fxml"));
     Scene scene = new Scene(fxml.load(), 1280, 720);
     // scene.getStylesheets().add(LoginScene.class.getResource("style.css").toString());
-    System.out.println(Config.SERVER_URL);
     stage.setTitle("Log in");
     stage.setScene(scene);
     stage.setFullScreen(false);
