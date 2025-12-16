@@ -1,0 +1,6 @@
+
+/* 2. Apply it to your app */
+.root {
+    /* Use the name you defined above */
+    -fx-font-family: 'SansSerif';
+}
