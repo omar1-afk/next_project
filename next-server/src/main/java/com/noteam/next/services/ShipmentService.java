@@ -23,7 +23,7 @@ public class ShipmentService {
     @Autowired
     private ShipmentRepository shipmentRepository;
     @Autowired
-    private OrdersService ordersService;
+    private OrderService ordersService;
     @Autowired
     private AdminRepository adminRepository;
     @Autowired
@@ -124,10 +124,10 @@ public class ShipmentService {
             return java.util.Collections.emptyList();
         }
     }
-    public List<Orders> getAllOrdersInShipment(Shipment shipment) {
+    public List<Order> getAllOrdersInShipment(Shipment shipment) {
         logger.info("Getting all orders  by shipment_id" +shipment.getShipment_id() );
         try {
-              List<Orders> orders = shipment.getOrdersList();
+              List<Order> orders = shipment.getOrdersList();
               if (orders == null) {
                   logger.info("Orders not found");
                   return emptyList();
@@ -144,7 +144,7 @@ public class ShipmentService {
     public Shipment createShipment(List<Integer> orders, int admin_id, int vehicle_id, int driver_id, double total_weight, Date shipping_date ,int city_id) {
         logger.info("admin:" +admin_id+"creates a shipment for vehicle" +vehicle_id + "driver"+driver_id +"will be shipped at"+shipping_date +"total_wight"+total_weight);
 try{
-        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id); // name check
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id); // name check (checked)
         Optional<Driver> driver= driverRepository.findById(driver_id); // name check
         Optional<Admin> admin = adminRepository.findById(admin_id);
         Optional<City> city = cityRepository.findById(city_id);
@@ -154,7 +154,7 @@ try{
         }
 
             total_weight = Math.ceil(total_weight);
-            int weight = vehicle.get().getWeight();// name check
+            int weight = vehicle.get().getWeightLimit();// name check (checked)
              if (total_weight > weight) {
               throw new IllegalArgumentException("Total weight exceeds vehicle capacity");
              }
@@ -191,7 +191,7 @@ try{
 
         }
         Shipment existingShipment = shipment.get();
-        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id);     // name check
+        Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id);     // name check (checked)
         Optional<Driver> driver = driverRepository.findById(driver_id); // name check
         Optional<City> city= cityRepository.findById(city_id);
 
@@ -201,7 +201,7 @@ try{
             throw new IllegalArgumentException("Vehicle, Driver, City or shipment not found");
         }
         total_weight = Math.ceil(total_weight);
-        int weight = vehicle.get().getWeight();// name check
+        int weight = vehicle.get().getWeightLimit();// name check (checked)
         if (total_weight > weight) {
             throw new IllegalArgumentException("Total weight exceeds vehicle capacity");
         }
@@ -279,8 +279,8 @@ try{
                Shipment shipment = shipmentOptional.get();
                 if (shipment.getOrdersList() != null && !shipment.getOrdersList().isEmpty()) {
               List<Integer> orderIds = new ArrayList<>() ;
-                for(Orders order :shipment.getOrdersList() ) {
-                    orderIds.add(order.getOrder_id());
+                for(Order order :shipment.getOrdersList() ) {
+                    orderIds.add(order.getId());
                 }
                ordersService.assignOrDeleteShipment(orderIds,null);
             }

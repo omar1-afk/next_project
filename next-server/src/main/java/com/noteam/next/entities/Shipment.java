@@ -44,15 +44,15 @@ public class Shipment {
     private City city;
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Orders> ordersList;
+    private List<Order> orderList;
 
 
-    public List<Orders> getOrdersList() {
-        return ordersList;
+    public List<Order> getOrdersList() {
+        return orderList;
     }
 
-    public void setOrdersList(List<Orders> ordersList) {
-        this.ordersList = ordersList;
+    public void setOrdersList(List<Order> orderList) {
+        this.orderList = orderList;
     }
 
 
@@ -61,11 +61,11 @@ public class Shipment {
     public Integer getShipment_id() {
         return shipment_id;
     }
-    public Vehicle  getVehicle() {
+    public Vehicle getVehicle() {
         return vehicle;
     }
 
-    public void setVehicle(Vehicle  vehicle) {
+    public void setVehicle(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 
