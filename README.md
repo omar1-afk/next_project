@@ -1,2 +1,2 @@
 # next_project
-Next" is a full-stack desktop application designed for efficient and comprehensive Shipping Management. It provides tools for tracking shipments states, optimizing routes, and handling client information.
+Next" is a full-stack desktop application designed for efficient and comprehensive Shipping Management. It provides tools for tracking shipments states.

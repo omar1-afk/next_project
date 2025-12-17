@@ -15,4 +15,8 @@ module org.noteam.nextclient {
     opens org.noteam.nextclient.controller to javafx.fxml;
     opens org.noteam.nextclient.entity to com.fasterxml.jackson.databind;
     exports org.noteam.nextclient;
+    opens org.noteam.nextclient.controller to javafx.fxml;
+    exports org.noteam.nextclient.controller;
+    opens org.noteam.nextclient.scene to javafx.fxml;
+    exports org.noteam.nextclient.scene;
 }
