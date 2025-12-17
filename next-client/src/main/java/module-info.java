@@ -23,6 +23,4 @@ module org.noteam.nextclient {
 
   opens org.noteam.nextclient.scene to javafx.fxml;
 
-  opens org.noteam.nextclient.assets to javafx.fxml;
-
 }
