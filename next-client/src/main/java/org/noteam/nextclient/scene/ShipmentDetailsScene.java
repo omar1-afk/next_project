@@ -10,7 +10,7 @@ public class ShipmentDetailsScene extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     FXMLLoader fxml = new FXMLLoader(
-        ShipmentDetailsScene.class.getResource("shipment-details-scene.fxml"));
+        ShipmentDetailsScene.class.getResource("shipmentDetails-scene.fxml"));
     Scene scene = new Scene(fxml.load(), 1280, 720);
     stage.setTitle("Shipment Details");
     stage.setScene(scene);
