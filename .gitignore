@@ -1,1 +1,8 @@
 .idea/
+.editorconfig
+.classpath
+.env
+.env.local
+.project
+.settings/
+target/
