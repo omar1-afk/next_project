@@ -195,7 +195,7 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/Scene/orders-view.fxml"));
             Parent root = loader.load();
             OrderController orderController = loader.getController();
-            viewPane.getChildren().removeAll();
+            viewPane.getChildren().clear();
             viewPane.getChildren().add(orderController.getOrderPane());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -206,7 +206,7 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/Scene/shipments-view.fxml"));
             Parent root = loader.load();
             ShipmentController shipmentController = loader.getController();
-            viewPane.getChildren().removeAll();
+            viewPane.getChildren().clear();
             viewPane.getChildren().add(shipmentController.getShipmentPane());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -217,7 +217,7 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/fleets-view.fxml"));
             Parent root = loader.load();
             FleetController fleetController = loader.getController();
-            viewPane.getChildren().removeAll();
+            viewPane.getChildren().clear();
             viewPane.getChildren().add(fleetController.getFleetPane());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -228,7 +228,7 @@ public class MainController implements Initializable {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/drivers-view.fxml"));
             Parent root = loader.load();
             DriverController driverController = loader.getController();
-            viewPane.getChildren().removeAll();
+            viewPane.getChildren().clear();
             viewPane.getChildren().add(driverController.getDriverPane());
         } catch (IOException e) {
             throw new RuntimeException(e);
