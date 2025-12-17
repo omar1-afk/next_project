@@ -1,6 +1,35 @@
 
-/* 2. Apply it to your app */
 .root {
-    /* Use the name you defined above */
     -fx-font-family: 'SansSerif';
+}
+.table-view .scroll-bar:vertical .track {
+    -fx-background-color: #f0f0f0;
+}
+
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: red;
+}
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0; /* Removes default gaps */
+}
+.table-view .filler{
+    -fx-background-color: transparent;
+        -fx-min-width:224;
+    -fx-start-margin:0;
+    -fx-end-margin:0;
+}
+.table-view .column-header{
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 0.5 0;
+    -fx-border-color: #D9D9D9;
+    -fx-text-fill: #747474;
+}
+.table-view .column-header .label {
+    -fx-text-fill:  #747474;
+    -fx-start-margin: 8px;
+    -fx-font-size: 14px;
+    -font-weight: 100;
+    
+    -fx-alignment: CENTER_LEFT;
 }
