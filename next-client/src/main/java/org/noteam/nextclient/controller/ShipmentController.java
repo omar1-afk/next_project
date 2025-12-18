@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.noteam.nextclient.dto.ShipmentRequest;
@@ -19,6 +20,11 @@ import java.util.List;
 
 
 public class ShipmentController {
+    @FXML
+    private BorderPane shipmentPane;
+    public BorderPane getShipmentPane(){
+        return shipmentPane;
+    }
     @FXML
     private TableView<ShipmentRequest> completedShipmentTable;
     @FXML
@@ -49,8 +55,10 @@ public class ShipmentController {
     private TableColumn<ShipmentRequest, Void> incompletedDeleteButtonColumn;
     @FXML
     private Button completedPrevBtn, completedNextBtn,incompletedPrevBtn, incompletedNextBtn ,createShipmentBtn;
+
     @FXML
     private Label completedPageLabel;
+
     @FXML
     private Label inCompletedPageLabel;
      @FXML
@@ -116,7 +124,7 @@ public class ShipmentController {
 
             completeTableData.setAll(pageData);
             completedCurrentPage = page;
-            completedPageLabel.setText("Page " + (completedCurrentPage + 1));
+            completedPageLabel.setText("" + (completedCurrentPage + 1));
             completedPrevBtn.setDisable(completedCurrentPage == 0);
             completedNextBtn.setDisable(toIndex >=  completedShipment.size());
         }
