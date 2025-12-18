@@ -10,6 +10,17 @@ public class Admin {
     private int age;
     private String email;
     private String password;
+
+    public Admin(int adminId, String password, String email, int age, String socialSecurityNumber, String name, String image) {
+        this.adminId = adminId;
+        this.password = password;
+        this.email = email;
+        this.age = age;
+        this.socialSecurityNumber = socialSecurityNumber;
+        this.name = name;
+        this.image = image;
+    }
+
     public int getAdminId() {
         return adminId;
     }

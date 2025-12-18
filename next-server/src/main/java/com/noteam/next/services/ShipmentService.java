@@ -181,7 +181,7 @@ try{
     }
     //update
     @Transactional
-    public Shipment updateShipmentById(List<Integer> orders,int admin_id,int shipment_id,int vehicle_id, int driver_id, double total_weight, Date shipping_date,int city_id) {
+    public Shipment updateShipmentById(List<Integer> orders,int shipment_id,int vehicle_id, int driver_id, double total_weight, Date shipping_date,int city_id) {
         logger.info("update a shipment number" + shipment_id);
         try{
 

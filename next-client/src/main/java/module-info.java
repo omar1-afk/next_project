@@ -6,6 +6,9 @@ module org.noteam.nextclient {
     requires android.json;
     requires com.fasterxml.jackson.core;
     requires com.google.gson;
+    requires java.sql;
+    requires javafx.base;
+    requires spring.data.commons;
 
 
     opens org.noteam.nextclient to javafx.fxml;

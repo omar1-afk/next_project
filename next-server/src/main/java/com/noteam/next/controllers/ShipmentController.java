@@ -20,6 +20,7 @@ public class ShipmentController {
 
     private static final Logger logger = Logger.getLogger(ShipmentController.class.getName());
     public static class ShipmentRequest {
+        private int shipmentId;
         private List<Integer> orderIds;
         private int adminId;
         private int vehicleId;
@@ -30,6 +31,11 @@ public class ShipmentController {
 
 
         // Getters and setters
+
+        public int getShipmentId() {
+            return shipmentId;
+        }
+
         public List<Integer> getOrderIds() { return orderIds; }
         public void setOrderIds(List<Integer> orderIds) { this.orderIds = orderIds; }
         public int getAdminId() { return adminId; }
@@ -181,9 +187,7 @@ public class ShipmentController {
     @PostMapping
     public ResponseEntity<?> createShipment(@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("create a shipment ");
-         /*
-        admin authentication
-         */
+
         try {
            Shipment createdShipment = shipmentService.createShipment(
                     shipmentRequest.getOrderIds(),
@@ -207,17 +211,15 @@ public class ShipmentController {
     }
 }
     //update
-    @PutMapping("/update/{shipment_id}")
-    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id, @RequestBody ShipmentRequest shipmentRequest ) {
-        logger.info("update a shipment number" + shipment_id);
-         /*
-        admin authentication
-         */
+    @PutMapping("/update")
+    public ResponseEntity<?> updateShipment(@RequestBody ShipmentRequest shipmentRequest ) {
+        logger.info("update a shipment number" + shipmentRequest.getShipmentId());
+
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
                     shipmentRequest.getOrderIds(),
-                    shipmentRequest.getAdminId(),
-                    shipment_id,
+                    //shipmentRequest.getAdminId(),
+                    shipmentRequest.getShipmentId(),
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),
