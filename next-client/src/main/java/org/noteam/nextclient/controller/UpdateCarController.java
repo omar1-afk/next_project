@@ -10,7 +10,7 @@ public class UpdateCarController {
 
     @FXML
     private void handleUpdateCar() {
-        System.out.println("--- Update Core/Car Data ---");
+        System.out.println("--- Update Car Data ---");
         System.out.println("Type: " + carTypeField.getText());
         System.out.println("Weight Limit: " + weightLimitField.getText());
         System.out.println("License Plate: " + carPlateField.getText());
