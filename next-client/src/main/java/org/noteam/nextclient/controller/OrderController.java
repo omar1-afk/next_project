@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -209,6 +210,7 @@ public class OrderController implements Initializable {
             Button attachShipment = new Button("",icon);
             attachShipment.setStyle("-fx-background-color:#DCFBE3;-fx-border-radius:6px;-fx-background-radius:6px;");
             attachShipment.setTranslateX(25);
+            attachShipment.setCursor(Cursor.HAND);
             HBox hBox= new HBox(attachShipment);
             hBox.setAlignment(Pos.CENTER);
             return hBox;
@@ -221,9 +223,10 @@ public class OrderController implements Initializable {
             icon.setScaleX(0.8);
             icon.setScaleY(0.8);
             icon.setStrokeWidth(1.5);
-            Button attachShipment = new Button("",icon);
-            attachShipment.setStyle("-fx-background-color:#ff3b3b;-fx-border-radius:6px;-fx-background-radius:6px;-fx-padding:3px");
-            return attachShipment;
+            Button deattachShipment = new Button("",icon);
+            deattachShipment.setStyle("-fx-background-color:#ff3b3b;-fx-border-radius:6px;-fx-background-radius:6px;-fx-padding:3px");
+            deattachShipment.setCursor(Cursor.HAND);
+            return deattachShipment;
         }
 
         public int getOrderID() {
