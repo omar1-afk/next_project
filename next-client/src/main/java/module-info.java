@@ -1,6 +1,7 @@
 module org.noteam.nextclient {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
 
 
     opens org.noteam.nextclient to javafx.fxml;
