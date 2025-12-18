@@ -169,28 +169,28 @@ public class OrderController implements Initializable {
 
     public class OrderRow{
         SimpleIntegerProperty orderID;
-        SimpleDoubleProperty weight;
+        SimpleStringProperty weight;
         SimpleStringProperty city;
         SimpleStringProperty status;
-        SimpleDoubleProperty price;
+        SimpleStringProperty price;
         SimpleObjectProperty shipment;
         SimpleStringProperty createdAt;
 
         public OrderRow(Integer orderID, double weight, String city, State status, double price, int shipment, LocalDateTime createdAt) {
             this.orderID = new SimpleIntegerProperty(orderID);
-            this.weight = new SimpleDoubleProperty(weight);
+            this.weight = new SimpleStringProperty(weight+ "kg");
             this.city = new SimpleStringProperty(city);
             this.status = new SimpleStringProperty(status.toString());
-            this.price = new SimpleDoubleProperty(price);
+            this.price = new SimpleStringProperty(price+" LE");
             this.shipment = new SimpleObjectProperty(shipmentContent(shipment));
             this.createdAt = new SimpleStringProperty(createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")));
         }
         public OrderRow(Integer orderID, double weight, String city, State status, double price, LocalDateTime createdAt) {
             this.orderID = new SimpleIntegerProperty(orderID);
-            this.weight = new SimpleDoubleProperty(weight);
+            this.weight = new SimpleStringProperty(weight+" kg");
             this.city = new SimpleStringProperty(city);
             this.status = new SimpleStringProperty(status.toString());
-            this.price = new SimpleDoubleProperty(price);
+            this.price = new SimpleStringProperty(price+" LE");
             this.shipment = new SimpleObjectProperty(emptyShipmentView());
             this.createdAt = new SimpleStringProperty(createdAt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a")));
         }
@@ -241,16 +241,16 @@ public class OrderController implements Initializable {
             this.orderID.set(orderID);
         }
 
-        public double getWeight() {
+        public String getWeight() {
             return weight.get();
         }
 
-        public SimpleDoubleProperty weightProperty() {
+        public SimpleStringProperty weightProperty() {
             return weight;
         }
 
         public void setWeight(double weight) {
-            this.weight.set(weight);
+            this.weight.set(weight+ " kg");
         }
 
         public String getCity() {
@@ -277,16 +277,16 @@ public class OrderController implements Initializable {
             this.status.set(status);
         }
 
-        public double getPrice() {
+        public String getPrice() {
             return price.get();
         }
 
-        public SimpleDoubleProperty priceProperty() {
+        public SimpleStringProperty priceProperty() {
             return price;
         }
 
         public void setPrice(double price) {
-            this.price.set(price);
+            this.price.set(price+ " LE");
         }
 
         public Object getShipment() {
