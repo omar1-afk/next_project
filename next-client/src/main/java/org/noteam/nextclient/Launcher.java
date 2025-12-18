@@ -13,7 +13,7 @@ public class Launcher extends Application {
         // Path to FXML
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("scene/update-driver.fxml"));
 
-        Scene scene = new Scene(fxmlLoader.load(), 800, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 830, 500);
         stage.setTitle("Update driver");
 
         // Path to the Logo in assets

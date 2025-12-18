@@ -15,7 +15,7 @@
 /* Main Titles */
 .title-label {
     -fx-font-family: 'SansSerif';
-    -fx-font-weight: bold; /* 1600 is not standard, 'bold' is safer */
+    -fx-font-weight: bold;
     -fx-font-size: 32px;
     -fx-text-fill: #181D1F;
 }
@@ -37,7 +37,7 @@
     -fx-font-family: 'SansSerif';
 }
 
-/* Black Buttons (Car & Driver) */
+/* Black Buttons */
 .update-button, .update-driver-button {
     -fx-background-color: #000000;
     -fx-text-fill: #FFFFFF;
