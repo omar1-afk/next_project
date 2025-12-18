@@ -1,6 +1,66 @@
-
-/* 2. Apply it to your app */
+/* Global Font Application */
 .root {
-    /* Use the name you defined above */
     -fx-font-family: 'SansSerif';
+}
+
+/* Main Container Background */
+.root-container {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #D9D9D9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+/* Main Titles */
+.title-label {
+    -fx-font-family: 'SansSerif';
+    -fx-font-weight: bold; /* 1600 is not standard, 'bold' is safer */
+    -fx-font-size: 32px;
+    -fx-text-fill: #181D1F;
+}
+
+/* Field Headlines */
+.field-headline {
+    -fx-font-family: 'SansSerif';
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #181D1F;
+}
+
+/* Shared Input Field Style */
+.input-field {
+    -fx-background-color: #F2F2F2;
+    -fx-background-radius: 4px;
+    -fx-border-color: transparent;
+    -fx-padding: 8px;
+    -fx-font-family: 'SansSerif';
+}
+
+/* Black Buttons (Car & Driver) */
+.update-button, .update-driver-button {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 8px;
+    -fx-font-family: 'SansSerif';
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-cursor: hand;
+}
+
+.update-button:hover, .update-driver-button:hover {
+    -fx-background-color: #333333;
+}
+
+/* Specific containers */
+.password-container {
+    -fx-background-color: #F2F2F2;
+    -fx-background-radius: 4px;
+    -fx-border-color: #D9D9D9;
+    -fx-border-radius: 4px;
+}
+
+.eye-button {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
 }
