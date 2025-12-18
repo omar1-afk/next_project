@@ -18,7 +18,7 @@ public class Sender {
     @Column(name ="name", nullable = false)
     private String name;
 
-    @Column(name ="name", nullable = false, unique = true) // Enforces the UNIQUE constraint
+    @Column(name ="social_security_number", nullable = false, unique = true) // Enforces the UNIQUE constraint
     private String socialSecurityNumber;
 
     @Column(name ="phone", nullable = false)
@@ -33,7 +33,7 @@ public class Sender {
     @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name="updatedAt", nullable = false)
+    @Column(name="updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     public Integer getReceiverId() {
