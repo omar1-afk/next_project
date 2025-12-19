@@ -10,10 +10,13 @@
         <module name="next-client" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="23" />
   </component>
   <component name="JavacSettings">
+    <option name="PREFER_TARGET_JDK_COMPILER" value="false" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="next" options="-parameters" />
+      <module name="next-client" options="" />
     </option>
   </component>
 </project>

@@ -1,17 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
+<BorderPane fx:id="fleetPane"
+            style="-fx-background-color: white;"
+            styleClass="table-view"
+            stylesheets="@style.css"
+            xmlns="http://javafx.com/javafx/25"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.noteam.nextclient.controller.FleetController">
 
-<BorderPane fx:id="fleetPane" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.FleetController">
     <top>
-        <Pane prefHeight="20.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+        <HBox alignment="CENTER_LEFT"
+              style="-fx-border-color: transparent transparent #D4D4D4 transparent;
+                     -fx-border-width: 0 0 0.5 0;"
+              styleClass="titleView">
+
+            <!-- Fleets -->
+            <Label text="Fleets">
+                <font>
+                    <Font name="SansSerif Bold" size="14"/>
+                </font>
+            </Label>
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <!-- Add car -->
+            <Button fx:id="addCarButton"
+                    text="+ Add car"
+                    mnemonicParsing="false"
+                    onAction="#onAddCarClick"
+                    style="-fx-background-color: black;
+                           -fx-background-radius: 8px;
+                           -fx-font-weight: bold;"
+                    textFill="WHITE">
+                <padding>
+                    <Insets top="7" bottom="7" left="10" right="10"/>
+                </padding>
+                <font>
+                    <Font name="SansSerif Regular" size="12"/>
+                </font>
+            </Button>
+
+            <padding>
+                <Insets top="21" bottom="21" left="24" right="24"/>
+            </padding>
+        </HBox>
     </top>
-    <left>
-        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER" />
-    </left>
+
     <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+        <StackPane>
+
+            <VBox maxWidth="3000" spacing="24">
+                <padding>
+                    <Insets top="24" left="24" right="24"/>
+                </padding>
+
+                <!-- ===== 2 cars + Search (نفس السطر) ===== -->
+                <HBox alignment="CENTER_LEFT" spacing="19">
+
+                    <Label fx:id="fleetCountLabel" text="2 cars">
+                        <font>
+                            <Font name="SansSerif Bold" size="14"/>
+                        </font>
+                    </Label>
+
+                    <AnchorPane>
+                        <TextField fx:id="searchField"
+                                   promptText="Search for car ID"
+                                   prefWidth="260"
+                                   style="-fx-background-color: #D9D9D9,white;
+                                          -fx-background-radius: 8px;
+                                          -fx-prompt-text-weight: 800;
+                                          -fx-prompt-text-fill: #838B8E;">
+                            <padding>
+                                <Insets top="7" bottom="7" left="35" right="10"/>
+                            </padding>
+                            <font>
+                                <Font name="SansSerif Regular" size="14"/>
+                            </font>
+                        </TextField>
+
+                        <SVGPath content="M15.5 14h-.79l-.28-.27
+                             A6.471 6.471 0 0 0 16 9.5
+                             6.5 6.5 0 1 0 9.5 16
+                             a6.471 6.471 0 0 0 4.23-1.57
+                             l.27.28v.79L20 20.49
+                             20.49 20 15.5 14zm-6
+                             0C7.01 14 5 11.99 5 9.5
+                             S7.01 5 9.5 5 14 7.01
+                             14 9.5 11.99 14 9.5 14z"
+                                 fill="#000000"
+                                 scaleX="0.9"
+                                 scaleY="0.9"
+                                 AnchorPane.leftAnchor="10"
+                                 AnchorPane.topAnchor="9"/>
+                    </AnchorPane>
+
+                </HBox>
+
+                <!-- ===== Status ===== -->
+                <HBox spacing="8">
+                    <AnchorPane fx:id="allPane"
+                                style="-fx-background-color:#F1F1F1;-fx-background-radius:8;">
+                        <Label text="All" style="-fx-font-weight:700;">
+                            <padding>
+                                <Insets top="7" bottom="7" left="10" right="10"/>
+                            </padding>
+                        </Label>
+                    </AnchorPane>
+
+                    <AnchorPane fx:id="availablePane">
+                        <Label text="Available" style="-fx-font-weight:700;">
+                            <padding>
+                                <Insets top="7" bottom="7" left="10" right="10"/>
+                            </padding>
+                        </Label>
+                    </AnchorPane>
+
+                    <AnchorPane fx:id="unavailablePane">
+                        <Label text="Unavailable" style="-fx-font-weight:700;">
+                            <padding>
+                                <Insets top="7" bottom="7" left="10" right="10"/>
+                            </padding>
+                        </Label>
+                    </AnchorPane>
+                </HBox>
+
+                <!-- ===== Table ===== -->
+                <TableView fx:id="fleetTable"
+                           maxWidth="3000"
+                           style="-fx-background-color:transparent;
+                                  -fx-border-color:transparent;">
+                    <columns>
+                        <TableColumn fx:id="plateCol" text="License Plate" prefWidth="150"/>
+                        <TableColumn fx:id="stateCol" text="State" prefWidth="120"/>
+                        <TableColumn fx:id="weightCol" text="Weight limit" prefWidth="150"/>
+                        <TableColumn fx:id="typeCol" text="Type" prefWidth="120"/>
+                        <TableColumn fx:id="createdAtCol" text="Created at" prefWidth="150"/>
+                        <TableColumn fx:id="updatedVehicleCol" text="Updated vehicle" prefWidth="180"/>
+                    </columns>
+                </TableView>
+
+            </VBox>
+
+            <!-- ========= ADD VEHICLE FORM ========= -->
+            <VBox fx:id="addVehicleForm"
+                  visible="false"
+                  prefWidth="360"
+                  prefHeight="320"
+                  spacing="18"
+                  style="-fx-background-color:white;
+                         -fx-background-radius:12;
+                         -fx-padding:20;
+                         -fx-effect:dropshadow(gaussian, rgba(0,0,0,0.15), 20, 0.3, 0, 4);">
+
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Car Details">
+                        <font>
+                            <Font name="SansSerif Bold" size="16"/>
+                        </font>
+                    </Label>
+                    <Pane HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <VBox spacing="6">
+                    <Label text="Type"/>
+                    <TextField fx:id="typeField" promptText="truck"/>
+                </VBox>
+
+                <VBox spacing="6">
+                    <Label text="Weight limit"/>
+                    <TextField fx:id="weightField" promptText="500 kg"/>
+                </VBox>
+
+                <VBox spacing="6">
+                    <Label text="License plate"/>
+                    <TextField fx:id="plateField"/>
+                </VBox>
+
+                <Button text="+  Add vehicle"
+                        onAction="#onAddVehicle"
+                        prefHeight="40"
+                        style="-fx-background-color:black;
+                               -fx-text-fill:white;
+                               -fx-font-weight:bold;
+                               -fx-background-radius:10;"/>
+            </VBox>
+
+        </StackPane>
     </center>
 </BorderPane>

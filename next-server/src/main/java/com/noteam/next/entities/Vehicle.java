@@ -7,105 +7,51 @@ import java.time.LocalDateTime;
 @Table(name = "vehicles")
 public class Vehicle {
 
-    public enum VehicleType {
-        VAN, TRUCK
-    }
+    public enum VehicleType { VAN, TRUCK }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vehicle_ID")
     private Integer vehicleId;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", nullable = false)
+    @Column(nullable = false)
     private VehicleType type;
 
-    @Column(name = "license_plate", nullable = false)
+    @Column(nullable = false)
     private String licensePlate;
 
-    @Column(name = "is_available")
-    private boolean available;
-
-    @Column(name = "is_used")
-    private boolean used;
-
-    @Column(name = "weight_limit")
     private Integer weightLimit;
-
-    @Column(name = "created_at")
+    private boolean available = true;
+    private boolean used = false;
     private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
-    protected void onCreate() {
+    void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
     }
 
     @PreUpdate
-    protected void onUpdate() {
+    void onUpdate() {
         updatedAt = LocalDateTime.now();
     }
 
-    public Integer getVehicleId() {
-        return vehicleId;
-    }
-
-    public VehicleType getType() {
-        return type;
-    }
-
-    public void setType(VehicleType type) {
-        this.type = type;
-    }
-
-    public String getLicensePlate() {
-        return licensePlate;
-    }
-
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public boolean isUsed() {
-        return used;
-    }
-
-    public void setUsed(boolean used) {
-        this.used = used;
-    }
-
-    public Integer getWeightLimit() {
-        return weightLimit;
-    }
-
-    public void setWeightLimit(Integer weightLimit) {
-        this.weightLimit = weightLimit;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-
+    // Getters & Setters
+    public Integer getVehicleId() { return vehicleId; }
+    public VehicleType getType() { return type; }
+    public void setType(VehicleType type) { this.type = type; }
+    public String getLicensePlate() { return licensePlate; }
+    public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
+    public Integer getWeightLimit() { return weightLimit; }
+    public void setWeightLimit(Integer weightLimit) { this.weightLimit = weightLimit; }
+    public boolean isAvailable() { return available; }
+    public void setAvailable(boolean available) { this.available = available; }
+    public boolean isUsed() { return used; }
+    public void setUsed(boolean used) { this.used = used; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+}
 
 //    (this was the vehicle that Nesma did )
 //    public void setUpdatedAt(LocalDateTime updatedAt) {
@@ -125,5 +71,5 @@ public class Vehicle {
 //        return vehicle_id;
 //    }
 
-}
+
 

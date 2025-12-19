@@ -28,7 +28,7 @@
                <children>
                   <ImageView fx:id="logo" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/logo.png" />
+                        <Image url="@../../../../../../../../../U_I/vechile/src/main/resources/org/noteam/nextclient/assets/logo.png" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="20.0" top="20.0" />
