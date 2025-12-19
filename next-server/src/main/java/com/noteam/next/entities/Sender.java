@@ -18,7 +18,7 @@ public class Sender {
     @Column(name ="name", nullable = false)
     private String name;
 
-    @Column(name ="name", nullable = false, unique = true) // Enforces the UNIQUE constraint
+    @Column(name ="socialSecurityNumber", nullable = false, unique = true) // Enforces the UNIQUE constraint
     private String socialSecurityNumber;
 
     @Column(name ="phone", nullable = false)
