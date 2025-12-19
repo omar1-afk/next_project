@@ -11,12 +11,6 @@ import org.noteam.nextclient.dto.ShipmentDetails;
 import org.noteam.nextclient.dto.State;
 import org.noteam.nextclient.scene.DataEntryWindow;
 
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -49,8 +43,17 @@ public class ShipmentController {
         LocalDateTime.now(),
         LocalDate.now() // Use LocalDate.now() here to match the record
     );
-    ArrayList<Order> orders = new ArrayList<>();
-    orders.add(order);
+    Order order2 = new Order(
+        1, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50, d, 1,
+        LocalDateTime.now(),
+        LocalDate.now() // Use LocalDate.now() here to match the record
+    );
+    ArrayList<Order> orders = new ArrayList<>() {
+      {
+        add(order);
+        add(order2);
+      }
+    };
     ShipmentDetails shipment = new ShipmentDetails(
         0,
         orders);

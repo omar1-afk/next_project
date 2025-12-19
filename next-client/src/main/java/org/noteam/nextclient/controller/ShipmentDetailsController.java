@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -23,6 +24,7 @@ public class ShipmentDetailsController {
 
   private ShipmentDetails shipmentDetails = new ShipmentDetails(
       0, new ArrayList<>());
+  private ArrayList<Order> backupOrders;
 
   public void setShipmentDetails(ShipmentDetails shipmentDetails) {
 
@@ -32,6 +34,10 @@ public class ShipmentDetailsController {
       weightColumn.setCellValueFactory(data -> data.getValue().weight().asObject());
       statusColumn.setCellValueFactory(data -> data.getValue().status());
       priceColumn.setCellValueFactory(data -> data.getValue().price().asObject());
+    }
+    if (this.backupOrders == null) {
+      this.backupOrders = new ArrayList<>();
+      this.backupOrders.addAll(shipmentDetails.orders());
     }
 
     this.shipmentDetails = shipmentDetails;
@@ -46,6 +52,32 @@ public class ShipmentDetailsController {
   private TableColumn<OrderDetails, String> statusColumn;
   @FXML
   private TableColumn<OrderDetails, Float> priceColumn;
+
+  @FXML
+  private CheckBox completedCheckbox;
+
+  @FXML
+  protected void filterCompleted() {
+    boolean isSelected = completedCheckbox.isSelected();
+    ArrayList<Order> orders = this.shipmentDetails.orders();
+    ArrayList<Order> result = new ArrayList<>();
+    if (isSelected) {
+      for (Order order : orders) {
+        switch (order.state()) {
+          case DELEVERED:
+            result.add(order);
+          default:
+            continue;
+        }
+      }
+    } else {
+      result = this.backupOrders;
+    }
+    this.shipmentDetails.orders().clear();
+    this.shipmentDetails.orders().addAll(result);
+    System.out.println(this.shipmentDetails.orders().size());
+    this.refresh();
+  }
 
   private void refresh() {
     Integer shipmentId = shipmentDetails.id();
@@ -80,7 +112,7 @@ public class ShipmentDetailsController {
 
   private ObservableList<OrderDetails> prepareOrders() {
     ArrayList<OrderDetails> orderDetailsList = new ArrayList<>();
-    for (Order order : shipmentDetails.orders()) {
+    for (Order order : this.shipmentDetails.orders()) {
       OrderDetails orderDetails = new OrderDetails(
           new SimpleStringProperty(
               "Order Id: " + order.id()),
