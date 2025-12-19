@@ -104,37 +104,6 @@ public class MainController implements Initializable {
   }
 
   @FXML
-  public void onDriversMouseEnter(MouseEvent event) {
-    if (!isTabActive(driversBG)) {
-      driversBG.setFill(Color.rgb(193, 191, 191));
-    }
-  }
-
-  @FXML
-  public void onDriversMouseExit(MouseEvent event) {
-    if (!isTabActive(driversBG)) {
-      driversBG.setFill(Color.rgb(217, 217, 217));
-    }
-  }
-
-  @FXML
-  public void onDriversClick() {
-    if (!isTabActive(driversBG)) {
-      deactivateAllTabs();
-      makeTabActive(driversBG, driversTabLabel);
-      driversIcon.setFill(Color.WHITE);
-      showDrivers();
-    }
-  }
-
-  @FXML
-  public void onShipmentsMouseEnter(MouseEvent event) {
-    if (!isTabActive(shipmentsBG)) {
-      shipmentsBG.setFill(Color.rgb(193, 191, 191));
-    }
-  }
-
-  @FXML
   public void onShipmentsMouseExit(MouseEvent event) {
     if (!isTabActive(shipmentsBG)) {
       shipmentsBG.setFill(Color.rgb(217, 217, 217));
