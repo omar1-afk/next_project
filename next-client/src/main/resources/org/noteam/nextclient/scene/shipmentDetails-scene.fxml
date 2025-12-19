@@ -6,9 +6,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <VBox minHeight="720.0" minWidth="1024.0" spacing="20" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.ShipmentDetailsController">
     
@@ -25,21 +25,35 @@
     <!-- Info Fields Row -->
     <HBox alignment="CENTER_LEFT" spacing="15">
         <!-- Vehicle -->
-        <VBox spacing="5" HBox.hgrow="ALWAYS">
+        <VBox maxWidth="300.0" minWidth="120.0" prefWidth="0.0" spacing="5" HBox.hgrow="ALWAYS">
             <Label style="-fx-font-size: 12px; -fx-text-fill: #666;" text="Vehicle" />
-         <TextField prefHeight="30.0" prefWidth="150.0" promptText="Type vehicle id " />
+         <Label fx:id="vehicleIdLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" style="-fx-background-color: #eee;" text="vehicle-id">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <padding>
+               <Insets bottom="8.0" top="8.0" />
+            </padding>
+         </Label>
         </VBox>
         
         <!-- Driver -->
-        <VBox spacing="5" HBox.hgrow="ALWAYS">
+        <VBox maxWidth="300.0" minWidth="120.0" spacing="5" HBox.hgrow="ALWAYS">
             <Label style="-fx-font-size: 12px; -fx-text-fill: #666;" text="Driver" />
-         <TextField prefHeight="30.0" prefWidth="150.0" promptText="Type driver id " />
+         <Label fx:id="driverIdLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" style="-fx-background-color: #eee;" text="driver-id">
+            <font>
+               <Font size="16.0" />
+            </font>
+            <padding>
+               <Insets bottom="8.0" top="8.0" />
+            </padding>
+         </Label>
         </VBox>
         
         <!-- Shipping Date -->
-        <VBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="102.0" spacing="5" HBox.hgrow="ALWAYS">
+        <VBox alignment="CENTER_LEFT" maxWidth="300.0" minWidth="120.0" prefHeight="52.0" prefWidth="102.0" spacing="5" HBox.hgrow="ALWAYS">
             <Label style="-fx-font-size: 12px; -fx-text-fill: #666;" text="Shipping date" />
-         <DatePicker prefHeight="28.0" prefWidth="240.0">
+         <DatePicker fx:id="datePicker" editable="true" prefHeight="28.0" prefWidth="240.0">
             <VBox.margin>
                <Insets />
             </VBox.margin>
@@ -48,7 +62,7 @@
         
               <!-- Completed Status -->
         <VBox alignment="BOTTOM_CENTER" spacing="5">
-         <CheckBox fx:id="completedCheckbox" mnemonicParsing="false" onAction="#filterCompleted" text="Completed" />
+         <CheckBox fx:id="completedCheckbox" mnemonicParsing="false" text="Completed" />
          <HBox.margin>
             <Insets right="36.0" />
          </HBox.margin>
@@ -64,9 +78,9 @@
         
         <TableView fx:id="ordersTable" editable="false" style="-fx-background-color: white; -fx-border-color: #e0e0e0;" VBox.vgrow="ALWAYS">
             <columns>
-               <TableColumn fx:id="idColumn" minWidth="120.0" prefWidth="420.0" text="Order details" />
+               <TableColumn fx:id="idColumn" minWidth="120.0" prefWidth="280.0" text="Order details" />
                 
-                <TableColumn fx:id="weightColumn" prefWidth="200.0" text="Weight" />
+                <TableColumn fx:id="weightColumn" prefWidth="120.0" text="Weight" />
 
             <!-- 
                 <TableColumn fx:id="dimensionsColumn" text="Dimensions" prefWidth="150">
@@ -75,9 +89,12 @@
                     </cellValueFactory>
                 </TableColumn>
                 -->
-                <TableColumn fx:id="statusColumn" prefWidth="280.0" text="Status" />
+                <TableColumn fx:id="statusColumn" prefWidth="120.0" text="Status" />
                 
-               <TableColumn fx:id="priceColumn" prefWidth="200.0" text="Price" />
+               <TableColumn fx:id="priceColumn" prefWidth="120.0" text="Price" />
+
+
+               <TableColumn fx:id="dateColumn" prefWidth="200.0" text="Shipping Date" />
             </columns>
         </TableView>
     </VBox>

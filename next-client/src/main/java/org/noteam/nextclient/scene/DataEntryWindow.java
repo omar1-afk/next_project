@@ -82,6 +82,7 @@ public class DataEntryWindow<T> {
    * Sets the content of this window
    */
   public DataEntryWindow<T> setContent(Region content) {
+    buttonBar.setVisible(false);
     contentArea.getChildren().clear();
     contentArea.getChildren().add(content);
     VBox.setVgrow(content, Priority.ALWAYS);

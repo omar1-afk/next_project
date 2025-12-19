@@ -39,7 +39,8 @@ public class ShipmentController {
         720);
     LocalDate d = LocalDate.of(2025, 12, 31);
     Order order = new Order(
-        0, "EG", "Alex", "Borg", "District", false, true, 100, State.PICKED, 50, d, 1,
+        0, "EG", "Alex", "Borg", "District", false, true, 100, State.PICKED, 50,
+        LocalDate.of(2025, 12, 24), 1,
         LocalDateTime.now(),
         LocalDate.now() // Use LocalDate.now() here to match the record
     );
@@ -48,10 +49,17 @@ public class ShipmentController {
         LocalDateTime.now(),
         LocalDate.now() // Use LocalDate.now() here to match the record
     );
+    Order order3 = new Order(
+        2, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50,
+        LocalDate.of(2025, 12, 24), 1,
+        LocalDateTime.now(),
+        LocalDate.now() // Use LocalDate.now() here to match the record
+    );
     ArrayList<Order> orders = new ArrayList<>() {
       {
         add(order);
         add(order2);
+        add(order3);
       }
     };
     ShipmentDetails shipment = new ShipmentDetails(
