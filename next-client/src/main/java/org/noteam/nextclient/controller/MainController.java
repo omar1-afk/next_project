@@ -29,6 +29,8 @@ public class MainController implements Initializable {
   @FXML
   private Rectangle driversBG;
   @FXML
+  private Rectangle driverPageBG;
+  @FXML
   private Rectangle shipmentsBG;
   @FXML
   private Rectangle settingsBG;
@@ -41,6 +43,8 @@ public class MainController implements Initializable {
   @FXML
   private Label driversTabLabel;
   @FXML
+  private Label driverPageTabLabel;
+  @FXML
   private Label settingsTabLabel;
   @FXML
   private SVGPath dashboardIcon;
@@ -50,6 +54,8 @@ public class MainController implements Initializable {
   private SVGPath shipmentsIcon;
   @FXML
   private SVGPath driversIcon;
+  @FXML
+  private SVGPath driverPageIcon;
   @FXML
   private SVGPath settingsIcon;
   @FXML
@@ -156,17 +162,50 @@ public class MainController implements Initializable {
 
   @FXML
   public void onDriversClick() {
-
+    if (!isTabActive(driversBG)) {
+      deactivateAllTabs();
+      makeTabActive(driversBG, driversTabLabel);
+      driversIcon.setStroke(Color.WHITE);
+      showDrivers();
+    }
   }
 
   @FXML
   public void onDriversMouseEnter() {
-
+    if (!isTabActive(driversBG)) {
+      driversBG.setFill(Color.rgb(193, 191, 191));
+    }
   }
 
   @FXML
   public void onDriversMouseExit() {
+    if (!isTabActive(driversBG)) {
+      driversBG.setFill(Color.rgb(217, 217, 217));
+    }
+  }
 
+  @FXML
+  public void onDriverPageClick() {
+    if (!isTabActive(driverPageBG)) {
+      deactivateAllTabs();
+      makeTabActive(driverPageBG, driverPageTabLabel);
+      driverPageIcon.setStroke(Color.WHITE);
+      showDriverPage();
+    }
+  }
+
+  @FXML
+  public void onDriverPageMouseEnter() {
+    if (!isTabActive(driverPageBG)) {
+      driverPageBG.setFill(Color.rgb(193, 191, 191));
+    }
+  }
+
+  @FXML
+  public void onDriverPageMouseExit() {
+    if (!isTabActive(driverPageBG)) {
+      driverPageBG.setFill(Color.rgb(217, 217, 217));
+    }
   }
 
   protected void makeTabActive(Rectangle tabBG, Label tabLabel) {
@@ -187,6 +226,9 @@ public class MainController implements Initializable {
     driversBG.setFill(Color.rgb(217, 217, 217));
     driversTabLabel.setTextFill(Color.rgb(36, 30, 30));
     driversIcon.setFill(Color.rgb(36, 30, 30));
+    driverPageBG.setFill(Color.rgb(217, 217, 217));
+    driverPageTabLabel.setTextFill(Color.rgb(36, 30, 30));
+    driverPageIcon.setFill(Color.rgb(36, 30, 30));
     settingsBG.setFill(Color.rgb(217, 217, 217));
     settingsTabLabel.setTextFill(Color.rgb(36, 30, 30));
     settingsIcon.setFill(Color.rgb(36, 30, 30));
@@ -227,6 +269,18 @@ public class MainController implements Initializable {
       FleetController fleetController = loader.getController();
       viewPane.getChildren().removeAll();
       viewPane.getChildren().add(fleetController.getFleetPane());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private void showDriverPage() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/driverPage-view.fxml"));
+      Parent root = loader.load();
+      DriverViewController driverController = loader.getController();
+      viewPane.getChildren().removeAll();
+      viewPane.getChildren().add(driverController.getDriverPane());
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
