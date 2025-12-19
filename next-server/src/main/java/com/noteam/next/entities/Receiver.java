@@ -23,7 +23,7 @@ public class Receiver {
     @Column(name ="email", nullable = false)
     private String email;
 
-    @Column(name="updated_at", nullable = false)
+    @Column(name="created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name="updatedAt", nullable = false)
