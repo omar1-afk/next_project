@@ -104,6 +104,13 @@ public class MainController implements Initializable {
   }
 
   @FXML
+  public void onShipmentsMouseEnter(MouseEvent event) {
+    if (!isTabActive(shipmentsBG)) {
+      shipmentsBG.setFill(Color.rgb(217, 217, 217));
+    }
+  }
+
+  @FXML
   public void onShipmentsMouseExit(MouseEvent event) {
     if (!isTabActive(shipmentsBG)) {
       shipmentsBG.setFill(Color.rgb(217, 217, 217));
@@ -145,6 +152,21 @@ public class MainController implements Initializable {
 
       // 4. Now this will work
     }
+  }
+
+  @FXML
+  public void onDriversClick() {
+
+  }
+
+  @FXML
+  public void onDriversMouseEnter() {
+
+  }
+
+  @FXML
+  public void onDriversMouseExit() {
+
   }
 
   protected void makeTabActive(Rectangle tabBG, Label tabLabel) {
