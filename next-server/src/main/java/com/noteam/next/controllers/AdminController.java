@@ -12,48 +12,46 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/api/v1/admin")
 public class AdminController {
-    private static final Logger logger = Logger.getLogger(AdminController.class.getName());
+  private static final Logger logger = Logger.getLogger(AdminController.class.getName());
 
-    @Autowired
-    private AdminServices adminService;
+  @Autowired
+  private AdminServices adminService;
 
-    @GetMapping
-    public ResponseEntity<Admin> getAdminById(@RequestParam int admin_id){
-        logger.info("Getting admin by id: " + admin_id);
+  @GetMapping
+  public ResponseEntity<Admin> getAdminById(@RequestParam int admin_id) {
+    logger.info("Getting admin by id: " + admin_id);
 
-        Optional<Admin> adminOptional = adminService.getAdminById(admin_id);
-        if(adminOptional.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
+    Optional<Admin> adminOptional = adminService.getAdminById(admin_id);
+    if (adminOptional.isEmpty())
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    else
+      return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
+  }
+
+  // @GetMapping
+  // public ResponseEntity<Admin> getAdminByEmail(@RequestParam String email){
+  // logger.info("Getting admin by email: " + email);
+  // Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
+
+  // if(adminOptional.isEmpty())
+  // return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+  // else
+  // return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
+  // }
+
+  @PostMapping("/login")
+  public ResponseEntity<Admin> loginAdmin(@RequestParam String email, @RequestParam String password) {
+    // find the Admin data that contains the following email
+    Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
+
+    if (adminOptional.isEmpty()) { // Admin was not found
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
-    @GetMapping
-    public ResponseEntity<Admin> getAdminByEmail(@RequestParam String email){
-        logger.info("Getting admin by email: " + email);
-        Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
-
-        if(adminOptional.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
+    if (!password.equals(adminOptional.get().getPassword())) { // check if the passwords don't match
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Admin> loginAdmin(@RequestParam String email, @RequestParam String password){
-        // find the Admin data that contains the following email
-        Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
-
-        if(adminOptional.isEmpty()){  // Admin was not found
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        if(!password.equals(adminOptional.get().getPassword())){ // check if the passwords don't match
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        return ResponseEntity.status(HttpStatus.OK).build();
-    }
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
 }
-
-

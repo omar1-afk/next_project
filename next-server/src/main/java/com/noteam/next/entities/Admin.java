@@ -2,12 +2,17 @@ package com.noteam.next.entities;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.noteam.next.models.User;
+import com.noteam.next.roles.AdminAuthority;
 
 @Entity
 @Table(name = "admins")
-public class Admin extends User {
+public class Admin implements User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer admin_id;
@@ -108,5 +113,22 @@ public class Admin extends User {
 
   public void setUpdated_at(LocalDateTime updated_at) {
     this.updated_at = updated_at;
+  }
+
+  public String getUsername() {
+    return email;
+  }
+
+  public Integer getId() {
+    return admin_id;
+  }
+
+  public void setId(int id) {
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    AdminAuthority employeeAuthority = new AdminAuthority();
+    return List.of(new AdminAuthority[] { employeeAuthority });
   }
 }

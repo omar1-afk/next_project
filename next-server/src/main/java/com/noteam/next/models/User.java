@@ -1,18 +1,14 @@
 package com.noteam.next.models;
 
 import com.noteam.next.roles.EmployeeAuthority;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
-public class User implements UserDetails {
-  private long id;
-  private String email;
-  private String password;
-  private boolean isGenerated;
-
+public interface User extends UserDetails {
   // WARNING: Remove password field
   // public User(long id, String email, String password) {
   // this.id = id;
@@ -22,32 +18,18 @@ public class User implements UserDetails {
   // }
 
   @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    EmployeeAuthority employeeAuthority = new EmployeeAuthority();
-    return List.of(new EmployeeAuthority[] { employeeAuthority });
-  }
+  public Collection<? extends GrantedAuthority> getAuthorities();
 
-  public Long getId() {
-    return id;
-  }
+  public Integer getId();
 
-  public void setId(long id) {
-    this.id = id;
-    isGenerated = true;
-  }
+  public void setId(int id);
 
   @Override
-  public String getPassword() {
-    return password;
-  }
+  public String getPassword();
 
   @Override
-  public String getUsername() {
-    return email;
-  }
+  public String getUsername();
 
-  public String getEmail() {
-    return email;
-  }
+  public String getEmail();
 
 }

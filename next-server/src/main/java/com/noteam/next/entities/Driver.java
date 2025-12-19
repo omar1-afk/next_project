@@ -3,12 +3,17 @@ package com.noteam.next.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import com.noteam.next.models.User;
+import com.noteam.next.roles.EmployeeAuthority;
 
 @Entity
 @Table(name = "drivers")
-public class Driver extends User {
+public class Driver implements User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer driver_id;
@@ -119,5 +124,22 @@ public class Driver extends User {
 
   public void setUpdated_at(LocalDateTime updated_at) {
     this.updated_at = updated_at;
+  }
+
+  public String getUsername() {
+    return email;
+  }
+
+  public Integer getId() {
+    return driver_id;
+  }
+
+  public void setId(int id) {
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    EmployeeAuthority employeeAuthority = new EmployeeAuthority();
+    return List.of(new EmployeeAuthority[] { employeeAuthority });
   }
 }
