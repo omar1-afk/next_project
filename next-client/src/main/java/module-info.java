@@ -8,6 +8,7 @@ module org.noteam.nextclient {
   requires spring.web;
   requires reactor.core;
   requires org.reactivestreams;
+  requires javafx.graphics;
 
   opens org.noteam.nextclient to javafx.fxml;
 
