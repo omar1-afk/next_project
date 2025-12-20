@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="orderPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.OrderController">
+   <top>
+      <VBox>
+         <children>
+            <HBox style="-fx-border-color: transparent transparent #D4D4D4 transparent; -fx-border-width: 0 0 0.5 0;" styleClass="titleView">
+               <children>
+                  <Label text="Dashboard" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="21.0" left="24.0" top="21.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="SansSerif Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
+                  <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Button id="sync-button" fx:id="syncOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" styleClass="sync-button" text="Sync orders" textFill="#232323" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M6.44583 9.33333C5.14306 9.33333 4.03472 8.88125 3.12083 7.97708C2.20694 7.07292 1.75 5.96944 1.75 4.66667V4.56458L0.816667 5.49792L0 4.68125L2.33333 2.34792L4.66667 4.68125L3.85 5.49792L2.91667 4.56458V4.66667C2.91667 5.63889 3.25938 6.46528 3.94479 7.14583C4.63021 7.82639 5.46389 8.16667 6.44583 8.16667C6.69861 8.16667 6.94653 8.1375 7.18958 8.07917C7.43264 8.02083 7.67083 7.93333 7.90417 7.81667L8.77917 8.69167C8.40972 8.90556 8.03056 9.06597 7.64167 9.17292C7.25278 9.27986 6.85417 9.33333 6.44583 9.33333ZM10.5 6.98542L8.16667 4.65208L8.98333 3.83542L9.91667 4.76875V4.66667C9.91667 3.69444 9.57396 2.86806 8.88854 2.1875C8.20313 1.50694 7.36944 1.16667 6.3875 1.16667C6.13472 1.16667 5.88681 1.19583 5.64375 1.25417C5.40069 1.3125 5.1625 1.4 4.92917 1.51667L4.05417 0.641667C4.42361 0.427778 4.80278 0.267361 5.19167 0.160417C5.58056 0.0534722 5.97917 0 6.3875 0C7.69028 0 8.79861 0.452083 9.7125 1.35625C10.6264 2.26042 11.0833 3.36389 11.0833 4.66667V4.76875L12.0167 3.83542L12.8333 4.65208L10.5 6.98542Z" fill="#232323" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="createOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" onMouseEntered="#onCreateOrderBtnMouseEnter" onMouseExited="#onCreateOrderBtnMouseExit" styleClass="create-button" text="Create order" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath fx:id="cerateOrderIcon" content="M6.41663 7.58317H2.91663V6.4165H6.41663V2.9165H7.58329V6.4165H11.0833V7.58317H7.58329V11.0832H6.41663V7.58317Z" fill="WHITE" stroke="WHITE" strokeWidth="0.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="15.5" right="24.0" top="15.5" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox maxWidth="3000.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="19.0">
+               <children>
+                  <Label fx:id="orderNumLabel" text="14 orders">
+                     <font>
+                        <Font name="SansSerif Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <AnchorPane>
+                     <children>
+                        <TextField fx:id="searchFeild" onKeyTyped="#onSearchFeildKeyTyped" promptText="Search for order ID" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField">
+                           <padding>
+                              <Insets bottom="7.0" left="30.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
+                        </TextField>
+                        <AnchorPane prefHeight="14.0" prefWidth="14.0" AnchorPane.bottomAnchor="8.799999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="8.79999">
+                           <children>
+                              <SVGPath content="M11.4333 12.25L7.75833 8.575C7.46667 8.80833 7.13125 8.99306 6.75208 9.12917C6.37292 9.26528 5.96944 9.33333 5.54167 9.33333C4.48194 9.33333 3.58507 8.96632 2.85104 8.23229C2.11701 7.49826 1.75 6.60139 1.75 5.54167C1.75 4.48194 2.11701 3.58507 2.85104 2.85104C3.58507 2.11701 4.48194 1.75 5.54167 1.75C6.60139 1.75 7.49826 2.11701 8.23229 2.85104C8.96632 3.58507 9.33333 4.48194 9.33333 5.54167C9.33333 5.96944 9.26528 6.37292 9.12917 6.75208C8.99306 7.13125 8.80833 7.46667 8.575 7.75833L12.25 11.4333L11.4333 12.25ZM5.54167 8.16667C6.27083 8.16667 6.89062 7.91146 7.40104 7.40104C7.91146 6.89062 8.16667 6.27083 8.16667 5.54167C8.16667 4.8125 7.91146 4.19271 7.40104 3.68229C6.89062 3.17188 6.27083 2.91667 5.54167 2.91667C4.8125 2.91667 4.19271 3.17188 3.68229 3.68229C3.17188 4.19271 2.91667 4.8125 2.91667 5.54167C2.91667 6.27083 3.17188 6.89062 3.68229 7.40104C4.19271 7.91146 4.8125 8.16667 5.54167 8.16667Z" scaleX="1.3" scaleY="1.3" AnchorPane.bottomAnchor="3.099999999999998" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="28.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox spacing="8.0">
+               <children>
+                  <AnchorPane fx:id="allPane" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px;">
+                     <children>
+                        <Label onMouseClicked="#getAllOrders" style="-fx-font-weight: 700;" text="All">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="pickedPane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label onMouseClicked="#getPickedOrders" style="-fx-font-weight: 700;" text="Picked">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="packagingPane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label layoutX="1.0" onMouseClicked="#getPackagingOrders" style="-fx-font-weight: 700;" text="Packaging">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="shippingPane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label onMouseClicked="#getShippingOrders" style="-fx-font-weight: 700;" text="Shipping">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="deliveredPane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label onMouseClicked="#getDeliveredOrders" style="-fx-font-weight: 700;" text="Delivered">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="returnedPane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label onMouseClicked="#getReturnedOrders" style="-fx-font-weight: 700;" text="Returned">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TableView fx:id="orderTable" maxWidth="3000.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="orderIdCol" editable="false" minWidth="100.0" prefWidth="110.0" resizable="false" styleClass="order-id-cell" text="Order ID">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M0 9.33333V7.7C0 7.36944 0.0850694 7.06562 0.255208 6.78854C0.425347 6.51146 0.651389 6.3 0.933333 6.15417C1.53611 5.85278 2.14861 5.62674 2.77083 5.47604C3.39306 5.32535 4.025 5.25 4.66667 5.25C5.30833 5.25 5.94028 5.32535 6.5625 5.47604C7.18472 5.62674 7.79722 5.85278 8.4 6.15417C8.68194 6.3 8.90799 6.51146 9.07812 6.78854C9.24826 7.06562 9.33333 7.36944 9.33333 7.7V9.33333H0ZM10.5 9.33333V7.58333C10.5 7.15556 10.3809 6.74479 10.1427 6.35104C9.90451 5.95729 9.56667 5.61944 9.12917 5.3375C9.625 5.39583 10.0917 5.49549 10.5292 5.63646C10.9667 5.77743 11.375 5.95 11.7542 6.15417C12.1042 6.34861 12.3715 6.56493 12.5562 6.80312C12.741 7.04132 12.8333 7.30139 12.8333 7.58333V9.33333H10.5ZM4.66667 4.66667C4.025 4.66667 3.47569 4.43819 3.01875 3.98125C2.56181 3.52431 2.33333 2.975 2.33333 2.33333C2.33333 1.69167 2.56181 1.14236 3.01875 0.685417C3.47569 0.228472 4.025 0 4.66667 0C5.30833 0 5.85764 0.228472 6.31458 0.685417C6.77153 1.14236 7 1.69167 7 2.33333C7 2.975 6.77153 3.52431 6.31458 3.98125C5.85764 4.43819 5.30833 4.66667 4.66667 4.66667ZM10.5 2.33333C10.5 2.975 10.2715 3.52431 9.81458 3.98125C9.35764 4.43819 8.80833 4.66667 8.16667 4.66667C8.05972 4.66667 7.92361 4.65451 7.75833 4.63021C7.59306 4.6059 7.45694 4.57917 7.35 4.55C7.6125 4.23889 7.81424 3.89375 7.95521 3.51458C8.09618 3.13542 8.16667 2.74167 8.16667 2.33333C8.16667 1.925 8.09618 1.53125 7.95521 1.15208C7.81424 0.772917 7.6125 0.427778 7.35 0.116667C7.48611 0.0680556 7.62222 0.0364583 7.75833 0.021875C7.89444 0.00729167 8.03056 0 8.16667 0C8.80833 0 9.35764 0.228472 9.81458 0.685417C10.2715 1.14236 10.5 1.69167 10.5 2.33333Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="weightCol" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" styleClass="weight-cell" text="Weight">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M7.00002 4.08333C7.1653 4.08333 7.30384 4.02743 7.41565 3.91563C7.52745 3.80382 7.58335 3.66528 7.58335 3.5C7.58335 3.33472 7.52745 3.19618 7.41565 3.08438C7.30384 2.97257 7.1653 2.91667 7.00002 2.91667C6.83474 2.91667 6.6962 2.97257 6.5844 3.08438C6.47259 3.19618 6.41669 3.33472 6.41669 3.5C6.41669 3.66528 6.47259 3.80382 6.5844 3.91563C6.6962 4.02743 6.83474 4.08333 7.00002 4.08333ZM8.64794 4.08333H9.66877C9.96044 4.08333 10.2132 4.18056 10.4271 4.375C10.641 4.56944 10.7722 4.80764 10.8209 5.08958L11.6521 10.9229C11.7007 11.2729 11.6108 11.5816 11.3823 11.849C11.1538 12.1163 10.8597 12.25 10.5 12.25H3.50002C3.1403 12.25 2.8462 12.1163 2.61773 11.849C2.38926 11.5816 2.29933 11.2729 2.34794 10.9229L3.17919 5.08958C3.2278 4.80764 3.35905 4.56944 3.57294 4.375C3.78683 4.18056 4.0396 4.08333 4.33127 4.08333H5.3521C5.32294 3.98611 5.29863 3.89132 5.27919 3.79896C5.25974 3.7066 5.25002 3.60694 5.25002 3.5C5.25002 3.01389 5.42016 2.60069 5.76044 2.26042C6.10071 1.92014 6.51391 1.75 7.00002 1.75C7.48613 1.75 7.89933 1.92014 8.2396 2.26042C8.57988 2.60069 8.75002 3.01389 8.75002 3.5C8.75002 3.60694 8.7403 3.7066 8.72085 3.79896C8.70141 3.89132 8.6771 3.98611 8.64794 4.08333Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="cityCol" minWidth="80.0" prefWidth="162.0" resizable="false" styleClass="city-cell" text="City">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M1.96973 5.94998V5.08998C1.96973 2.46998 3.91973 1.27998 6.30973 2.44998L10.7497 4.62998C11.7097 5.09998 12.4997 6.34998 12.4997 7.40998V22H4.07973C2.91973 22 1.96973 21.07 1.96973 19.93V10.02 M21.97 15.06V18.84C21.97 21 20.97 22 18.81 22H12.5V10.42L12.97 10.52L17.47 11.53L19.5 11.98C20.82 12.27 21.9 12.95 21.96 14.87C21.97 14.93 21.97 14.99 21.97 15.06Z M5.5 9H8.97 M5.5 13H8.97 M17.4697 11.53V14.75C17.4697 15.99 16.4597 17 15.2197 17C13.9797 17 12.9697 15.99 12.9697 14.75V10.52L17.4697 11.53Z M21.9597 14.87C21.8997 16.05 20.9197 17 19.7197 17C18.4797 17 17.4697 15.99 17.4697 14.75V11.53L19.4997 11.98C20.8197 12.27 21.8997 12.95 21.9597 14.87Z" fill="#73737300" scaleX="0.8" scaleY="0.8" stroke="#747474" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="priceCol" editable="false" minWidth="80.0" prefWidth="147.0" resizable="false" styleClass="price-cell" text="Price">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M5.30775 20.5C4.80908 20.5 4.38308 20.3234 4.02975 19.9703C3.67658 19.6169 3.5 19.1909 3.5 18.6923V5.30775C3.5 4.80908 3.67658 4.38308 4.02975 4.02975C4.38308 3.67658 4.80908 3.5 5.30775 3.5H18.6923C19.1909 3.5 19.6169 3.67658 19.9703 4.02975C20.3234 4.38308 20.5 4.80908 20.5 5.30775V8.029H19V5.30775C19 5.21792 18.9712 5.14417 18.9135 5.0865C18.8558 5.02883 18.7821 5 18.6923 5H5.30775C5.21792 5 5.14417 5.02883 5.0865 5.0865C5.02883 5.14417 5 5.21792 5 5.30775V18.6923C5 18.7821 5.02883 18.8558 5.0865 18.9135C5.14417 18.9712 5.21792 19 5.30775 19H18.6923C18.7821 19 18.8558 18.9712 18.9135 18.9135C18.9712 18.8558 19 18.7821 19 18.6923V15.971H20.5V18.6923C20.5 19.1909 20.3234 19.6169 19.9703 19.9703C19.6169 20.3234 19.1909 20.5 18.6923 20.5H5.30775ZM13.3077 16.5C12.8091 16.5 12.3831 16.3234 12.0297 15.9703C11.6766 15.6169 11.5 15.1909 11.5 14.6923V9.30775C11.5 8.80908 11.6766 8.38308 12.0297 8.02975C12.3831 7.67658 12.8091 7.5 13.3077 7.5H19.6923C20.1909 7.5 20.6169 7.67658 20.9703 8.02975C21.3234 8.38308 21.5 8.80908 21.5 9.30775V14.6923C21.5 15.1909 21.3234 15.6169 20.9703 15.9703C20.6169 16.3234 20.1909 16.5 19.6923 16.5H13.3077ZM19.6923 15C19.7821 15 19.8558 14.9712 19.9135 14.9135C19.9712 14.8558 20 14.7821 20 14.6923V9.30775C20 9.21792 19.9712 9.14417 19.9135 9.0865C19.8558 9.02883 19.7821 9 19.6923 9H13.3077C13.2179 9 13.1442 9.02883 13.0865 9.0865C13.0288 9.14417 13 9.21792 13 9.30775V14.6923C13 14.7821 13.0288 14.8558 13.0865 14.9135C13.1442 14.9712 13.2179 15 13.3077 15H19.6923ZM16 13.5C16.4167 13.5 16.7708 13.3542 17.0625 13.0625C17.3542 12.7708 17.5 12.4167 17.5 12C17.5 11.5833 17.3542 11.2292 17.0625 10.9375C16.7708 10.6458 16.4167 10.5 16 10.5C15.5833 10.5 15.2292 10.6458 14.9375 10.9375C14.6458 11.2292 14.5 11.5833 14.5 12C14.5 12.4167 14.6458 12.7708 14.9375 13.0625C15.2292 13.3542 15.5833 13.5 16 13.5Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="shipmentCol" minWidth="100.0" prefWidth="185.0" resizable="false" styleClass="shipment-cell" text="Shipment">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M14.0001 24.5V15.1667M14.0001 24.5L5.60675 19.2542C5.14723 18.967 4.91746 18.8234 4.79211 18.5972C4.66675 18.371 4.66675 18.1001 4.66675 17.5582V9.33333M14.0001 24.5L18.6667 21.5833L22.3934 19.2542C22.8529 18.967 23.0827 18.8234 23.2081 18.5972C23.3334 18.371 23.3334 18.1001 23.3334 17.5582V9.33333M14.0001 15.1667L4.66675 9.33333M14.0001 15.1667L23.3334 9.33333M4.66675 9.33333L12.9401 4.1625C13.4556 3.84033 13.7133 3.67925 14.0001 3.67925C14.2869 3.67925 14.5446 3.84033 15.0601 4.1625L23.3334 9.33333 M17.6666 16.9165C17.6666 17.4688 18.1143 17.9165 18.6666 17.9165C19.2189 17.9165 19.6666 17.4688 19.6666 16.9165H18.6666H17.6666ZM18.5412 12.3193L19.4159 11.8345L18.5412 12.3193ZM9.33325 6.4165L8.80325 7.2645L17.1966 12.5103L17.7266 11.6623L18.2566 10.8143L9.86325 5.56851L9.33325 6.4165ZM18.6666 16.9165H19.6666V13.3583H18.6666H17.6666V16.9165H18.6666ZM17.7266 11.6623L17.1966 12.5103C17.4423 12.6639 17.567 12.7431 17.6508 12.8074C17.7178 12.8587 17.6936 12.8528 17.6666 12.8041L18.5412 12.3193L19.4159 11.8345C19.2635 11.5597 19.0617 11.3689 18.8676 11.2201C18.6904 11.0842 18.4704 10.948 18.2566 10.8143L17.7266 11.6623ZM18.6666 13.3583H19.6666C19.6666 13.1062 19.6676 12.8474 19.6464 12.6252C19.6231 12.3817 19.5682 12.1094 19.4159 11.8345L18.5412 12.3193L17.6666 12.8041C17.6396 12.7554 17.6474 12.7317 17.6555 12.8157C17.6655 12.9209 17.6666 13.0686 17.6666 13.3583H18.6666Z" fill="#73737300" scaleX="0.7" scaleY="0.7" stroke="#737373" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="statusCol" editable="false" minWidth="80.0" prefWidth="150.0" resizable="false" styleClass="status-cell" text="Status">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M5.25 12.25C4.60833 12.25 4.05903 12.0215 3.60208 11.5646C3.14514 11.1076 2.91667 10.5583 2.91667 9.91667V5.14792C2.57639 5.02153 2.29688 4.81007 2.07812 4.51354C1.85938 4.21701 1.75 3.87917 1.75 3.5C1.75 3.01389 1.92014 2.60069 2.26042 2.26042C2.60069 1.92014 3.01389 1.75 3.5 1.75C3.98611 1.75 4.39931 1.92014 4.73958 2.26042C5.07986 2.60069 5.25 3.01389 5.25 3.5C5.25 3.87917 5.14062 4.21701 4.92188 4.51354C4.70312 4.81007 4.42361 5.02153 4.08333 5.14792V9.91667C4.08333 10.2375 4.19757 10.5122 4.42604 10.7406C4.65451 10.9691 4.92917 11.0833 5.25 11.0833C5.57083 11.0833 5.84549 10.9691 6.07396 10.7406C6.30243 10.5122 6.41667 10.2375 6.41667 9.91667V4.08333C6.41667 3.44167 6.64514 2.89236 7.10208 2.43542C7.55903 1.97847 8.10833 1.75 8.75 1.75C9.39167 1.75 9.94097 1.97847 10.3979 2.43542C10.8549 2.89236 11.0833 3.44167 11.0833 4.08333V8.85208C11.4236 8.97847 11.7031 9.18993 11.9219 9.48646C12.1406 9.78299 12.25 10.1208 12.25 10.5C12.25 10.9861 12.0799 11.3993 11.7396 11.7396C11.3993 12.0799 10.9861 12.25 10.5 12.25C10.0139 12.25 9.60069 12.0799 9.26042 11.7396C8.92014 11.3993 8.75 10.9861 8.75 10.5C8.75 10.1208 8.85937 9.78056 9.07812 9.47917C9.29687 9.17778 9.57639 8.96875 9.91667 8.85208V4.08333C9.91667 3.7625 9.80243 3.48785 9.57396 3.25937C9.34549 3.0309 9.07083 2.91667 8.75 2.91667C8.42917 2.91667 8.15451 3.0309 7.92604 3.25937C7.69757 3.48785 7.58333 3.7625 7.58333 4.08333V9.91667C7.58333 10.5583 7.35486 11.1076 6.89792 11.5646C6.44097 12.0215 5.89167 12.25 5.25 12.25Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="createdAtCol" editable="false" minWidth="120.0" prefWidth="160.0" resizable="false" styleClass="created-at-cell" text="Created at">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z" fill="#73737300" stroke="#747474" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                     </columns>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets top="27.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="24.0" right="24.0" top="24.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
