@@ -238,6 +238,6 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/noteam/nextclient/assets/105.png")));
         imageClipCircle.setFill(new ImagePattern(image));
-        showOrders();;
+        showOrders();
     }
 }
