@@ -15,7 +15,7 @@ import com.noteam.next.roles.AdminAuthority;
 public class Admin implements User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer admin_id;
+  private Integer id;
 
   @Column(name = "name", nullable = false)
   private String name;
@@ -35,15 +35,15 @@ public class Admin implements User {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(nullable = false, name = "created_at")
+  @Column(nullable = false, name = "created_at", insertable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
   private LocalDateTime created_at;
 
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)")
   private LocalDateTime updated_at;
 
-  public Integer getAdmin_id() {
-    return admin_id;
-  }
+  // public Integer getAdmin_id() {
+  // return id;
+  // }
 
   //
   // public void setAdmin_id(Integer admin_id) { (we don't need to set the admin
@@ -120,10 +120,7 @@ public class Admin implements User {
   }
 
   public Integer getId() {
-    return admin_id;
-  }
-
-  public void setId(int id) {
+    return id;
   }
 
   @Override

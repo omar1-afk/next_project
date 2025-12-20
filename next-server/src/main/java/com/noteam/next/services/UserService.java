@@ -7,13 +7,9 @@ import com.noteam.next.entities.Driver;
 import com.noteam.next.models.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -59,6 +55,10 @@ public class UserService {
       return Optional.of(driver.get());
     }
     return Optional.empty();
+  }
+
+  public Admin createAdmin(Admin admin) {
+    return adminRepo.save(admin);
   }
 
   // public User createUser(User user) {

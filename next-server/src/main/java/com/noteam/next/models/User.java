@@ -22,8 +22,6 @@ public interface User extends UserDetails {
 
   public Integer getId();
 
-  public void setId(int id);
-
   @Override
   public String getPassword();
 

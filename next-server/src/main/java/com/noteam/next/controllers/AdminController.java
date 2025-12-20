@@ -2,6 +2,9 @@ package com.noteam.next.controllers;
 
 import com.noteam.next.entities.Admin;
 import com.noteam.next.services.AdminServices;
+import com.noteam.next.services.AuthService;
+import com.noteam.next.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,9 @@ public class AdminController {
 
   @Autowired
   private AdminServices adminService;
+
+  @Autowired
+  private UserService userService;
 
   @GetMapping
   public ResponseEntity<Admin> getAdminById(@RequestParam int admin_id) {
@@ -54,4 +60,16 @@ public class AdminController {
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
+
+  @PostMapping
+  public ResponseEntity<Admin> createAdmin(@RequestBody Admin admin) {
+    try {
+      logger.info("Creating New Admin");
+      Admin newAdmin = userService.createAdmin(admin);
+      return ResponseEntity.status(HttpStatus.OK).body(newAdmin);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+  }
+
 }
