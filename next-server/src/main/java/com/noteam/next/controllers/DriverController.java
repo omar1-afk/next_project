@@ -29,16 +29,16 @@ public class DriverController {
       return ResponseEntity.status(HttpStatus.OK).body(driverOptional.get());
   }
 
-  // @GetMapping
-  // public ResponseEntity<Driver> getDriverByEmail(@RequestParam String email){
-  // logger.info("Getting driver by email: " + email);
-  // Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
+  @GetMapping("/email/{email}")
+  public ResponseEntity<Driver> getDriverByEmail(@RequestParam String email) {
+    logger.info("Getting driver by email: " + email);
+    Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
 
-  // if(driverOptional.isEmpty())
-  // return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-  // else
-  // return ResponseEntity.status(HttpStatus.OK).body(driverOptional.get());
-  // }
+    if (driverOptional.isEmpty())
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    else
+      return ResponseEntity.status(HttpStatus.OK).body(driverOptional.get());
+  }
 
   @GetMapping("/all")
   ResponseEntity<List<Driver>> getAllDrivers(
@@ -87,16 +87,20 @@ public class DriverController {
 
   @PostMapping
   public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
-    logger.info("Creating New Driver");
-    Driver newDriver = driverService.createdriver(
-        driver.getName(),
-        driver.getAge(),
-        driver.getEmail(),
-        driver.getPassword(),
-        driver.getSocial_security_number(),
-        driver.getImage(),
-        driver.getIsbusy());
-    return ResponseEntity.status(HttpStatus.OK).body(newDriver);
+    try {
+      logger.info("Creating New Driver");
+      Driver newDriver = driverService.createdriver(
+          driver.getName(),
+          driver.getAge(),
+          driver.getEmail(),
+          driver.getPassword(),
+          driver.getSocial_security_number(),
+          driver.getImage(),
+          driver.getIsbusy());
+      return ResponseEntity.status(HttpStatus.OK).body(newDriver);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
   }
 
   @PutMapping("/{id}")

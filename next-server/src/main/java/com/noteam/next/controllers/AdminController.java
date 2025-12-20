@@ -28,16 +28,16 @@ public class AdminController {
       return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
   }
 
-  // @GetMapping
-  // public ResponseEntity<Admin> getAdminByEmail(@RequestParam String email){
-  // logger.info("Getting admin by email: " + email);
-  // Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
+  @GetMapping("/email/{email}")
+  public ResponseEntity<Admin> getAdminByEmail(@RequestParam String email) {
+    logger.info("Getting admin by email: " + email);
+    Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
 
-  // if(adminOptional.isEmpty())
-  // return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-  // else
-  // return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
-  // }
+    if (adminOptional.isEmpty())
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    else
+      return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
+  }
 
   @PostMapping("/login")
   public ResponseEntity<Admin> loginAdmin(@RequestParam String email, @RequestParam String password) {

@@ -6,6 +6,5 @@ import java.time.LocalDateTime;
 public record Order(int id, String country, String city, String region
         , String address, boolean flameable, boolean breakable
         , int price, State state, int weight, LocalDate shippingDate
-        //, Shipment shipment, Receiver receiver, Sender sender
-        , int boxesCount, LocalDateTime createdAt, LocalDate updatedAt) {
-}
+        , int shipment, int receiver, int sender
+        , int boxesCount, LocalDateTime createdAt, LocalDate updatedAt) {}
