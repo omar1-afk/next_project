@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "vehicles")
+@Table(
+        name = "vehicles",
+        uniqueConstraints = @UniqueConstraint(columnNames = "licensePlate")
+)
 public class Vehicle {
 
     public enum VehicleType { VAN, TRUCK }
@@ -17,13 +20,19 @@ public class Vehicle {
     @Column(nullable = false)
     private VehicleType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String licensePlate;
 
+    @Column(nullable = false)
     private Integer weightLimit;
+
     private boolean available = true;
     private boolean used = false;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -37,21 +46,30 @@ public class Vehicle {
         updatedAt = LocalDateTime.now();
     }
 
-    // Getters & Setters
+    // ===== Getters & Setters =====
     public Integer getVehicleId() { return vehicleId; }
+
     public VehicleType getType() { return type; }
     public void setType(VehicleType type) { this.type = type; }
+
     public String getLicensePlate() { return licensePlate; }
     public void setLicensePlate(String licensePlate) { this.licensePlate = licensePlate; }
+
     public Integer getWeightLimit() { return weightLimit; }
     public void setWeightLimit(Integer weightLimit) { this.weightLimit = weightLimit; }
+
     public boolean isAvailable() { return available; }
     public void setAvailable(boolean available) { this.available = available; }
+
     public boolean isUsed() { return used; }
     public void setUsed(boolean used) { this.used = used; }
+
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 }
+
+
+
 
 //    (this was the vehicle that Nesma did )
 //    public void setUpdatedAt(LocalDateTime updatedAt) {

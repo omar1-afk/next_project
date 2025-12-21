@@ -20,7 +20,6 @@
                      -fx-border-width: 0 0 0.5 0;"
               styleClass="titleView">
 
-            <!-- Fleets -->
             <Label text="Fleets">
                 <font>
                     <Font name="SansSerif Bold" size="14"/>
@@ -29,7 +28,6 @@
 
             <Pane HBox.hgrow="ALWAYS"/>
 
-            <!-- Add car -->
             <Button fx:id="addCarButton"
                     text="+ Add car"
                     mnemonicParsing="false"
@@ -60,10 +58,9 @@
                     <Insets top="24" left="24" right="24"/>
                 </padding>
 
-                <!-- ===== 2 cars + Search (نفس السطر) ===== -->
                 <HBox alignment="CENTER_LEFT" spacing="19">
 
-                    <Label fx:id="fleetCountLabel" text="2 cars">
+                    <Label fx:id="fleetCountLabel" text="0 cars">
                         <font>
                             <Font name="SansSerif Bold" size="14"/>
                         </font>
@@ -103,7 +100,6 @@
 
                 </HBox>
 
-                <!-- ===== Status ===== -->
                 <HBox spacing="8">
                     <AnchorPane fx:id="allPane"
                                 style="-fx-background-color:#F1F1F1;-fx-background-radius:8;">
@@ -131,7 +127,6 @@
                     </AnchorPane>
                 </HBox>
 
-                <!-- ===== Table ===== -->
                 <TableView fx:id="fleetTable"
                            maxWidth="3000"
                            style="-fx-background-color:transparent;
@@ -148,7 +143,6 @@
 
             </VBox>
 
-            <!-- ========= ADD VEHICLE FORM ========= -->
             <VBox fx:id="addVehicleForm"
                   visible="false"
                   prefWidth="360"
@@ -170,12 +164,12 @@
 
                 <VBox spacing="6">
                     <Label text="Type"/>
-                    <TextField fx:id="typeField" promptText="truck"/>
+                    <TextField fx:id="typeField" promptText="TRUCK or VAN"/>
                 </VBox>
 
                 <VBox spacing="6">
                     <Label text="Weight limit"/>
-                    <TextField fx:id="weightField" promptText="500 kg"/>
+                    <TextField fx:id="weightField" promptText="500"/>
                 </VBox>
 
                 <VBox spacing="6">
@@ -183,7 +177,7 @@
                     <TextField fx:id="plateField"/>
                 </VBox>
 
-                <Button text="+  Add vehicle"
+                <Button text="+ Add vehicle"
                         onAction="#onAddVehicle"
                         prefHeight="40"
                         style="-fx-background-color:black;

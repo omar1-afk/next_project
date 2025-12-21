@@ -89,6 +89,7 @@ public class Receiver {
     }
 }
 
+
 //Men3em test
 //@Entity
 //@Table(name = "receivers")
