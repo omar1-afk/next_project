@@ -22,60 +22,60 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 public class ShipmentController {
-  @FXML
-  private BorderPane shipmentPane;
+    @FXML
+    private BorderPane shipmentPane;
 
-  public BorderPane getShipmentPane() {
-    return shipmentPane;
-  }
+    public BorderPane getShipmentPane() {
+        return shipmentPane;
+    }
 
-  @FXML
-  private Button openPopUp;
+    @FXML
+    private Button openPopUp;
 
-  @FXML
-  protected void showPopUp(ActionEvent e) throws IOException {
-    DataEntryWindow window = new DataEntryWindow<>("Total", (Stage) ((Node) e.getSource()).getScene().getWindow(),
-        1280,
-        720);
-    LocalDate d = LocalDate.of(2025, 12, 31);
-    Order order = new Order(
-        0, "EG", "Alex", "Borg", "District", false, true, 100, State.PICKED, 50,
-        LocalDate.of(2025, 12, 24), 1,1,2,
-        LocalDateTime.now(),
-        LocalDate.now() // Use LocalDate.now() here to match the record
-    );
-    Order order2 = new Order(
-        1, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50, d, 1,
-        LocalDateTime.now(),
-        LocalDate.now() // Use LocalDate.now() here to match the record
-    );
-    Order order3 = new Order(
-        2, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50,
-        LocalDate.of(2025, 12, 24), 1,
-        LocalDateTime.now(),
-        LocalDate.now() // Use LocalDate.now() here to match the record
-    );
-    ArrayList<Order> orders = new ArrayList<>() {
-      {
-        add(order);
-        add(order2);
-        add(order3);
-      }
-    };
-    ShipmentDetails shipment = new ShipmentDetails(
-        0,
-        orders);
-    FXMLLoader loader = new FXMLLoader(
-        getClass().getResource("/org/noteam/nextclient/scene/shipmentDetails-scene.fxml"));
+    @FXML
+    protected void showPopUp(ActionEvent e) throws IOException {
+        DataEntryWindow window = new DataEntryWindow<>("Total", (Stage) ((Node) e.getSource()).getScene().getWindow(),
+                1280,
+                720);
+        LocalDate d = LocalDate.of(2025, 12, 31);
+        Order order = new Order(
+                0, "EG", "Alex", "Borg", "District", false, true, 100, State.PICKED, 50, LocalDate.of(2025, 12, 24),
+                0, 1, 1, 2,
+                LocalDateTime.now(),
+                LocalDate.now() // Use LocalDate.now() here to match the record
+        );
+        Order order2 = new Order(
+                1, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50, d, 0, 0, 0, 1,
+                LocalDateTime.now(),
+                LocalDate.now() // Use LocalDate.now() here to match the record
+        );
+        Order order3 = new Order(
+                2, "EG", "Alex", "Borg", "District", false, true, 100, State.DELEVERED, 50,
+                LocalDate.of(2025, 12, 24), 0, 0, 0, 1,
+                LocalDateTime.now(),
+                LocalDate.now() // Use LocalDate.now() here to match the record
+        );
+        ArrayList<Order> orders = new ArrayList<>() {
+            {
+                add(order);
+                add(order2);
+                add(order3);
+            }
+        };
+        ShipmentDetails shipment = new ShipmentDetails(
+                0,
+                orders);
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/org/noteam/nextclient/scene/shipmentDetails-scene.fxml"));
 
-    Parent layout = loader.load();
+        Parent layout = loader.load();
 
-    window.setContent((Region) layout);
+        window.setContent((Region) layout);
 
-    ShipmentDetailsController controller = loader.getController();
-    controller.setShipmentDetails(shipment);
+        ShipmentDetailsController controller = loader.getController();
+        controller.setShipmentDetails(shipment);
 
-    Optional<Object> s = window.showAndWaitForResult();
-  }
+        Optional<Object> s = window.showAndWaitForResult();
+    }
 
 }
