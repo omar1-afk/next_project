@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextField?>
@@ -46,7 +47,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
+                        <TextField prefWidth="240.0" promptText="e.g, Egypt" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
                            <contextMenu>
                               <ContextMenu>
                                  <items>
@@ -64,7 +65,15 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText="City" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
+                        <TextField prefWidth="240.0" promptText="e.g, Cairo" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
+                           <contextMenu>
+                              <ContextMenu>
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
+                                 </items>
+                              </ContextMenu>
+                           </contextMenu>
+                        </TextField>
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="2">
@@ -74,15 +83,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText="Region" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="eg,Ain Shams" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="3">
@@ -92,15 +93,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 2 Example street" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefHeight="40.0" prefWidth="242.0" spacing="8.0" GridPane.rowIndex="1">
@@ -110,15 +103,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, Ahmed Ahmed" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -128,15 +113,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, aa@bb.cc" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -146,15 +123,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, Ahmed Ahmed" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -164,15 +133,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, aa@bb.cc" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -182,15 +143,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 30123456789012" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -200,15 +153,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 01234567891" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.rowIndex="2">
@@ -218,15 +163,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 01234567891" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
@@ -236,15 +173,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="30123456789012" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
@@ -254,15 +183,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
@@ -272,15 +193,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 1 (kg)" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
@@ -290,15 +203,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <DatePicker prefHeight="26.0" prefWidth="242.0" promptText="dd/MM/yyyy" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
@@ -308,15 +213,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 500 {LE}" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
@@ -327,15 +224,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField prefWidth="240.0" promptText=" right country" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
-                           <contextMenu>
-                              <ContextMenu>
-                                 <items>
-                                    <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
-                                 </items>
-                              </ContextMenu>
-                           </contextMenu>
-                        </TextField>
+                        <TextField prefWidth="240.0" promptText="e.g, 1" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <HBox alignment="TOP_CENTER" fillHeight="false" spacing="50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
@@ -395,7 +284,7 @@
    <top>
       <HBox styleClass="titleView" BorderPane.alignment="CENTER">
          <children>
-            <Label text="Create new Order" HBox.hgrow="NEVER">
+            <Label text="Order Details" HBox.hgrow="NEVER">
                <HBox.margin>
                   <Insets bottom="7.0" left="24.0" top="23.0" />
                </HBox.margin>

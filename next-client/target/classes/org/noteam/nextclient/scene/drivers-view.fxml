@@ -1,17 +1,248 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-
-<BorderPane fx:id="driverPane" style="-fx-background-color: brown;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.DriverController">
-    <top>
-        <Pane prefHeight="20.0" style="-fx-background-color: yellow;" BorderPane.alignment="CENTER" />
-    </top>
-    <left>
-        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER" />
-    </left>
-    <center>
-        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
-    </center>
+<BorderPane fx:id="driverPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.DriverController">
+   <top>
+      <VBox>
+         <children>
+            <HBox style="-fx-border-color: transparent transparent #D4D4D4 transparent; -fx-border-width: 0 0 0.5 0;" styleClass="titleView">
+               <children>
+                  <Label text="Dashboard" HBox.hgrow="NEVER">
+                     <HBox.margin>
+                        <Insets bottom="21.0" left="24.0" top="21.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font name="SansSerif Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
+                  <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
+                     <children>
+                        <Button fx:id="createDriverBtn" graphicTextGap="0.0" mnemonicParsing="false" styleClass="create-button" text="Create Driver" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath fx:id="cerateOrderIcon" content="M6.41663 7.58317H2.91663V6.4165H6.41663V2.9165H7.58329V6.4165H11.0833V7.58317H7.58329V11.0832H6.41663V7.58317Z" fill="WHITE" stroke="WHITE" strokeWidth="0.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets right="10.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="15.5" right="24.0" top="15.5" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <VBox maxWidth="3000.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox spacing="19.0">
+               <children>
+                  <Label fx:id="DriverNumLabel" text="10 Drivers">
+                     <font>
+                        <Font name="SansSerif Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="8.0" top="8.0" />
+                     </padding>
+                  </Label>
+                  <AnchorPane>
+                     <children>
+                        <TextField fx:id="searchFeild" promptText="Search for driver name" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField">
+                           <padding>
+                              <Insets bottom="7.0" left="30.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="14.0" />
+                           </font>
+                        </TextField>
+                        <AnchorPane prefHeight="14.0" prefWidth="14.0" AnchorPane.bottomAnchor="8.799999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="8.79999">
+                           <children>
+                              <SVGPath content="M11.4333 12.25L7.75833 8.575C7.46667 8.80833 7.13125 8.99306 6.75208 9.12917C6.37292 9.26528 5.96944 9.33333 5.54167 9.33333C4.48194 9.33333 3.58507 8.96632 2.85104 8.23229C2.11701 7.49826 1.75 6.60139 1.75 5.54167C1.75 4.48194 2.11701 3.58507 2.85104 2.85104C3.58507 2.11701 4.48194 1.75 5.54167 1.75C6.60139 1.75 7.49826 2.11701 8.23229 2.85104C8.96632 3.58507 9.33333 4.48194 9.33333 5.54167C9.33333 5.96944 9.26528 6.37292 9.12917 6.75208C8.99306 7.13125 8.80833 7.46667 8.575 7.75833L12.25 11.4333L11.4333 12.25ZM5.54167 8.16667C6.27083 8.16667 6.89062 7.91146 7.40104 7.40104C7.91146 6.89062 8.16667 6.27083 8.16667 5.54167C8.16667 4.8125 7.91146 4.19271 7.40104 3.68229C6.89062 3.17188 6.27083 2.91667 5.54167 2.91667C4.8125 2.91667 4.19271 3.17188 3.68229 3.68229C3.17188 4.19271 2.91667 4.8125 2.91667 5.54167C2.91667 6.27083 3.17188 6.89062 3.68229 7.40104C4.19271 7.91146 4.8125 8.16667 5.54167 8.16667Z" scaleX="1.3" scaleY="1.3" AnchorPane.bottomAnchor="3.099999999999998" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="28.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox spacing="8.0">
+               <children>
+                  <AnchorPane fx:id="AllPane" onMouseClicked="#getAllDrivers" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px;">
+                     <children>
+                        <Label style="-fx-font-weight: 700;" text="All">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="NamePane" onMouseClicked="#getDriverByNane" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label style="-fx-font-weight: 700;" text="Name">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="AgePane" onMouseClicked="#getDriverByAge" style="-fx-background-radius: 8px;">
+                     <children>
+                        <Label layoutX="1.0" style="-fx-font-weight: 700;" text="Age">
+                           <padding>
+                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
+                           </padding>
+                           <font>
+                              <Font name="SansSerif Regular" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="shippingPane" style="-fx-background-radius: 8px;" />
+                  <AnchorPane fx:id="deliveredPane" style="-fx-background-radius: 8px;" />
+                  <AnchorPane fx:id="returnedPane" style="-fx-background-radius: 8px;" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <TableView fx:id="DriverTable" maxWidth="3000.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                     <columns>
+                        <TableColumn fx:id="DriverIDCol" editable="false" minWidth="80.0" prefWidth="150.0" resizable="false" styleClass="price-cell" text="Driver ID">
+                           <graphic>
+                              <AnchorPane scaleX="0.6" scaleY="0.6">
+                                 <children>
+                                    <SVGPath content="m21 4h-6v-1a3 3 0 0 0 -6 0v1h-6a3 3 0 0 0 -3 3v17h24v-17a3 3 0 0 0 -3-3zm-11 15h-7v-10h7zm1-16a1 1 0 0 1 2 0v3h-2zm8 16h-6v-2h6zm2-4h-8v-2h8zm0-4h-8v-2h8zm-13 6h-3v-6h3z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="DriverNameCol" editable="false" minWidth="100.0" prefWidth="200.0" resizable="false" styleClass="order-id-cell" text="Driver name ">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M0 9.33333V7.7C0 7.36944 0.0850694 7.06562 0.255208 6.78854C0.425347 6.51146 0.651389 6.3 0.933333 6.15417C1.53611 5.85278 2.14861 5.62674 2.77083 5.47604C3.39306 5.32535 4.025 5.25 4.66667 5.25C5.30833 5.25 5.94028 5.32535 6.5625 5.47604C7.18472 5.62674 7.79722 5.85278 8.4 6.15417C8.68194 6.3 8.90799 6.51146 9.07812 6.78854C9.24826 7.06562 9.33333 7.36944 9.33333 7.7V9.33333H0ZM10.5 9.33333V7.58333C10.5 7.15556 10.3809 6.74479 10.1427 6.35104C9.90451 5.95729 9.56667 5.61944 9.12917 5.3375C9.625 5.39583 10.0917 5.49549 10.5292 5.63646C10.9667 5.77743 11.375 5.95 11.7542 6.15417C12.1042 6.34861 12.3715 6.56493 12.5562 6.80312C12.741 7.04132 12.8333 7.30139 12.8333 7.58333V9.33333H10.5ZM4.66667 4.66667C4.025 4.66667 3.47569 4.43819 3.01875 3.98125C2.56181 3.52431 2.33333 2.975 2.33333 2.33333C2.33333 1.69167 2.56181 1.14236 3.01875 0.685417C3.47569 0.228472 4.025 0 4.66667 0C5.30833 0 5.85764 0.228472 6.31458 0.685417C6.77153 1.14236 7 1.69167 7 2.33333C7 2.975 6.77153 3.52431 6.31458 3.98125C5.85764 4.43819 5.30833 4.66667 4.66667 4.66667ZM10.5 2.33333C10.5 2.975 10.2715 3.52431 9.81458 3.98125C9.35764 4.43819 8.80833 4.66667 8.16667 4.66667C8.05972 4.66667 7.92361 4.65451 7.75833 4.63021C7.59306 4.6059 7.45694 4.57917 7.35 4.55C7.6125 4.23889 7.81424 3.89375 7.95521 3.51458C8.09618 3.13542 8.16667 2.74167 8.16667 2.33333C8.16667 1.925 8.09618 1.53125 7.95521 1.15208C7.81424 0.772917 7.6125 0.427778 7.35 0.116667C7.48611 0.0680556 7.62222 0.0364583 7.75833 0.021875C7.89444 0.00729167 8.03056 0 8.16667 0C8.80833 0 9.35764 0.228472 9.81458 0.685417C10.2715 1.14236 10.5 1.69167 10.5 2.33333Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="EmailCol" editable="false" minWidth="100.0" prefWidth="200.0" resizable="false" styleClass="weight-cell" text="Email">
+                           <graphic>
+                              <AnchorPane prefHeight="12.0" prefWidth="16.0" scaleX="0.6" scaleY="0.6">
+                                 <children>
+                                    <SVGPath content="M12,0A12.013,12.013,0,0,0,0,12c-.126,9.573,11.159,15.429,18.9,9.817a1,1,0,1,0-1.152-1.634C11.3,24.856,1.9,19.978,2,12,2.549-1.266,21.453-1.263,22,12v2a2,2,0,0,1-4,0V12C17.748,4.071,6.251,4.072,6,12a6.017,6.017,0,0,0,10.52,3.933A4,4,0,0,0,24,14V12A12.013,12.013,0,0,0,12,0Zm0,16a4,4,0,0,1,0-8A4,4,0,0,1,12,16Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="AgeCol" editable="false" minWidth="80.0" prefWidth="120.0" resizable="false" styleClass="status-cell" text="Age">
+                           <graphic>
+                              <AnchorPane scaleX="0.6" scaleY="0.6">
+                                 <children>
+                                    <SVGPath content="M23.765,9,24,7H18.054L18.9,0H16.883l-.841,7H9.159L10,0H7.988L7.147,7H.941L.706,9h6.2l-.721,6H.235L0,17H5.946l-.841,7H7.117l.841-7h6.883L14,24h2.012l.841-7h6.206l.235-2h-6.2l.721-6Zm-8.684,6H8.2l.721-6H15.8Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="SCNCol" minWidth="80.0" prefWidth="250.0" resizable="false" styleClass="city-cell" text="Social Security Number">
+                           <graphic>
+                              <AnchorPane scaleX="0.6" scaleY="0.6">
+                                 <children>
+                                    <SVGPath content="M23.765,9,24,7H18.054L18.9,0H16.883l-.841,7H9.159L10,0H7.988L7.147,7H.941L.706,9h6.2l-.721,6H.235L0,17H5.946l-.841,7H7.117l.841-7h6.883L14,24h2.012l.841-7h6.206l.235-2h-6.2l.721-6Zm-8.684,6H8.2l.721-6H15.8Z" fill="#747474" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                        <TableColumn fx:id="BusyCol" editable="false" minWidth="80.0" prefWidth="150.0" resizable="false" styleClass="weight-cell" text="Busy ">
+                           <graphic>
+                              <AnchorPane>
+                                 <children>
+                                    <SVGPath content="M19,0H5A5.006,5.006,0,0,0,0,5V19a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V5A5.006,5.006,0,0,0,19,0Zm3,19a3,3,0,0,1-3,3H5a3,3,0,0,1-3-3V5A3,3,0,0,1,5,2H19a3,3,0,0,1,3,3ZM9.333,15.919,5.414,12A1,1,0,0,0,4,12H4a1,1,0,0,0,0,1.414l3.919,3.919a2,2,0,0,0,2.829,0L20,8.081a1,1,0,0,0,0-1.414h0a1,1,0,0,0-1.414,0Z" fill="#747474" scaleX="0.6" scaleY="0.6" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="13.0" left="12.0" top="13.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </graphic>
+                        </TableColumn>
+                     </columns>
+                  </TableView>
+               </children>
+               <VBox.margin>
+                  <Insets top="27.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="24.0" right="24.0" top="24.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
 </BorderPane>
