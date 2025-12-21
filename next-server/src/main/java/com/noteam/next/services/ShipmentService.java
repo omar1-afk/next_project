@@ -128,7 +128,7 @@ public class ShipmentService {
     public List<Order> getAllOrdersInShipment(Shipment shipment) {
         logger.info("Getting all orders  by shipment_id" +shipment.getShipment_id() );
         try {
-              List<Order> orders = shipment.getOrdersList();
+              List<Order> orders = shipment.getOrderList();
               if (orders == null) {
                   logger.info("Orders not found");
                   return emptyList();
@@ -304,9 +304,9 @@ try{
         else {
             try{
                Shipment shipment = shipmentOptional.get();
-                if (shipment.getOrdersList() != null && !shipment.getOrdersList().isEmpty()) {
+                if (shipment.getOrderList() != null && !shipment.getOrderList().isEmpty()) {
               List<Integer> orderIds = new ArrayList<>() ;
-                for(Order order :shipment.getOrdersList() ) {
+                for(Order order :shipment.getOrderList() ) {
                     orderIds.add(order.getId());
                 }
                ordersService.deattachShipmentByIds(orderIds);
@@ -314,7 +314,7 @@ try{
             shipment.setDriver(null);
             shipment.setVehicle(null);
             shipment.setAdmin(null);
-            shipment.setOrdersList(null);
+            shipment.setOrderList(null);
             shipmentRepository.save(shipment);
             shipmentRepository.delete(shipment);
             return true;
