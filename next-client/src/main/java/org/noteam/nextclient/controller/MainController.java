@@ -56,9 +56,9 @@ public class MainController implements Initializable {
     private StackPane viewPane;
     @FXML
     public void onDashboardMouseEnter(){
-     if (!isTabActive(dashboardBG)){
-         dashboardBG.setFill(Color.rgb(193,191,191));
-     }
+         if (!isTabActive(dashboardBG)){
+             dashboardBG.setFill(Color.rgb(193,191,191));
+         }
     }
     @FXML
     public void onDashboardClick(){
@@ -78,13 +78,13 @@ public class MainController implements Initializable {
     @FXML
     public void onFleetsMouseEnter(MouseEvent event){
         if(!isTabActive(fleetsBG)){
-        fleetsBG.setFill(Color.rgb(193,191,191));
+            fleetsBG.setFill(Color.rgb(193,191,191));
         }
     }
     @FXML
     public void onFleetsMouseExit(MouseEvent event){
         if (!isTabActive(fleetsBG)){
-        fleetsBG.setFill(Color.rgb(217,217,217));
+            fleetsBG.setFill(Color.rgb(217,217,217));
         }
     }
     @FXML
@@ -99,13 +99,13 @@ public class MainController implements Initializable {
     @FXML
     public void onDriversMouseEnter(MouseEvent event){
         if (!isTabActive(driversBG)){
-        driversBG.setFill(Color.rgb(193,191,191));
+            driversBG.setFill(Color.rgb(193,191,191));
         }
     }
     @FXML
     public void onDriversMouseExit(MouseEvent event){
         if (!isTabActive(driversBG)){
-        driversBG.setFill(Color.rgb(217,217,217));
+            driversBG.setFill(Color.rgb(217,217,217));
         }
     }
     @FXML
@@ -127,7 +127,7 @@ public class MainController implements Initializable {
     @FXML
     public void onShipmentsMouseExit(MouseEvent event){
         if (!isTabActive(shipmentsBG)){
-        shipmentsBG.setFill(Color.rgb(217,217,217));
+            shipmentsBG.setFill(Color.rgb(217,217,217));
         }
     }
     @FXML
@@ -142,13 +142,13 @@ public class MainController implements Initializable {
     @FXML
     public void onSettingsMouseEnter(MouseEvent event){
         if (!isTabActive(settingsBG)){
-        settingsBG.setFill(Color.rgb(193,191,191));
+            settingsBG.setFill(Color.rgb(193,191,191));
         }
     }
     @FXML
     public void onSettingsMouseExit(MouseEvent event){
         if(!isTabActive(settingsBG)){
-        settingsBG.setFill(Color.rgb(217,217,217));
+            settingsBG.setFill(Color.rgb(217,217,217));
         }
     }
     @FXML
@@ -157,18 +157,13 @@ public class MainController implements Initializable {
             deactivateAllTabs();
             makeTabActive(settingsBG,settingsTabLabel);
             settingsIcon.setFill(Color.WHITE);
-
-
-            // 3. Get the controller instance from the loader
-
-            // 4. Now this will work
         }
     }
-    protected void makeTabActive(Rectangle tabBG,Label tabLabel){
+    private void makeTabActive(Rectangle tabBG,Label tabLabel){
         tabBG.setFill(Color.rgb(36,30,30));
         tabLabel.setTextFill(Color.WHITE);
     }
-    protected void deactivateAllTabs(){
+    private void deactivateAllTabs(){
         dashboardBG.setFill(Color.rgb(217,217,217));
         dashTabLabel.setTextFill(Color.rgb(36,30,30));
         dashboardIcon.setStroke(Color.rgb(36,30,30));
@@ -187,7 +182,7 @@ public class MainController implements Initializable {
     }
 
 
-    protected boolean isTabActive(Rectangle tabBG){
+    private boolean isTabActive(Rectangle tabBG){
         return tabBG.getFill().equals(Color.rgb(36, 30, 30));
     }
     private void showOrders(){
