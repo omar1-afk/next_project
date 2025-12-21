@@ -9,8 +9,10 @@ module org.noteam.nextclient {
   requires reactor.core;
   requires org.reactivestreams;
   requires javafx.graphics;
+    requires org.noteam.nextclient;
+    requires javafx.base;
 
-  opens org.noteam.nextclient to javafx.fxml;
+    opens org.noteam.nextclient to javafx.fxml;
 
   exports org.noteam.nextclient.scene to javafx.graphics;
 
