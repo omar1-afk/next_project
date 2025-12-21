@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+
+<BorderPane fx:id="fleetPane" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.FleetController">
+    <top>
+        <Pane prefHeight="20.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+    </top>
+    <left>
+        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER" />
+    </left>
+    <center>
+        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER" />
+    </center>
+</BorderPane>

@@ -7,9 +7,11 @@ import javafx.scene.Group;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import org.noteam.nextclient.Config;
 import org.noteam.nextclient.dto.LoginResponse;
 import org.noteam.nextclient.entity.Employee;
+import org.noteam.nextclient.scene.DataEntryWindow;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -24,7 +26,6 @@ public class LoginController {
 
   private String email = "";
 
-
   @FXML
   private PasswordField passwordField;
 
@@ -38,39 +39,53 @@ public class LoginController {
   }
 
   @FXML
+  private Button loginButton;
+
+  @FXML
   protected void login() {
-    passwordField.textProperty().bindBidirectional(passwordVisibleField.textProperty());
-    password = passwordField.getText();
-    email = emailField.getText();
-    if (password.length() <= 8 || email.length() <= 8) {
-      alert("Email and/or password are incorrect");
-      return;
+
+    System.out.println("SSSS");
+    class Data {
+      private String name;
+      private int age;
     }
-    new Thread(() -> {
-      System.out.println("SSSS");
-      Employee credentials = new Employee(email, password);
-      WebClient client = WebClient.builder().baseUrl(Config.SERVER_URL).build();
-      client.post()
-              .uri("/login")
-              .bodyValue(credentials)
-              .retrieve()
-              .bodyToMono(LoginResponse.class)
-              .subscribe(res -> {
-                javafx.application.Platform.runLater(() -> {
-                  System.out.println("Login Success: " + res);
-                  // TODO: Switch the scenes
-                  alert("GOOOOOOOOD");
-                  System.out.println(res.getToken());
-                });
-              },
-               error -> {
-                System.out.println(error);
-                }
-              );
+    Stage primaryStage = (Stage) loginButton.getScene().getWindow();
+    DataEntryWindow<Data> window = new DataEntryWindow<>("Create new Data", primaryStage);
+    window.showAndWaitForResult();
 
+    return;
+    // passwordField.textProperty().bindBidirectional(passwordVisibleField.textProperty());
+    // password = passwordField.getText();
+    // email = emailField.getText();
+    // if (password.length() <= 8 || email.length() <= 8) {
+    // alert("Email and/or password are incorrect");
+    // return;
+    // }
+    // new Thread(() -> {
+    // System.out.println("SSSS");
+    // Employee credentials = new Employee(email, password);
+    // WebClient client = WebClient.builder().baseUrl(Config.SERVER_URL).build();
+    // client.post()
+    // .uri("/login")
+    // .bodyValue(credentials)
+    // .retrieve()
+    // .bodyToMono(LoginResponse.class)
+    // .subscribe(res -> {
+    // javafx.application.Platform.runLater(() -> {
+    // System.out.println("Login Success: " + res);
+    // // TODO: Switch the scenes
+    // alert("GOOOOOOOOD");
+    // System.out.println(res.getToken());
+    // });
+    // },
+    // error -> {
+    // System.out.println(error);
+    // }
+    // );
 
-    });
+    // });
   }
+
   @FXML
   private Group passwordToggleGroup;
   @FXML
@@ -82,6 +97,7 @@ public class LoginController {
   @FXML
   private ImageView hidePasswordImage;
   private boolean visiblePassword = false;
+
   @FXML
   protected void togglePasswordVisibility() {
     visiblePassword = !visiblePassword;
