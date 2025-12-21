@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/shipments")
+@RequestMapping("/api/v1/shipment")
 public class ShipmentController {
 
     @Autowired
