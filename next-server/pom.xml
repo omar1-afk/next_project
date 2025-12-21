@@ -58,7 +58,6 @@
 			<scope>test</scope>
 		</dependency>
         <dependency>
-<<<<<<< HEAD
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
@@ -76,8 +75,6 @@
             <scope>runtime</scope>
         </dependency>
         <dependency>
-=======
->>>>>>> origin/Mohamed/ViewMainStructure
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>

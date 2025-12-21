@@ -15,12 +15,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.State;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class OrderController implements Initializable {
     @FXML
@@ -65,6 +67,38 @@ public class OrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        List<Order> orderList = Arrays.asList(
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
+                new Order(1,"Egypt","Cairo","s","a",true,false,50,State.PICKED,30, LocalDate.now(),1,2,3,5,LocalDateTime.now(),LocalDate.now())
+        );
+        setOrderTableView(orderList);
+    }
+    public void setOrderTableView(List<Order> orderList){
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
         weightCol.setCellValueFactory(new PropertyValueFactory<>("Weight"));
         cityCol.setCellValueFactory(new PropertyValueFactory<>("City"));
@@ -72,33 +106,20 @@ public class OrderController implements Initializable {
         priceCol.setCellValueFactory(new PropertyValueFactory<>("Price"));
         shipmentCol.setCellValueFactory(new PropertyValueFactory<>("Shipment"));
         createdAtCol.setCellValueFactory(new PropertyValueFactory<>("CreatedAt"));
+        observableList = FXCollections.observableArrayList();
+        orderList.forEach(order->{
+            if(order.shipment()==0){
+            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),order.createdAt())) ;
+            }
+            else {
+            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),order.createdAt(),order.shipment())) ;
 
-        observableList = FXCollections.observableArrayList(
-            new OrderRow(1,50,"Alex",State.PICKED,150,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(1,50,"Alex",State.PICKED,150,1,LocalDateTime.now()),
-            new OrderRow(2,25,"Cairo",State.PICKED,150,2,LocalDateTime.now())
-        );
+            }
+                }
+                );
         orderTable.setItems(observableList);
         System.out.println(orderTable.getItems());
     }
-
 
     @FXML
     public void onCreateOrderBtnMouseEnter(){
@@ -176,7 +197,7 @@ public class OrderController implements Initializable {
         SimpleObjectProperty shipment;
         SimpleStringProperty createdAt;
 
-        public OrderRow(Integer orderID, double weight, String city, State status, double price, int shipment, LocalDateTime createdAt) {
+        public OrderRow(Integer orderID, double weight, String city, State status, double price, LocalDateTime createdAt, int shipment) {
             this.orderID = new SimpleIntegerProperty(orderID);
             this.weight = new SimpleStringProperty(weight+ "kg");
             this.city = new SimpleStringProperty(city);
@@ -312,6 +333,10 @@ public class OrderController implements Initializable {
         public void setCreatedAt(String createdAt) {
             this.createdAt.set(createdAt);
         }
+    }
+
+    public class CreateOrderPopupController{
+
     }
 
 }

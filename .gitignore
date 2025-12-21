@@ -15,6 +15,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea/
+<<<<<<< HEAD
 *.iws
 *.iml
 *.ipr
@@ -34,3 +35,12 @@ build/
 
 .env*
 .editorconfig
+=======
+.editorconfig
+.classpath
+.env
+.env.local
+.project
+.settings/
+target/
+>>>>>>> develop
