@@ -13,7 +13,6 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "vehicle_ID")
     private Integer vehicleId;
 
     @Enumerated(EnumType.STRING)

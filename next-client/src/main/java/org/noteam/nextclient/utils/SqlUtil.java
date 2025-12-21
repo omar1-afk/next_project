@@ -115,7 +115,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/complete/" + isComplete, ApiUtil.RequestMethod.GET, null);
+                    "/api/v1/shipment/complete/" + isComplete, ApiUtil.RequestMethod.GET, null);
             if (connection.getResponseCode() != 200) {
                 System.out.println("Error getting shipments by complete" + connection.getResponseCode());
                 return Collections.emptyList();
@@ -184,7 +184,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/" + shipmentId, ApiUtil.RequestMethod.GET, null);
+                    "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.GET, null);
             if (connection.getResponseCode() != 200) {
                 System.out.println("Error getting  Shipment by id" + connection.getResponseCode());
                 return null;
@@ -285,19 +285,19 @@ public class SqlUtil {
     }
 
     public static List<ShipmentDisplayDTO> getShipmentsByCityId(int cityId) {
-        return getShipmentsByCriteria("/api/shipments/city/" + cityId);
+        return getShipmentsByCriteria("/api/v1/shipment/city/" + cityId);
     }
 
     public static List<ShipmentDisplayDTO> getShipmentsByVehicleId(int vehicleId) {
-        return getShipmentsByCriteria("/api/shipments/vehicle/" + vehicleId);
+        return getShipmentsByCriteria("/api/v1/shipment/vehicle/" + vehicleId);
     }
 
     public static List<ShipmentDisplayDTO> getShipmentsByAdminID(int adminId) {
-        return getShipmentsByCriteria("/api/shipments/admin/" + adminId);
+        return getShipmentsByCriteria("/api/v1/shipment/admin/" + adminId);
     }
 
     public static List<ShipmentDisplayDTO> getShipmentsByDriverId(int driverId) {
-        return getShipmentsByCriteria("/api/shipments/driver/" + driverId);
+        return getShipmentsByCriteria("/api/v1/shipment/driver/" + driverId);
     }
 
     public static List<OrderTable> getAllOrders() {
@@ -336,7 +336,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/" + shipmentId + "/orders", ApiUtil.RequestMethod.GET, null);
+                    "/api/v1/shipment/" + shipmentId + "/orders", ApiUtil.RequestMethod.GET, null);
             if (connection.getResponseCode() != 200) {
                 // System.out.println("Error getting orders in shipment by id" +
                 // connection.getResponseCode());
@@ -416,7 +416,7 @@ public class SqlUtil {
             json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, updateDTO.getTotalWeight());
 
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/update" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
+                    "/api/v1/shipment/update" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
             if (connection.getResponseCode() != 200) {
                 // System.out.println("Error updating shipment" + connection.getResponseCode());
                 return false;
@@ -436,7 +436,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/" + shipmentId, ApiUtil.RequestMethod.PATCH, null);
+                    "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.PATCH, null);
             if (connection.getResponseCode() != 200) {
                 // System.out.println("Error manually set shipment as completed by id"+
                 // connection.getResponseCode());
@@ -459,7 +459,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/shipments/" + shipmentId, ApiUtil.RequestMethod.DELETE, null);
+                    "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.DELETE, null);
             if (connection.getResponseCode() != 200) {
                 // System.out.println("Error deleting shipment by id"+
                 // connection.getResponseCode());

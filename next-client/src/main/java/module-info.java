@@ -1,12 +1,14 @@
 module org.noteam.nextclient {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
+
     requires java.desktop;
     requires com.fasterxml.jackson.core;
     requires com.google.gson;
     requires java.sql;
     requires javafx.base;
-    requires javafx.graphics;
+    requires spring.data.commons;
     requires io.github.cdimascio.dotenv.java;
     requires com.fasterxml.jackson.databind;
 

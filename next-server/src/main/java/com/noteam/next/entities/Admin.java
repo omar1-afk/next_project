@@ -15,31 +15,31 @@ import com.noteam.next.roles.Authorities;
 public class Admin implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer admin_id = Integer.valueOf(0);
 
     @Column(name = "name", nullable = false)
-    private String name;
+    private String name = "mm";
 
     @Column(name = "age", nullable = false)
-    private Integer age;
+    private Integer age = Integer.valueOf(5);
 
     @Column(name = "image", nullable = true)
-    private String image;
+    private String image = "I";
 
     @Column(name = "social_security_number", nullable = false)
-    private String social_security_number;
+    private String social_security_number = "S";
 
     @Column(name = "email", nullable = false)
-    private String email;
+    private String email = ".COM";
 
     @Column(name = "password", nullable = false)
-    private String password;
+    private String password = "Password";
 
-    @Column(nullable = false, name = "created_at", insertable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6)")
-    private LocalDateTime created_at;
+    @Column(nullable = false, name = "created_at")
+    private LocalDateTime created_at = LocalDateTime.now();
 
-    @Column(name = "updated_at", insertable = false, updatable = false, columnDefinition = "DATETIME(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)")
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+    private LocalDateTime updated_at = LocalDateTime.now();
 
     // public Integer getAdmin_id() {
     // return id;
@@ -120,7 +120,7 @@ public class Admin implements User {
     }
 
     public Integer getId() {
-        return id;
+        return admin_id;
     }
 
     @Override

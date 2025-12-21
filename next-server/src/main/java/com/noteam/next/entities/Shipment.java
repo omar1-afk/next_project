@@ -1,6 +1,9 @@
 package com.noteam.next.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -14,7 +17,7 @@ public class Shipment {
     @Column(name="total_weight")
     private Integer total_weight;
     @Column(name="shipping_date")
-    private Date shipping_date;
+    private LocalDate shipping_date;
     @Column(name="is_complete")
     private Boolean isComplete;
     @Column(name="created_at")
@@ -43,15 +46,14 @@ public class Shipment {
     @JoinColumn(name="city_id")
     private City city;
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
     private List<Order> orderList;
 
 
-    public List<Order> getOrdersList() {
+    public List<Order> getOrderList() {
         return orderList;
     }
 
-    public void setOrdersList(List<Order> orderList) {
+    public void setOrderList(List<Order> orderList) {
         this.orderList = orderList;
     }
 
@@ -89,11 +91,11 @@ public class Shipment {
         this.total_weight = total_weight;
     }
 
-    public Date getShipping_date() {
+    public LocalDate getShipping_date() {
         return shipping_date;
     }
 
-    public void setShipping_date(Date shipping_date) {
+    public void setShipping_date(LocalDate shipping_date) {
         this.shipping_date = shipping_date;
     }
 
