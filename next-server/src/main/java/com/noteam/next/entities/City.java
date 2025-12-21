@@ -1,35 +1,19 @@
 package com.noteam.next.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.List;
-
 @Entity
-@Table(name = "Cities")
+@Table(name = "city")
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @ManyToOne
-    @JoinColumn(name = "country_id")
-    @JsonIgnoreProperties("cities")
-    private Country country;
-    @OneToMany(mappedBy = "city",cascade = CascadeType.PERSIST)
-    @JsonIgnore
-    private List<Order> orders;
-    public int getId() {
-        return id;
+    private Integer city_id;
+
+    public Integer getCity_id() {
+        return city_id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public Country getCountry() {
-        return country;
+    public void setCity_id(Integer city_id) {
+        this.city_id = city_id;
     }
 }
