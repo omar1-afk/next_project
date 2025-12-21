@@ -39,15 +39,13 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "shipment_id",nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JsonIgnoreProperties("ordersList")
+    @JsonIgnoreProperties("orderList")
     Shipment shipment;
     @ManyToOne
     @JoinColumn(name="receiver_id",nullable = true)
-    @JsonIgnoreProperties("orders")
     Receiver receiver;
     @ManyToOne
     @JoinColumn(name="sender_id",nullable = true)
-    @JsonIgnoreProperties("orders")
     Sender sender;
     @Column(name = "boxes_count")
     int boxesCount;

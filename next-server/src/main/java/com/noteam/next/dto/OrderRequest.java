@@ -9,5 +9,5 @@ public record OrderRequest(int id, City city, String region
         , String address, boolean flameable, boolean breakable
         , int price, State state, int weight, Shipment shipment
         , Receiver receiver, Sender sender, int boxesCount
-        , LocalDateTime createdAt, LocalDate updatedAt) {
+        , LocalDateTime createdAt, LocalDateTime updatedAt) {
 }
