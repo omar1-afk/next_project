@@ -28,7 +28,7 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.OK).body(adminOptional.get());
     }
 
-    @GetMapping
+    @GetMapping("/email/{email}")
     public ResponseEntity<Admin> getAdminByEmail(@RequestParam String email){
         logger.info("Getting admin by email: " + email);
         Optional<Admin> adminOptional = adminService.getAdminByEmail(email);
@@ -55,5 +55,3 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
-
-

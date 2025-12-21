@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,7 @@ public class ShipmentController {
         private int vehicleId;
         private int driverId;
         private double totalWeight;
-        private Date shippingDate;
+        private LocalDate shippingDate;
         private int cityId;
 
 
@@ -46,8 +48,8 @@ public class ShipmentController {
         public void setDriverId(int driverId) { this.driverId = driverId; }
         public double getTotalWeight() { return totalWeight; }
         public void setTotalWeight(double totalWeight) { this.totalWeight = totalWeight; }
-        public Date getShippingDate() { return shippingDate; }
-        public void setShippingDate(Date shippingDate) { this.shippingDate = shippingDate; }
+        public LocalDate getShippingDate() { return shippingDate; }
+        public void setShippingDate(LocalDate shippingDate) { this.shippingDate = shippingDate; }
         public int getCityId() { return cityId; }
         public void setCityId(int cityId) { this.cityId = cityId; }
     }
@@ -211,15 +213,15 @@ public class ShipmentController {
     }
 }
     //update
-    @PutMapping("/update")
-    public ResponseEntity<?> updateShipment(@RequestBody ShipmentRequest shipmentRequest ) {
+    @PutMapping("/update/{shipment_id}")
+    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id,@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("update a shipment number" + shipmentRequest.getShipmentId());
 
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
                     shipmentRequest.getOrderIds(),
                     //shipmentRequest.getAdminId(),
-                    shipmentRequest.getShipmentId(),
+                    shipment_id,
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),

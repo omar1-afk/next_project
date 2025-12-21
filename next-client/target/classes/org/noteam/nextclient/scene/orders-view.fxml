@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="orderPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.OrderController">
+<BorderPane fx:id="orderPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.noteam.nextclient.controller.OrderController">
    <top>
       <VBox>
          <children>
@@ -31,7 +31,7 @@
                   <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
                   <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <Button id="sync-button" fx:id="syncButton" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: #F1F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="syncButton" text="Sync orders" textFill="#232323" HBox.hgrow="NEVER">
+                        <Button id="sync-button" fx:id="syncOrderButton" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: #F1F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="syncButton" text="Sync orders" textFill="#232323" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -39,20 +39,20 @@
                               <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                            </padding>
                            <font>
-                              <Font name="SansSerif Regular" size="13.0" />
+                              <Font name="SansSerif Regular" size="12.0" />
                            </font>
                            <graphic>
                               <AnchorPane>
                                  <children>
-                                    <SVGPath content="M6.44583 9.33333C5.14306 9.33333 4.03472 8.88125 3.12083 7.97708C2.20694 7.07292 1.75 5.96944 1.75 4.66667V4.56458L0.816667 5.49792L0 4.68125L2.33333 2.34792L4.66667 4.68125L3.85 5.49792L2.91667 4.56458V4.66667C2.91667 5.63889 3.25938 6.46528 3.94479 7.14583C4.63021 7.82639 5.46389 8.16667 6.44583 8.16667C6.69861 8.16667 6.94653 8.1375 7.18958 8.07917C7.43264 8.02083 7.67083 7.93333 7.90417 7.81667L8.77917 8.69167C8.40972 8.90556 8.03056 9.06597 7.64167 9.17292C7.25278 9.27986 6.85417 9.33333 6.44583 9.33333ZM10.5 6.98542L8.16667 4.65208L8.98333 3.83542L9.91667 4.76875V4.66667C9.91667 3.69444 9.57396 2.86806 8.88854 2.1875C8.20313 1.50694 7.36944 1.16667 6.3875 1.16667C6.13472 1.16667 5.88681 1.19583 5.64375 1.25417C5.40069 1.3125 5.1625 1.4 4.92917 1.51667L4.05417 0.641667C4.42361 0.427778 4.80278 0.267361 5.19167 0.160417C5.58056 0.0534722 5.97917 0 6.3875 0C7.69028 0 8.79861 0.452083 9.7125 1.35625C10.6264 2.26042 11.0833 3.36389 11.0833 4.66667V4.76875L12.0167 3.83542L12.8333 4.65208L10.5 6.98542Z" fill="#232323" scaleX="1.1" scaleY="1.1" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                    <SVGPath content="M6.44583 9.33333C5.14306 9.33333 4.03472 8.88125 3.12083 7.97708C2.20694 7.07292 1.75 5.96944 1.75 4.66667V4.56458L0.816667 5.49792L0 4.68125L2.33333 2.34792L4.66667 4.68125L3.85 5.49792L2.91667 4.56458V4.66667C2.91667 5.63889 3.25938 6.46528 3.94479 7.14583C4.63021 7.82639 5.46389 8.16667 6.44583 8.16667C6.69861 8.16667 6.94653 8.1375 7.18958 8.07917C7.43264 8.02083 7.67083 7.93333 7.90417 7.81667L8.77917 8.69167C8.40972 8.90556 8.03056 9.06597 7.64167 9.17292C7.25278 9.27986 6.85417 9.33333 6.44583 9.33333ZM10.5 6.98542L8.16667 4.65208L8.98333 3.83542L9.91667 4.76875V4.66667C9.91667 3.69444 9.57396 2.86806 8.88854 2.1875C8.20313 1.50694 7.36944 1.16667 6.3875 1.16667C6.13472 1.16667 5.88681 1.19583 5.64375 1.25417C5.40069 1.3125 5.1625 1.4 4.92917 1.51667L4.05417 0.641667C4.42361 0.427778 4.80278 0.267361 5.19167 0.160417C5.58056 0.0534722 5.97917 0 6.3875 0C7.69028 0 8.79861 0.452083 9.7125 1.35625C10.6264 2.26042 11.0833 3.36389 11.0833 4.66667V4.76875L12.0167 3.83542L12.8333 4.65208L10.5 6.98542Z" fill="#232323" stroke="BLACK" strokeWidth="0.0" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
                                  </children>
                                  <padding>
-                                    <Insets bottom="7.0" right="10.0" top="7.0" />
+                                    <Insets right="10.0" />
                                  </padding>
                               </AnchorPane>
                            </graphic>
                         </Button>
-                        <Button graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: black; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="createButton" text="Create order" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                        <Button fx:id="createOrderButton" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: black; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="createButton" text="Create order" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -60,15 +60,15 @@
                               <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                            </padding>
                            <font>
-                              <Font name="SansSerif Regular" size="13.0" />
+                              <Font name="SansSerif Regular" size="12.0" />
                            </font>
                            <graphic>
                               <AnchorPane>
                                  <children>
-                                    <SVGPath content="M6.41663 7.58317H2.91663V6.4165H6.41663V2.9165H7.58329V6.4165H11.0833V7.58317H7.58329V11.0832H6.41663V7.58317Z" fill="WHITE" scaleX="1.1" scaleY="1.1" stroke="WHITE" strokeWidth="0.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                    <SVGPath content="M6.41663 7.58317H2.91663V6.4165H6.41663V2.9165H7.58329V6.4165H11.0833V7.58317H7.58329V11.0832H6.41663V7.58317Z" fill="WHITE" stroke="WHITE" strokeWidth="0.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
                                  </children>
                                  <padding>
-                                    <Insets bottom="7.0" right="10.0" top="7.0" />
+                                    <Insets right="10.0" />
                                  </padding>
                               </AnchorPane>
                            </graphic>
@@ -88,7 +88,7 @@
          <children>
             <HBox spacing="19.0">
                <children>
-                  <Label text="14 orders">
+                  <Label fx:id="orderNumLabel" text="14 orders">
                      <font>
                         <Font name="SansSerif Bold" size="14.0" />
                      </font>
@@ -98,7 +98,7 @@
                   </Label>
                   <AnchorPane>
                      <children>
-                        <TextField promptText="Search for order ID" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField">
+                        <TextField fx:id="searchFeild" promptText="Search for order ID" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField">
                            <padding>
                               <Insets bottom="7.0" left="30.0" right="10.0" top="7.0" />
                            </padding>
@@ -123,7 +123,7 @@
             </HBox>
             <HBox spacing="8.0">
                <children>
-                  <AnchorPane style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px;">
+                  <AnchorPane fx:id="allPane" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px;">
                      <children>
                         <Label style="-fx-font-weight: 700;" text="All">
                            <padding>
@@ -135,7 +135,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane style="-fx-background-radius: 8px;">
+                  <AnchorPane fx:id="pickedPane" style="-fx-background-radius: 8px;">
                      <children>
                         <Label style="-fx-font-weight: 700;" text="Picked">
                            <padding>
@@ -147,7 +147,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane style="-fx-background-radius: 8px;">
+                  <AnchorPane fx:id="packagingPane" style="-fx-background-radius: 8px;">
                      <children>
                         <Label layoutX="1.0" style="-fx-font-weight: 700;" text="Packaging">
                            <padding>
@@ -161,7 +161,7 @@
                   </AnchorPane>
                   <AnchorPane style="-fx-background-radius: 8px;">
                      <children>
-                        <Label style="-fx-font-weight: 700;" text="Shipping">
+                        <Label fx:id="shippingPane" style="-fx-font-weight: 700;" text="Shipping">
                            <padding>
                               <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                            </padding>
@@ -173,7 +173,7 @@
                   </AnchorPane>
                   <AnchorPane style="-fx-background-radius: 8px;">
                      <children>
-                        <Label style="-fx-font-weight: 700;" text="Delivered">
+                        <Label fx:id="deliveredPane" style="-fx-font-weight: 700;" text="Delivered">
                            <padding>
                               <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                            </padding>
@@ -185,7 +185,7 @@
                   </AnchorPane>
                   <AnchorPane style="-fx-background-radius: 8px;">
                      <children>
-                        <Label style="-fx-font-weight: 700;" text="Returned">
+                        <Label fx:id="returnedPane" style="-fx-font-weight: 700;" text="Returned">
                            <padding>
                               <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
                            </padding>
@@ -199,7 +199,7 @@
             </HBox>
             <HBox>
                <children>
-                  <TableView maxWidth="3000.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                  <TableView fx:id="orderTable" maxWidth="3000.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                      <columns>
                         <TableColumn fx:id="orderIdCol" editable="false" minWidth="100.0" prefWidth="110.0" resizable="false" text="Order ID">
                            <graphic>

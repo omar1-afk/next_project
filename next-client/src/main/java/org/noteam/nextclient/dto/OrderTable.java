@@ -1,13 +1,16 @@
 package org.noteam.nextclient.dto;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 
 public class OrderTable {
-    int orderId;
-    int orderWeight;
+    private IntegerProperty orderId=new SimpleIntegerProperty();
+    private IntegerProperty orderPrice=new SimpleIntegerProperty();
+    private IntegerProperty orderWeight=new SimpleIntegerProperty();
     private BooleanProperty selected=new SimpleBooleanProperty(false);
-    int orderPrice;
+
     public BooleanProperty selectedProperty() {
         return selected;
     }
@@ -17,33 +20,42 @@ public class OrderTable {
     public Boolean isSelected() {
         return selected.get();
     }
+
     public OrderTable(int orderId, int orderPrice, int orderWeight) {
-        this.orderId = orderId;
-        this.orderPrice = orderPrice;
-        this.orderWeight = orderWeight;
+        this.orderId.set(orderId);
+        this.orderPrice.set(orderPrice);
+        this.orderWeight.set(orderWeight);
     }
 
-    public int getOrderId() {
+    public IntegerProperty getOrderId() {
         return orderId;
     }
 
     public void setOrderId(int orderId) {
-        this.orderId = orderId;
+        this.orderId.set(orderId);
     }
 
-    public int getOrderPrice() {
+    public IntegerProperty getOrderPrice() {
         return orderPrice;
     }
 
     public void setOrderPrice(int orderPrice) {
-        this.orderPrice = orderPrice;
+        this.orderPrice.set(orderPrice);
     }
 
-    public int getOrderWeight() {
+    public IntegerProperty getOrderWeight() {
         return orderWeight;
     }
 
     public void setOrderWeight(int orderWeight) {
-        this.orderWeight = orderWeight;
+        this.orderWeight.set(orderWeight);
+    }
+
+    public BooleanProperty getSelected() {
+        return selected;
+    }
+
+    public void setSelected(BooleanProperty selected) {
+        this.selected = selected;
     }
 }

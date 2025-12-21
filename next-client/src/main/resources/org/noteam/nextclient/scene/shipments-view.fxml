@@ -2,8 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -14,26 +16,36 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="shipmentPane" prefHeight="606.0" prefWidth="1020.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.noteam.nextclient.controller.ShipmentController">
+<BorderPane fx:id="shipmentPane" prefHeight="900.0" prefWidth="1180.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.ShipmentController">
     <top>
         <VBox>
             <children>
-                <HBox prefHeight="61.0" prefWidth="996.0" style="-fx-border-color: transparent transparent #D4D4D4 transparent; -fx-border-width: 0 0 0.5 0;" styleClass="titleView">
+                <HBox prefHeight="97.0" prefWidth="1180.0" style="-fx-border-color: transparent transparent #D4D4D4 transparent; -fx-border-width: 0 0 0.5 0;">
                     <children>
-                        <Label text="Shipments" translateX="-20.0" HBox.hgrow="NEVER">
-                            <HBox.margin>
-                                <Insets bottom="21.0" left="24.0" top="21.0" />
-                            </HBox.margin>
-                            <font>
-                                <Font name="SansSerif Bold" size="14.0" />
-                            </font>
-                        </Label>
-                        <Pane maxWidth="30000.0" minWidth="1.0" prefHeight="85.0" prefWidth="614.0" HBox.hgrow="ALWAYS" />
-                        <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
+                        <HBox prefHeight="62.0" prefWidth="1179.0" spacing="8.0" HBox.hgrow="SOMETIMES">
                             <children>
-                                <Button id="" fx:id="" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: #F1F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="syncButton" text="Sync Tables" textFill="#232323" HBox.hgrow="NEVER">
+                        <Pane prefHeight="42.0" prefWidth="503.0" />
+                                <TextField fx:id="searchField" onAction="#handleSearch" prefHeight="30.0" prefWidth="176.0" promptText="Choose Filter To Search" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField" translateX="14.0" translateY="30.0">
+                                    <padding>
+                                        <Insets bottom="7.0" left="20.0" right="10.0" top="7.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="SansSerif Bold" size="12.0" />
+                                    </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                                </TextField>
+                        <ComboBox fx:id="searchComboBox" minHeight="-Infinity" minWidth="-Infinity" onAction="#handleSearch" prefHeight="32.0" prefWidth="150.0" promptText="Complete" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8;" translateX="14.0" translateY="30.0">
+                            <padding>
+                              <Insets bottom="2.0" left="30.0" right="11.0" top="2.0" />
+                           </padding>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ComboBox>
+                                <Button id="" fx:id="syncTableBtn" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.4" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="syncButton" text="Sync Tables" textFill="#232323" translateX="14.0" translateY="30.0" HBox.hgrow="NEVER">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -54,7 +66,7 @@
                                         </AnchorPane>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="createShipmentBtn" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleCreate" style="-fx-background-color: black; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="createButton" text="Create Shipment" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                                <Button fx:id="createShipmentBtn" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.4" style="-fx-background-color: black; -fx-background-radius: 8px; -fx-font-weight: bold;" styleClass="createButton" text="Create Shipment" textAlignment="RIGHT" textFill="WHITE" translateX="14.0" translateY="30.0" HBox.hgrow="NEVER">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
@@ -77,7 +89,7 @@
                                 </Button>
                             </children>
                             <HBox.margin>
-                                <Insets bottom="15.5" right="24.0" top="15.5" />
+                                <Insets bottom="15.5" top="15.5" />
                             </HBox.margin>
                         </HBox>
                     </children>
@@ -89,116 +101,35 @@
         </VBox>
     </top>
     <center>
-        <VBox maxWidth="3000.0" prefHeight="708.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+        <VBox maxHeight="1.7976931348623157E308" maxWidth="3000.0" prefHeight="900.0" prefWidth="1006.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
             <children>
                 <HBox prefHeight="33.0" prefWidth="946.0" spacing="19.0">
-                    <children>
-                        <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="71.0" prefWidth="942.0">
-                            <children>
-                                <AnchorPane layoutX="578.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="20.0" AnchorPane.bottomAnchor="25.599999999999994" AnchorPane.leftAnchor="578.0" AnchorPane.topAnchor="56.0">
-                                    <padding>
-                                        <Insets left="10.0" />
-                                    </padding>
-                                </AnchorPane>
-                            <HBox layoutY="8.0" prefWidth="777.0" spacing="8.0">
-                                <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Search using: " translateX="2.0" translateY="5.0" wrappingWidth="93.68243408203125">
-                                 <font>
-                                    <Font name="SansSerif Bold" size="12.0" />
-                                 </font>
-                              </Text>
-                                    <AnchorPane fx:id="" style="-fx-background-color: #F1F1F1; -fx-background-radius: 8px;" translateX="1.0">
-                                        <children>
-                                            <Label style="-fx-font-weight: 700;" text="Shipment ID">
-                                                <padding>
-                                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                                </padding>
-                                                <font>
-                                                    <Font name="SansSerif Regular" size="12.0" />
-                                                </font>
-                                            </Label>
-                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="" style="-fx-background-radius: 8px;" translateX="1.0">
-                                        <children>
-                                            <Label style="-fx-font-weight: 700;" text="Driver ID">
-                                                <padding>
-                                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                                </padding>
-                                                <font>
-                                                    <Font name="SansSerif Regular" size="12.0" />
-                                                </font>
-                                            </Label>
-                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane fx:id="" style="-fx-background-radius: 8px;" translateX="1.0">
-                                        <children>
-                                            <Label layoutX="1.0" style="-fx-font-weight: 700;" text="Admin ID">
-                                                <padding>
-                                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                                </padding>
-                                                <font>
-                                                    <Font name="SansSerif Regular" size="12.0" />
-                                                </font>
-                                            </Label>
-                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane style="-fx-background-radius: 8px;" translateX="1.0">
-                                        <children>
-                                            <Label fx:id="" style="-fx-font-weight: 700;" text="Vehicle ID">
-                                                <padding>
-                                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                                </padding>
-                                                <font>
-                                                    <Font name="SansSerif Regular" size="12.0" />
-                                                </font>
-                                            </Label>
-                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane style="-fx-background-radius: 8px;" translateX="1.0">
-                                        <children>
-                                            <Label fx:id="" style="-fx-font-weight: 700;" text="City ID">
-                                                <padding>
-                                                    <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                                </padding>
-                                                <font>
-                                                    <Font name="SansSerif Regular" size="12.0" />
-                                                </font>
-                                            </Label>
-                                        </children>
-                                    </AnchorPane>
-                                    <AnchorPane style="-fx-background-radius: 8px;" />
-                                      <TextField fx:id="" prefHeight="30.0" prefWidth="167.0" style="-fx-background-color: #D9D9D9,white; -fx-background-radius: 8px; -fx-prompt-text-weight: 800; -fx-prompt-text-fill: #838B8E;" styleClass="searchField">
-                                          <padding>
-                                              <Insets bottom="7.0" left="10.0" right="10.0" top="7.0" />
-                                          </padding>
-                                          <font>
-                                              <Font name="SansSerif Regular" size="14.0" />
-                                          </font>
-                                      </TextField>
-                                </children>
-                            </HBox>
-                            </children>
-                        </AnchorPane>
-                    </children>
                     <VBox.margin>
                         <Insets bottom="28.0" />
                     </VBox.margin>
                 </HBox>
-            <ScrollPane fitToWidth="true" minHeight="-Infinity" prefHeight="1000.0" prefWidth="946.0" style="-fx-background-color: white;">
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="-20.0" />
+               </VBox.margin>
+            </Separator>
+            <ScrollPane fitToHeight="false" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="790.0" prefWidth="1180.0" style="-fx-background-color: white;">
                <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
+                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="3000.0" prefWidth="1178.0" style="-fx-background-color: white;">
                      <children>
-                        <VBox minHeight="-Infinity" prefHeight="821.0" prefWidth="944.0" style="-fx-background-color: white;">
+                        <Label fx:id="completedLabel" style="-fx-background-color: white;" text="Completed Shipments" translateX="3.0" translateY="20.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="750.0" prefWidth="1179.0" style="-fx-background-color: white;">
                            <children>
-                              <Label style="-fx-background-color: #;" text="Completed Shipments" translateX="3.0">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Label>
-                              <TableView maxWidth="3000.0" minHeight="-Infinity" prefHeight="400.0" prefWidth="1002.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: white; -fx-border-color: #F1F1F1F1;">
+                              <TableView fx:id="completedShipmentTable" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1164.0" style="-fx-border-width: 5; -fx-background-color: white; -fx-border-color: #F1F1F1;">
                                  <columns>
-                                    <TableColumn fx:id="completedShipmentIdColumn" editable="false" minWidth="100.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Shipment ID">
+                                    <TableColumn fx:id="completedShipmentIdColumn" editable="false" minWidth="100.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="Shipment ID">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -210,7 +141,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="completedCityColumn" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="City">
+                                    <TableColumn fx:id="completedCityColumn" editable="false" minWidth="80.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="City">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -222,7 +153,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="completedWeightColumn" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Total Weight">
+                                    <TableColumn fx:id="completedWeightColumn" minWidth="80.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="Total Weight">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -234,7 +165,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="completedShippingDateColumn" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Shipping Date">
+                                    <TableColumn fx:id="completedShippingDateColumn" editable="false" minWidth="80.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="Shipping Date">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -246,7 +177,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="completedUpdateButtonColumn" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Update">
+                                    <TableColumn fx:id="completedUpdateButtonColumn" editable="false" minWidth="80.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="Update">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -258,11 +189,11 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="completedDeleteButtonColumn" minWidth="100.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Delete">
+                                    <TableColumn fx:id="completedDeleteButtonColumn" minWidth="100.0" prefWidth="192.0" resizable="false" style="-fx-background-color: white;" text="Delete">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
-                                                <SVGPath content="M14.0001 24.5V15.1667M14.0001 24.5L5.60675 19.2542C5.14723 18.967 4.91746 18.8234 4.79211 18.5972C4.66675 18.371 4.66675 18.1001 4.66675 17.5582V9.33333M14.0001 24.5L18.6667 21.5833L22.3934 19.2542C22.8529 18.967 23.0827 18.8234 23.2081 18.5972C23.3334 18.371 23.3334 18.1001 23.3334 17.5582V9.33333M14.0001 15.1667L4.66675 9.33333M14.0001 15.1667L23.3334 9.33333M4.66675 9.33333L12.9401 4.1625C13.4556 3.84033 13.7133 3.67925 14.0001 3.67925C14.2869 3.67925 14.5446 3.84033 15.0601 4.1625L23.3334 9.33333 M17.6666 16.9165C17.6666 17.4688 18.1143 17.9165 18.6666 17.9165C19.2189 17.9165 19.6666 17.4688 19.6666 16.9165H18.6666H17.6666ZM18.5412 12.3193L19.4159 11.8345L18.5412 12.3193ZM9.33325 6.4165L8.80325 7.2645L17.1966 12.5103L17.7266 11.6623L18.2566 10.8143L9.86325 5.56851L9.33325 6.4165ZM18.6666 16.9165H19.6666V13.3583H18.6666H17.6666V16.9165H18.6666ZM17.7266 11.6623L17.1966 12.5103C17.4423 12.6639 17.567 12.7431 17.6508 12.8074C17.7178 12.8587 17.6936 12.8528 17.6666 12.8041L18.5412 12.3193L19.4159 11.8345C19.2635 11.5597 19.0617 11.3689 18.8676 11.2201C18.6904 11.0842 18.4704 10.948 18.2566 10.8143L17.7266 11.6623ZM18.6666 13.3583H19.6666C19.6666 13.1062 19.6676 12.8474 19.6464 12.6252C19.6231 12.3817 19.5682 12.1094 19.4159 11.8345L18.5412 12.3193L17.6666 12.8041C17.6396 12.7554 17.6474 12.7317 17.6555 12.8157C17.6655 12.9209 17.6666 13.0686 17.6666 13.3583H18.6666Z" fill="#73737300" scaleX="0.7" scaleY="0.7" stroke="#737373" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
+                                                <SVGPath content="M14.0001 24.5V15.1667M14.0001 24.5L5.60675 19.2542C5.14723 18.967 4.91746 18.8234 4.79211 18.5972C4.66675 18.371 4.66675 18.1001 4.66675 17.5582V9.33333M14.0001 24.5L18.6667 21.5833L22.3934 19.2542C22.8529 18.967 23.0827 18.8234 23.2081 18.5972C23.3334 18.371 23.3334 18.1001 23.3334 17.5582V9.33333M14.0001 15.1667L4.66675 9.33333M14.0001 15.1667L23.3334 9.33333M4.66675 9.33333L12.9401 4.1625C13.4556 3.84033 13.7133 3.67925 14.0001 3.67925C14.2869 3.67925 14.5446 3.84033 15.0601 4.1625L23.3334 9.33333 M17.6666 16.9165C17.6666 17.4688 18.1143 17.9165 18.6666 17.9165C19.2189 17.9165 19.6666 17.4688 19.6666 16.9165H18.6666H17.6666ZM18.5412 12.3193L19.4159 11.8345L18.5412 12.3193ZM9.33325 6.4165L8.80325 7.2645L17.1966 12.5103L17.7266 11.6623L18.2566 10.8143L9.86325 5.56851L9.33325 6.4165ZM18.6666 16.9165H19.6666V13.3583H18.6666H17.6666V16.9165H18.6666ZM17.7266 11.6623L17.1966 12.5103C17.4423 12.6639 17.567 12.7431 17.6508 12.8074C17.7178 12.8587 17.6936 12.8528 17.6666 12.8041L18.5412 12.3193L19.4159 11.8345C19.2635 11.5597 19.0617 11.3689 18.8676 11.2201C18.6904 11.0842 18.4704 10.948 18.2566 10.8143L17.7266 11.6623ZM18.6666 13.3583H19.6666C19.6666 13.1062 19.6676 12.8474 19.6464 12.6252C19.6231 12.3817 19.5682 12.1094 19.4159 11.8345L18.5412 12.3193L17.6666 12.8041C17.6396 12.7554 17.6474 12.7317 17.6555 12.8157C17.6655 12.9209 17.6666 13.0686 17.6666 13.3583H18.6666Z" fill="#86828200" scaleX="0.7" scaleY="0.7" stroke="#737373" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
                                              </children>
                                              <padding>
                                                 <Insets bottom="13.0" left="12.0" top="13.0" />
@@ -272,14 +203,14 @@
                                     </TableColumn>
                                  </columns>
                               </TableView>
-                              <HBox prefHeight="39.0" prefWidth="944.0" style="-fx-background-color: white;">
+                              <HBox minHeight="-Infinity" prefHeight="43.0" prefWidth="1179.0" style="-fx-background-color: white;">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#completedPrevPage" style="-fx-background-color: black; -fx-background-radius: 8;" text="&lt;&lt;" textFill="#f2f2f2" translateX="860.0">
+                                    <Button fx:id="completedPrevBtn" mnemonicParsing="false" onAction="#completedPrevPage" style="-fx-background-color: black; -fx-background-radius: 8;" text="&lt;&lt;" textFill="#f2f2f2" translateX="1064.0">
                                        <font>
                                           <Font name="SansSerif Regular" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Label text="0" textFill="#1f1f1f" translateX="860.0">
+                                    <Label fx:id="completedPageLabel" text="15" textFill="#1f1f1f" translateX="1067.0">
                                        <font>
                                           <Font name="SansSerif Bold" size="12.0" />
                                        </font>
@@ -289,22 +220,25 @@
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
                                     </Label>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-background-radius: 8;" text="&gt;&gt;" textFill="#efecec" translateX="860.0">
+                                    <Button fx:id="completedNextBtn" mnemonicParsing="false" onAction="#completedNextPage" style="-fx-background-color: black; -fx-background-radius: 8;" text="&gt;&gt;" textFill="#efecec" translateX="1070.0">
                                        <font>
                                           <Font name="SansSerif Regular" size="12.0" />
                                        </font>
                                     </Button>
                                  </children>
                               </HBox>
-                              <Label text="Incompleted Shipments" translateX="3.0">
+                              <Label fx:id="incompletedLabel" text="Incompleted Shipments" translateX="3.0" translateY="-3.0">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TableView fx:id="" maxWidth="3000.0" minHeight="-Infinity" prefHeight="400.0" prefWidth="944.0" style="-fx-border-width: 5; -fx-border-color: transparent; -fx-background-color: white; -fx-border-color: #F1F1F1F1;">
+                              <TableView fx:id="inCompletedShipmentTable" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1164.0" style="-fx-border-width: 5; -fx-background-color: white; -fx-border-color: #F1F1F1;">
                                  <columns>
-                                    <TableColumn fx:id="" editable="false" minWidth="100.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Order ID">
+                                    <TableColumn fx:id="incompletedShipmentIdColumn" editable="false" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="Shipment ID">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -316,7 +250,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="City">
+                                    <TableColumn fx:id="incompletedCityColumn" editable="false" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="City">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -328,7 +262,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Total Weight">
+                                    <TableColumn fx:id="incompletedWeightColumn" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="Total Weight">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -340,7 +274,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Shipping Date">
+                                    <TableColumn fx:id="incompletedShippingDateColumn" editable="false" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="Shipping Date">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -352,7 +286,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="" editable="false" minWidth="80.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Update">
+                                    <TableColumn fx:id="incompletedUpdateButtonColumn" editable="false" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="Update">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -364,7 +298,7 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn minWidth="100.0" prefWidth="157.0" resizable="false" style="-fx-background-color: white;" text="Delete">
+                                    <TableColumn fx:id="incompletedDeleteButtonColumn" minWidth="80.0" prefWidth="192.0" style="-fx-background-color: white;" text="Delete">
                                        <graphic>
                                           <AnchorPane>
                                              <children>
@@ -376,28 +310,16 @@
                                           </AnchorPane>
                                        </graphic>
                                     </TableColumn>
-                                    <TableColumn fx:id="11" editable="false" minWidth="187.0" prefWidth="187.0" resizable="false" text="Created at">
-                                       <graphic>
-                                          <AnchorPane>
-                                             <children>
-                                                <SVGPath content="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM7 3V8.41421L10.2929 11.7071L11.7071 10.2929L9 7.58579V3H7Z" fill="#73737300" stroke="#747474" strokeWidth="1.5" style="-fx-padding: 5;" AnchorPane.bottomAnchor="0.6465805053710909" AnchorPane.leftAnchor="0.0" />
-                                             </children>
-                                             <padding>
-                                                <Insets bottom="13.0" left="12.0" top="13.0" />
-                                             </padding>
-                                          </AnchorPane>
-                                       </graphic>
-                                    </TableColumn>
                                  </columns>
                               </TableView>
-                              <HBox prefHeight="22.0" prefWidth="944.0" style="-fx-background-color: white;">
+                              <HBox maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="1180.0" style="-fx-background-color: white;">
                                  <children>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-background-radius: 8;" text="&lt;&lt;" textFill="WHITE" translateX="860.0">
+                                    <Button fx:id="incompletedPrevBtn" mnemonicParsing="false" onAction="#incompletedPrevPage" style="-fx-background-color: black; -fx-background-radius: 8;" text="&lt;&lt;" textFill="WHITE" translateX="1064.0">
                                        <font>
                                           <Font name="SansSerif Regular" size="12.0" />
                                        </font>
                                     </Button>
-                                    <Label text="0" textFill="#1f1f1f" translateX="860.0">
+                                    <Label fx:id="inCompletedPageLabel" text="15" textFill="#1f1f1f" translateX="1067.0">
                                        <font>
                                           <Font name="SansSerif Bold" size="12.0" />
                                        </font>
@@ -408,7 +330,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </Label>
-                                    <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-background-radius: 8;" text="&gt;&gt;" textFill="WHITE" translateX="860.0">
+                                    <Button fx:id="incompletedNextBtn" mnemonicParsing="false" onAction="#incompletedNextPage" style="-fx-background-color: black; -fx-background-radius: 8;" text="&gt;&gt;" textFill="WHITE" translateX="1070.0">
                                        <font>
                                           <Font name="SansSerif Regular" size="12.0" />
                                        </font>
@@ -416,8 +338,14 @@
                                  </children>
                               </HBox>
                            </children>
+                           <VBox.margin>
+                              <Insets top="25.0" />
+                           </VBox.margin>
                         </VBox>
                      </children>
+                     <padding>
+                        <Insets top="15.0" />
+                     </padding>
                   </VBox>
                </content>
             </ScrollPane>
@@ -431,7 +359,7 @@
                 </HBox>
             </children>
             <BorderPane.margin>
-                <Insets left="24.0" right="24.0" top="24.0" />
+                <Insets left="24.0" top="-20.0" />
             </BorderPane.margin>
         </VBox>
     </center>

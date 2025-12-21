@@ -14,6 +14,18 @@
 <junit.version>5.12.1</junit.version>  </properties>
 
   <dependencies>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-annotations</artifactId>
+          <version>2.15.2</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-webflux</artifactId>
+          <version>4.0.0</version>
+      </dependency>
+
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -24,7 +36,6 @@
       <artifactId>javafx-fxml</artifactId>
       <version>21.0.6</version>
     </dependency>
-
 <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -55,7 +66,6 @@
           <version>1.17.8</version>
           <scope>compile</scope>
       </dependency>
-
       <dependency>
           <groupId>com.google.code.gson</groupId>
           <artifactId>gson</artifactId>
@@ -67,7 +77,23 @@
           <version>3.5.5</version>
           <scope>compile</scope>
       </dependency>
-
+      <dependency>
+          <groupId>io.github.cdimascio</groupId>
+          <artifactId>dotenv-java</artifactId>
+          <version>3.2.0</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring-web</artifactId>
+          <version>6.2.12</version>
+          <scope>compile</scope>
+      </dependency>
+      <dependency>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+          <version>2.19.2</version>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>

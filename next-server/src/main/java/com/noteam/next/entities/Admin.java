@@ -7,31 +7,31 @@ import java.time.LocalDateTime;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer admin_id;
+    private Integer admin_id= Integer.valueOf(0);
 
     @Column(name = "name", nullable = false)
-    private String name;
+    private String name="mm";
 
     @Column(name = "age", nullable = false)
-    private Integer age;
+    private Integer age=Integer.valueOf(5);
 
     @Column(name = "image", nullable = true)
-    private String image;
+    private String image="I";
 
     @Column(name = "social_security_number", nullable = false)
-    private String social_security_number;
+    private String social_security_number="S";
 
     @Column(name = "email", nullable = false)
-    private String email;
+    private String email=".COM";
 
     @Column(name = "password", nullable = false)
-    private String password;
+    private String password="Password";
 
     @Column(nullable = false, name = "created_at")
-    private LocalDateTime created_at;
+    private LocalDateTime created_at=LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private LocalDateTime updated_at;
+    private LocalDateTime updated_at=LocalDateTime.now();
 
     public Integer getAdmin_id() {
         return admin_id;

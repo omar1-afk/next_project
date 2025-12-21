@@ -5,12 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 public class Shipment {
+    /*
     private List<Integer> ordersIds;
     private  int shipmentId;
     private Admin admin;
     private Vehicle vehicle;
     private int vehicleId = vehicle.getVehicleId();
-    //private String vehicleType= vehicle.;
+
      private Driver driver;
     private String driverName= driver.getName();
     private double totalWeight;
@@ -61,4 +62,6 @@ public class Shipment {
     public void setComplete(boolean complete) { this.isComplete = complete; }
     public int getShipmentId() {return shipmentId;}
     public void setShipmentId(int shipmentId) {this.shipmentId = shipmentId;}
+
+     */
 }

@@ -22,15 +22,15 @@ public class DriverController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Driver> getDriverById(@RequestParam int driver_id){
-         logger.info("Getting driver by id: " + driver_id);
-         Optional<Driver> driverOptional = driverService.getDriverById(driver_id);
-         if(driverOptional.isEmpty())
+        logger.info("Getting driver by id: " + driver_id);
+        Optional<Driver> driverOptional = driverService.getDriverById(driver_id);
+        if(driverOptional.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-         else
+        else
             return ResponseEntity.status(HttpStatus.OK).body(driverOptional.get());
-        }
+    }
 
-    @GetMapping
+    @GetMapping("/email/{email}")
     public ResponseEntity<Driver> getDriverByEmail(@RequestParam String email){
         logger.info("Getting driver by email: " + email);
         Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
@@ -70,7 +70,7 @@ public class DriverController {
         }
     }
 
-        @PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Driver> loginDriver(@RequestParam String email, @RequestParam String password){
         // find the Driver data that contains the following email
         Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
@@ -89,18 +89,22 @@ public class DriverController {
     }
 
     @PostMapping
-    public ResponseEntity<Driver> createDriver(@RequestBody Driver driver){
-        logger.info("Creating New Driver");
-        Driver newDriver = driverService.createdriver(
-                driver.getName(),
-                driver.getAge(),
-                driver.getEmail(),
-                driver.getPassword(),
-                driver.getSocial_security_number(),
-                driver.getImage(),
-                driver.getIsbusy()
-        );
-        return ResponseEntity.status(HttpStatus.OK).body(newDriver);
+    public ResponseEntity<Driver> createDriver(@RequestBody Driver driver) {
+        try {
+            logger.info("Creating New Driver");
+            Driver newDriver = driverService.createdriver(
+                    driver.getName(),
+                    driver.getAge(),
+                    driver.getEmail(),
+                    driver.getPassword(),
+                    driver.getSocial_security_number(),
+                    driver.getImage(),
+                    driver.getIsbusy()
+            );
+            return ResponseEntity.status(HttpStatus.OK).body(newDriver);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PutMapping("/{id}")
