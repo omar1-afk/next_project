@@ -1,5 +1,6 @@
 package org.noteam.nextclient.controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.*;
@@ -15,8 +16,10 @@ import com.google.gson.JsonObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.logging.Logger;
 
 public class LoginController {
+    private static Logger log = Logger.getLogger(LoginController.class.getName());
     @FXML
     private StackPane passwordFieldsStack;
     @FXML
@@ -41,6 +44,7 @@ public class LoginController {
 
     @FXML
     protected void login() {
+        log.severe("______________STARTING____________");
         passwordField.textProperty().bindBidirectional(passwordVisibleField.textProperty());
         password = passwordField.getText();
         email = emailField.getText();
@@ -49,13 +53,20 @@ public class LoginController {
             return;
         }
 
-        new Thread(() -> {
+        Platform.runLater(() -> {
             JsonObject data = new JsonObject();
 
-            data.add("email", email);
-            data.add("password", password);
+            data.addProperty("email", email);
+            data.addProperty("password", password);
+            log.severe(data.toString());
+            try {
+                HttpURLConnection con = ApiUtil.fetchApi("/api/v1/login",
+                        ApiUtil.RequestMethod.POST, data);
+                log.severe("" + con.getResponseCode());
 
-            HttpURLConnection con = ApiUtil.fetchApi("/api/v1/login", ApiUtil.RequestMethod.POST, data);
+            } catch (IOException e) {
+
+            }
         });
     }
 

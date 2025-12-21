@@ -1,3 +1,4 @@
-package org.noteam.nextclient.entity;
+package org.noteam.nextclient.models;
 
-public record Employee (String email, String password) { }
+public record Employee(String email, String password) {
+}
