@@ -12,17 +12,25 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <junit.version>5.12.1</junit.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.compiler.release>17</maven.compiler.release>
+    <maven.compiler.source>25</maven.compiler.source>
+    <maven.compiler.target>25</maven.compiler.target>
+    <maven.compiler.release>25</maven.compiler.release>
   </properties>
 
-  <dependencies>
+<dependencies>
+    <!-- JavaFX -->
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-webflux</artifactId>
-      <version>4.0.0</version>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>21.0.6</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>21.0.6</version>
+    </dependency>
+
+    <!-- Jackson (single version) -->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
@@ -38,23 +46,37 @@
       <artifactId>jackson-annotations</artifactId>
       <version>2.15.2</version>
     </dependency>
+
+    <!-- Gson -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.13.1</version>
+    </dependency>
+
+    <!-- org.json (proper version, not android) -->
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20240303</version>
+    </dependency>
+
+    <!-- Dotenv -->
     <dependency>
       <groupId>io.github.cdimascio</groupId>
       <artifactId>dotenv-java</artifactId>
       <version>3.2.0</version>
     </dependency>
+
+    <!-- HTTP Client (if you need it for API calls) -->
     <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-controls</artifactId>
-      <version>21.0.6</version>
-    </dependency>
-    <dependency>
-      <groupId>org.openjfx</groupId>
-      <artifactId>javafx-fxml</artifactId>
-      <version>21.0.6</version>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.2.1</version>
     </dependency>
 
-<dependency>
+    <!-- JUnit (test only) -->
+    <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>
@@ -66,31 +88,6 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>com.vaadin.external.google</groupId>
-          <artifactId>android-json</artifactId>
-          <version>0.0.20131108.vaadin1</version>
-          <scope>compile</scope>
-      </dependency>
-      <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-core</artifactId>
-          <version>2.19.2</version>
-          <scope>compile</scope>
-      </dependency>
-      <dependency>
-          <groupId>net.bytebuddy</groupId>
-          <artifactId>byte-buddy</artifactId>
-          <version>1.17.8</version>
-          <scope>compile</scope>
-      </dependency>
-
-      <dependency>
-          <groupId>com.google.code.gson</groupId>
-          <artifactId>gson</artifactId>
-          <version>2.13.1</version>
-      </dependency>
-
   </dependencies>
 
   <build>
@@ -102,6 +99,10 @@
         <configuration>
           <source>25</source>
           <target>25</target>
+          <compilerArgs>
+              <arg>--add-reads</arg>
+              <arg>org.noteam.nextclient=ALL-UNNAMED</arg>
+          </compilerArgs>
         </configuration>
       </plugin>
       <plugin>
@@ -113,7 +114,11 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.noteam.nextclient.Launcher</mainClass>
+                            <mainClass>org.noteam.nextclient.Launcher</mainClass>
+                            <options>
+        <option>--add-modules</option>
+        <option>com.google.gson</option>
+    </options>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>

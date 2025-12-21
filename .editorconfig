@@ -1,0 +1,9 @@
+root = true
+
+[*.java]
+indent_style = space
+indent_size = 2
+
+[*.{xml,fxml}]
+indent_style = space
+indent_size = 3
