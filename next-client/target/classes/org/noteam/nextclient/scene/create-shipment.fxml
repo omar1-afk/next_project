@@ -125,7 +125,7 @@
                   </TableView>
                   <HBox prefHeight="34.0" prefWidth="892.0" translateY="5.0">
                      <children>
-                        <Button fx:id="ordersPrevBtn" minHeight="19.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="26.4" prefWidth="54.0" style="-fx-background-color: BLACK; -fx-background-radius: 8;" text="&lt;&lt;" textFill="WHITE" translateX="750.0">
+                        <Button fx:id="ordersPrevBtn" minHeight="19.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#orderPrevPage" prefHeight="26.4" prefWidth="54.0" style="-fx-background-color: BLACK; -fx-background-radius: 8;" text="&lt;&lt;" textFill="WHITE" translateX="750.0">
                            <font>
                               <Font name="SansSerif Bold" size="12.0" />
                            </font>
@@ -141,7 +141,7 @@
                               <Font name="SansSerif Bold" size="13.0" />
                            </font>
                         </Label>
-                        <Button fx:id="ordersNextBtn" maxHeight="-Infinity" mnemonicParsing="false" prefHeight="26.4" prefWidth="54.0" style="-fx-background-color: BLACK; -fx-background-radius: 8;" text="&gt;&gt;" textFill="WHITE" translateX="750.0">
+                        <Button fx:id="ordersNextBtn" maxHeight="-Infinity" mnemonicParsing="false" onAction="#orderNextPage" prefHeight="26.4" prefWidth="54.0" style="-fx-background-color: BLACK; -fx-background-radius: 8;" text="&gt;&gt;" textFill="WHITE" translateX="750.0">
                            <HBox.margin>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                            </HBox.margin>

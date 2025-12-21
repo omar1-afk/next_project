@@ -46,7 +46,6 @@ public class Shipment {
     @JoinColumn(name="city_id")
     private City city;
     @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
     private List<Order> orderList;
 
 

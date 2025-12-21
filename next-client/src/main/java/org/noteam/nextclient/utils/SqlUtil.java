@@ -49,7 +49,7 @@ public class SqlUtil {
         HttpURLConnection connection = null;
         try {
             connection =ApiUtil.fetchApi(
-                    "api/v1/driver/all",ApiUtil.RequestMethod.GET,null
+                    "/api/v1/driver/all",ApiUtil.RequestMethod.GET,null
             );
             if (connection.getResponseCode()!=200){
                 System.out.println("Error getting drivers"+ connection.getResponseCode());

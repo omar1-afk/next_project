@@ -42,7 +42,7 @@ public class Order {
     @JoinColumn(name = "shipment_id",nullable = true)
     @JsonBackReference
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties("orderList")
     Shipment shipment;
     @ManyToOne
     @JoinColumn(name="receiver_id",nullable = true)

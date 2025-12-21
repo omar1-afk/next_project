@@ -209,7 +209,7 @@ try{
     //update
     @Transactional
     public Shipment updateShipmentById(List<Integer> orders, int shipment_id, int vehicle_id, int driver_id, double total_weight, LocalDate shipping_date, int city_id) {
-        logger.info("update a shipment number" + shipment_id);
+        logger.info("update a shipment number" + shipment_id );
         try{
 
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
@@ -224,8 +224,11 @@ try{
 
        // Optional<Admin> admin = adminRepository.findById(admin_id); // it depends on whether the admin here is the one who added the shipment or
                                                                      // the one who last confirmed a change cuz obviously it can not be both
-        if (vehicle.isEmpty() ||driver.isEmpty()||city.isEmpty()){
-            throw new IllegalArgumentException("Vehicle, Driver, City or shipment not found");
+        if (vehicle.isEmpty()){ throw new IllegalArgumentException("Vehicle not found");}
+
+           if( driver.isEmpty()){ throw new IllegalArgumentException(" Driver not found");}
+           if(city.isEmpty()){
+            throw new IllegalArgumentException(" City  not found");
         }
         total_weight = Math.ceil(total_weight);
         int weight = vehicle.get().getWeightLimit();// name check (checked)

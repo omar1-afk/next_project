@@ -215,7 +215,7 @@ public class ShipmentController {
     //update
     @PutMapping("/update/{shipment_id}")
     public ResponseEntity<?> updateShipment(@PathVariable int shipment_id,@RequestBody ShipmentRequest shipmentRequest ) {
-        logger.info("update a shipment number" + shipmentRequest.getShipmentId());
+        logger.info("update a shipment number" + shipment_id);
 
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
