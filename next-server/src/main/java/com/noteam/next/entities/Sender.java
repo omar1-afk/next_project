@@ -13,7 +13,8 @@ public class Sender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // for Auto-increment
-    private Integer receiverId;
+    @Column(name = "sender_id")
+    private Integer senderId;
 
     @Column(name ="name", nullable = false)
     private String name;
@@ -36,8 +37,8 @@ public class Sender {
     @Column(name="updatedAt", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public Integer getReceiverId() {
-        return receiverId;
+    public Integer getSenderId() {
+        return senderId;
     }
 
 //    public void setReceiverId(Integer receiverId) { (we don't need to set the sender id)

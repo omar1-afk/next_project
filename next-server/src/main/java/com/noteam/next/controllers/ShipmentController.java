@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,14 +22,22 @@ public class ShipmentController {
 
     private static final Logger logger = Logger.getLogger(ShipmentController.class.getName());
     public static class ShipmentRequest {
+        private int shipmentId;
         private List<Integer> orderIds;
         private int adminId;
         private int vehicleId;
         private int driverId;
         private double totalWeight;
-        private Date shippingDate;
+        private LocalDate shippingDate;
+        private int cityId;
+
 
         // Getters and setters
+
+        public int getShipmentId() {
+            return shipmentId;
+        }
+
         public List<Integer> getOrderIds() { return orderIds; }
         public void setOrderIds(List<Integer> orderIds) { this.orderIds = orderIds; }
         public int getAdminId() { return adminId; }
@@ -38,8 +48,10 @@ public class ShipmentController {
         public void setDriverId(int driverId) { this.driverId = driverId; }
         public double getTotalWeight() { return totalWeight; }
         public void setTotalWeight(double totalWeight) { this.totalWeight = totalWeight; }
-        public Date getShippingDate() { return shippingDate; }
-        public void setShippingDate(Date shippingDate) { this.shippingDate = shippingDate; }
+        public LocalDate getShippingDate() { return shippingDate; }
+        public void setShippingDate(LocalDate shippingDate) { this.shippingDate = shippingDate; }
+        public int getCityId() { return cityId; }
+        public void setCityId(int cityId) { this.cityId = cityId; }
     }
     //get
     @GetMapping
@@ -86,6 +98,23 @@ public class ShipmentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/city/{city_id}")
+    public ResponseEntity<List<Shipment>> getAllShipmentsByCityId(@PathVariable int city_id) {
+        logger.info("Getting all shipments  by city: " + city_id);
+        try {
+            List<Shipment> shipments = shipmentService.getAllShipmentsByCityId(city_id);
+            if (shipments.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(shipments);
+        }
+        catch (Exception e){
+            logger.severe("Error getting all shipments: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
     @GetMapping("/admin/{admin_id}")
     public ResponseEntity<List<Shipment>> getAllShipmentsByAdminId(@PathVariable int admin_id) {
         logger.info("Getting all shipments  by admin: " + admin_id);
@@ -160,9 +189,7 @@ public class ShipmentController {
     @PostMapping
     public ResponseEntity<?> createShipment(@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("create a shipment ");
-         /*
-        admin authentication
-         */
+
         try {
            Shipment createdShipment = shipmentService.createShipment(
                     shipmentRequest.getOrderIds(),
@@ -170,13 +197,16 @@ public class ShipmentController {
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),
-                    shipmentRequest.getShippingDate()
+                    shipmentRequest.getShippingDate(),
+                   shipmentRequest.getCityId()
 
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(createdShipment);
-          } catch (IllegalArgumentException e) {
+          }
+        catch (IllegalArgumentException e) {
            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-          } catch (Exception e) {
+          }
+        catch (Exception e) {
           logger.severe("Error creating shipment: " + e.getMessage());
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Error creating shipment: " + e.getCause().getMessage());
@@ -184,24 +214,25 @@ public class ShipmentController {
 }
     //update
     @PutMapping("/update/{shipment_id}")
-    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id, @RequestBody ShipmentRequest shipmentRequest ) {
+    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id,@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("update a shipment number" + shipment_id);
-         /*
-        admin authentication
-         */
+
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
                     shipmentRequest.getOrderIds(),
-                    shipmentRequest.getAdminId(),
+                    //shipmentRequest.getAdminId(),
                     shipment_id,
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),
-                    shipmentRequest.getShippingDate());
+                    shipmentRequest.getShippingDate(),
+                    shipmentRequest.getCityId());
             return ResponseEntity.status(HttpStatus.OK).body(updatedShipment);
-          } catch (IllegalArgumentException e) {
+          }
+        catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-           } catch (Exception e) {
+           }
+        catch (Exception e) {
             logger.severe("Error updating shipment: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error updating shipment: " + e.getCause().getMessage());

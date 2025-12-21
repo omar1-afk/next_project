@@ -54,12 +54,18 @@ public class MainController implements Initializable {
     private SVGPath settingsIcon;
     @FXML
     private StackPane viewPane;
-    @FXML
-    public void onDashboardMouseEnter(){
-         if (!isTabActive(dashboardBG)){
-             dashboardBG.setFill(Color.rgb(193,191,191));
-         }
+
+    public StackPane getViewPane() {
+        return viewPane;
     }
+
+    @FXML
+    public void onDashboardMouseEnter() {
+        if (!isTabActive(dashboardBG)) {
+            dashboardBG.setFill(Color.rgb(193, 191, 191));
+        }
+    }
+
     @FXML
     public void onDashboardClick(){
         if (!isTabActive(dashboardBG)){
@@ -69,24 +75,28 @@ public class MainController implements Initializable {
             showOrders();
         }
     }
+
     @FXML
     public void onDashboardMouseExit(){
         if (!isTabActive(dashboardBG)){
             dashboardBG.setFill(Color.rgb(217,217,217));
         }
     }
+
     @FXML
-    public void onFleetsMouseEnter(MouseEvent event){
-        if(!isTabActive(fleetsBG)){
-            fleetsBG.setFill(Color.rgb(193,191,191));
+    public void onFleetsMouseEnter(MouseEvent event) {
+        if (!isTabActive(fleetsBG)) {
+            fleetsBG.setFill(Color.rgb(193, 191, 191));
         }
     }
+
     @FXML
-    public void onFleetsMouseExit(MouseEvent event){
-        if (!isTabActive(fleetsBG)){
-            fleetsBG.setFill(Color.rgb(217,217,217));
+    public void onFleetsMouseExit(MouseEvent event) {
+        if (!isTabActive(fleetsBG)) {
+            fleetsBG.setFill(Color.rgb(217, 217, 217));
         }
     }
+
     @FXML
     public void onFleetsClick(){
        if (!isTabActive(fleetsBG)){
@@ -131,10 +141,10 @@ public class MainController implements Initializable {
         }
     }
     @FXML
-    public void onShipmentsClick(){
-        if (!isTabActive(shipmentsBG)){
+    public void onShipmentsClick() {
+        if (!isTabActive(shipmentsBG)) {
             deactivateAllTabs();
-            makeTabActive(shipmentsBG,shipmentsTabLabel);
+            makeTabActive(shipmentsBG, shipmentsTabLabel);
             shipmentsIcon.setStroke(Color.WHITE);
             showShipments();
         }
@@ -145,18 +155,24 @@ public class MainController implements Initializable {
             settingsBG.setFill(Color.rgb(193,191,191));
         }
     }
+
     @FXML
     public void onSettingsMouseExit(MouseEvent event){
         if(!isTabActive(settingsBG)){
             settingsBG.setFill(Color.rgb(217,217,217));
         }
     }
+
     @FXML
     public void onSettingsClick(){
         if (!isTabActive(settingsBG)){
             deactivateAllTabs();
             makeTabActive(settingsBG,settingsTabLabel);
             settingsIcon.setFill(Color.WHITE);
+
+            // 3. Get the controller instance from the loader
+
+            // 4. Now this will work
         }
     }
     private void makeTabActive(Rectangle tabBG,Label tabLabel){
@@ -187,7 +203,7 @@ public class MainController implements Initializable {
     }
     private void showOrders(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/Scene/orders-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/orders-view.fxml"));
             Parent root = loader.load();
             OrderController orderController = loader.getController();
             viewPane.getChildren().clear();
@@ -198,7 +214,7 @@ public class MainController implements Initializable {
     }
     private void showShipments(){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/Scene/shipments-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/shipments-view.fxml"));
             Parent root = loader.load();
             ShipmentController shipmentController = loader.getController();
             viewPane.getChildren().clear();

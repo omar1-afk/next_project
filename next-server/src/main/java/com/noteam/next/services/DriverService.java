@@ -41,7 +41,7 @@ public class DriverService {
     public Page<Driver> getDdriversByPage(int page, int size, String sortBy, String sortDir){
         Pageable pageable = PageRequest.of(page,size,Sort.by(Sort.Direction.fromString(sortDir),sortBy));
         logger.info("Driver service: getting Drivers by page: "+page+" with size "+size+" sorted by "+ sortBy+",("+ sortDir+")");
-            return driverRepository.findAll(pageable);
+        return driverRepository.findAll(pageable);
     }
 
     public List<Driver> findAll() {
@@ -72,20 +72,20 @@ public class DriverService {
             return 0;
         }
         else{
-                logger.info("updating driver by id : " + driver_id);
-                Driver driver = new Driver();
-                driver.setName(name);
-                driver.setAge(age);
-                driver.setImage(image);
-                driver.setSocial_security_number(social_security_number);
-                driver.setEmail(email);
-                driver.setPassword(password);
-                driver.setIsbusy(false);
-                driver.setUpdated_at(LocalDateTime.now());
-                driverRepository.save(driver);
-                return 1;
-            }
+            logger.info("updating driver by id : " + driver_id);
+            Driver driver = new Driver();
+            driver.setName(name);
+            driver.setAge(age);
+            driver.setImage(image);
+            driver.setSocial_security_number(social_security_number);
+            driver.setEmail(email);
+            driver.setPassword(password);
+            driver.setIsbusy(false);
+            driver.setUpdated_at(LocalDateTime.now());
+            driverRepository.save(driver);
+            return 1;
         }
+    }
     // delete
     public boolean deleteDriverById(int driver_id){
         Optional<Driver> driverOptional = getDriverById(driver_id);

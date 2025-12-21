@@ -1,22 +1,18 @@
 package com.noteam.next.services;
 import com.noteam.next.entities.*;
-import com.noteam.next.repositories.DriverRepository;
-import com.noteam.next.repositories.ShipmentRepository;
-import com.noteam.next.repositories.VehicleRepository;
-import com.noteam.next.repositories.AdminRepository;
+import com.noteam.next.repositories.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import static java.util.Collections.emptyList;
-
 @Service
 public class ShipmentService {
 
@@ -31,6 +27,8 @@ public class ShipmentService {
     private OrderService ordersService;
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private CityRepository cityRepository;
     //get
 
     public List<Shipment> getAllShipments() {
@@ -99,6 +97,19 @@ public class ShipmentService {
             return java.util.Collections.emptyList();
         }
     }
+
+    public List<Shipment> getAllShipmentsByCityId(int city_id) {
+        logger.info("Getting all shipments  by city_id" + city_id);
+        try {
+            Optional<City> city = cityRepository.findById(city_id);
+            return city.map(value->shipmentRepository.findAllByCity(value)).orElse(emptyList());
+        }
+        catch (Exception e) {
+            logger.severe("Error: " + e.getMessage());
+            return java.util.Collections.emptyList();
+        }
+    }
+
     public List<Shipment> getAllShipmentsByIsComplete( boolean isComplete ) {
         logger.info("Getting all shipments  by Is_complete" + isComplete);
         try {
@@ -117,7 +128,7 @@ public class ShipmentService {
     public List<Order> getAllOrdersInShipment(Shipment shipment) {
         logger.info("Getting all orders  by shipment_id" +shipment.getShipment_id() );
         try {
-              List<Order> orders = shipment.getOrdersList();
+              List<Order> orders = shipment.getOrderList();
               if (orders == null) {
                   logger.info("Orders not found");
                   return emptyList();
@@ -131,34 +142,62 @@ public class ShipmentService {
     }
     //post
     @Transactional
-    public Shipment createShipment(List<Integer> orders, int admin_id, int vehicle_id, int driver_id, double total_weight, Date shipping_date) {
+    public Shipment createShipment(List<Integer> orders, int admin_id, int vehicle_id, int driver_id, double total_weight, LocalDate shipping_date , int city_id) {
         logger.info("admin:" +admin_id+"creates a shipment for vehicle" +vehicle_id + "driver"+driver_id +"will be shipped at"+shipping_date +"total_wight"+total_weight);
 try{
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id); // name check (checked)
+    /*
+        Vehicle vehicle =new Vehicle();
+        vehicle.setCreatedAt(LocalDateTime.now());
+        vehicle.setAvailable(true);
+        vehicle.setType(Vehicle.VehicleType.TRUCK);
+        vehicle.setUsed(false);
+        vehicle.setWeightLimit(50);
+        vehicle.setLicensePlate("");
+        Driver driver = new Driver();
+        driver.setAge(10);
+        driver.setEmail(".com");
+        driver.setPassword("ps");
+        driver.setImage("im");
+    driver.setIsbusy(false);
+    driver.setCreated_at(LocalDateTime.now());
+    driver.setName("driver");
+    driver.setSocial_security_number("1234");
+    driver.setUpdated_at(LocalDateTime.now());
+*/
         Optional<Driver> driver= driverRepository.findById(driver_id); // name check
         Optional<Admin> admin = adminRepository.findById(admin_id);
+        Optional<City> city = cityRepository.findById(city_id);
 
-        if (vehicle.isEmpty() ||driver.isEmpty() ||admin.isEmpty()) {
-            throw new IllegalArgumentException("Vehicle, Driver, or Admin not found");
-        }
+       if (vehicle.isEmpty() )
+        {throw new IllegalArgumentException("Vehicle not found");}
+        if(driver.isEmpty()){throw new IllegalArgumentException("Driver not found");}
+        if(admin.isEmpty()){throw new IllegalArgumentException("Admin not found");}
+        if( city.isEmpty()){ throw new IllegalArgumentException(" City  not found");}
+
+
 
             total_weight = Math.ceil(total_weight);
-            int weight = vehicle.get().getWeightLimit();// name check (checked)
+       // int weight=vehicle.getWeightLimit();
+        int weight = vehicle.get().getWeightLimit();// name check (checked)
              if (total_weight > weight) {
               throw new IllegalArgumentException("Total weight exceeds vehicle capacity");
              }
                 Shipment shipment;
                 shipment = new Shipment();
                 shipment.setVehicle(vehicle.get());
+                // shipment.setVehicle(vehicle);
                 shipment.setAdmin(admin.get());
+                //shipment.setDriver(driver);
                 shipment.setDriver(driver.get());
+                shipment.setCity(city.get());
                 shipment.setIsComplete(total_weight == weight );
                 shipment.setTotal_weight((int) total_weight);
                 shipment.setShipping_date(shipping_date);
                 shipment.setCreated_at(LocalDateTime.now());
                 Shipment createdShipment = shipmentRepository.save(shipment);
                 if (orders != null && !orders.isEmpty()) {
-                    ordersService.assignOrDeleteShipment(orders, createdShipment);
+                    ordersService.attachShipmentByIds(orders, createdShipment); // name
                 }
              return createdShipment;
         } catch (Exception e) {
@@ -169,8 +208,8 @@ try{
     }
     //update
     @Transactional
-    public Shipment updateShipmentById(List<Integer> orders,int admin_id,int shipment_id,int vehicle_id, int driver_id, double total_weight, Date shipping_date) {
-        logger.info("update a shipment number" + shipment_id);
+    public Shipment updateShipmentById(List<Integer> orders, int shipment_id, int vehicle_id, int driver_id, double total_weight, LocalDate shipping_date, int city_id) {
+        logger.info("update a shipment number" + shipment_id );
         try{
 
         Optional<Shipment> shipment = shipmentRepository.findById(shipment_id);
@@ -181,11 +220,15 @@ try{
         Shipment existingShipment = shipment.get();
         Optional<Vehicle> vehicle = vehicleRepository.findById(vehicle_id);     // name check (checked)
         Optional<Driver> driver = driverRepository.findById(driver_id); // name check
+        Optional<City> city= cityRepository.findById(city_id);
 
        // Optional<Admin> admin = adminRepository.findById(admin_id); // it depends on whether the admin here is the one who added the shipment or
                                                                      // the one who last confirmed a change cuz obviously it can not be both
-        if (vehicle.isEmpty() ||driver.isEmpty()){
-            throw new IllegalArgumentException("Vehicle, Driver, or shipment not found");
+        if (vehicle.isEmpty()){ throw new IllegalArgumentException("Vehicle not found");}
+
+           if( driver.isEmpty()){ throw new IllegalArgumentException(" Driver not found");}
+           if(city.isEmpty()){
+            throw new IllegalArgumentException(" City  not found");
         }
         total_weight = Math.ceil(total_weight);
         int weight = vehicle.get().getWeightLimit();// name check (checked)
@@ -196,13 +239,14 @@ try{
         existingShipment.setVehicle(vehicle.get());
         //updatedShipment.setAdmin(admin.get());
         existingShipment.setDriver(driver.get());
+        existingShipment.setCity(city.get());
         existingShipment.setIsComplete(total_weight == weight );
         existingShipment.setTotal_weight((int) total_weight);
         existingShipment.setShipping_date(shipping_date);
         existingShipment.setUpdated_at(LocalDateTime.now());
         Shipment savedShipment = shipmentRepository.save(existingShipment);
         if (orders != null && !orders.isEmpty()) {
-            ordersService.assignOrDeleteShipment(orders, savedShipment);
+            ordersService.attachShipmentByIds(orders, savedShipment);
         }
         return savedShipment;
        } catch (Exception e) {
@@ -263,17 +307,17 @@ try{
         else {
             try{
                Shipment shipment = shipmentOptional.get();
-                if (shipment.getOrdersList() != null && !shipment.getOrdersList().isEmpty()) {
+                if (shipment.getOrderList() != null && !shipment.getOrderList().isEmpty()) {
               List<Integer> orderIds = new ArrayList<>() ;
-                for(Order order :shipment.getOrdersList() ) {
+                for(Order order :shipment.getOrderList() ) {
                     orderIds.add(order.getId());
                 }
-               ordersService.assignOrDeleteShipment(orderIds,null);
+               ordersService.deattachShipmentByIds(orderIds);
             }
             shipment.setDriver(null);
             shipment.setVehicle(null);
             shipment.setAdmin(null);
-            shipment.setOrdersList(null);
+            shipment.setOrderList(null);
             shipmentRepository.save(shipment);
             shipmentRepository.delete(shipment);
             return true;

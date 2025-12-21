@@ -9,6 +9,7 @@ public class Receiver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // for Auto-increment
+    @Column(name = "receiver_id")
     private Integer receiverId;
 
     @Column(name ="name", nullable = false)

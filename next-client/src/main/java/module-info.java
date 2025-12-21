@@ -3,6 +3,19 @@ module org.noteam.nextclient {
     requires javafx.fxml;
     requires javafx.graphics;
 
+    requires java.desktop;
+    requires android.json;
+    requires com.fasterxml.jackson.core;
+    requires com.google.gson;
+    requires java.sql;
+    requires javafx.base;
+    requires spring.data.commons;
+    requires javafx.graphics;
+    requires io.github.cdimascio.dotenv.java;
+    requires spring.web;
+    requires spring.webflux;
+    requires com.fasterxml.jackson.databind;
+
 
     opens org.noteam.nextclient to javafx.fxml;
     exports org.noteam.nextclient;

@@ -22,13 +22,13 @@ public class DriverController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Driver> getDriverById(@RequestParam int driver_id){
-         logger.info("Getting driver by id: " + driver_id);
-         Optional<Driver> driverOptional = driverService.getDriverById(driver_id);
-         if(driverOptional.isEmpty())
+        logger.info("Getting driver by id: " + driver_id);
+        Optional<Driver> driverOptional = driverService.getDriverById(driver_id);
+        if(driverOptional.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-         else
+        else
             return ResponseEntity.status(HttpStatus.OK).body(driverOptional.get());
-        }
+    }
 
     @GetMapping("/email/{email}")
     public ResponseEntity<Driver> getDriverByEmail(@RequestParam String email){
@@ -70,7 +70,7 @@ public class DriverController {
         }
     }
 
-        @PostMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Driver> loginDriver(@RequestParam String email, @RequestParam String password){
         // find the Driver data that contains the following email
         Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
