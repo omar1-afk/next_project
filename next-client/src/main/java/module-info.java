@@ -9,7 +9,8 @@ module org.noteam.nextclient {
   requires reactor.core;
   requires org.reactivestreams;
   requires javafx.graphics;
-    requires org.noteam.nextclient;
+//  when comment the luncher works :)
+//    requires org.noteam.nextclient;
     requires javafx.base;
 
     opens org.noteam.nextclient to javafx.fxml;
