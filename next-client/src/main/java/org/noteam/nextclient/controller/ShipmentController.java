@@ -40,7 +40,7 @@ public class ShipmentController {
     LocalDate d = LocalDate.of(2025, 12, 31);
     Order order = new Order(
         0, "EG", "Alex", "Borg", "District", false, true, 100, State.PICKED, 50,
-        LocalDate.of(2025, 12, 24), 1,
+        LocalDate.of(2025, 12, 24), 1,1,2,
         LocalDateTime.now(),
         LocalDate.now() // Use LocalDate.now() here to match the record
     );
