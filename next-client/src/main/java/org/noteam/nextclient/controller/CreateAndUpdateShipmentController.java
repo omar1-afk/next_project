@@ -1,5 +1,6 @@
 package org.noteam.nextclient.controller;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,7 +89,7 @@ public class CreateAndUpdateShipmentController {
                     .shipmentId(shipmentDisplay.shipmentIdProperty().get())
                     .totalWeight(shipmentDisplay.totalWeightProperty().get())
                     .vehicleId(shipmentDisplay.getVehicleId()).cityId(shipmentDisplay.getCityId())
-                    .driverId(shipmentDisplay.getDriverId()).shippingDate(shipmentDisplay.shippingDateProperty().get())
+                    .driver(shipmentDisplay.getDriver()).driverId(shipmentDisplay.getDriverId()).shippingDate(shipmentDisplay.shippingDateProperty().get())
                     .build();
         } else {
             this.shipment = null;
@@ -112,8 +113,7 @@ public class CreateAndUpdateShipmentController {
         priceColumn.setCellValueFactory(c ->
                 c.getValue().getOrderPrice().asObject()
         );
-        addToShipmentColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
-        addToShipmentColumn.setCellFactory(CheckBoxTableCell.forTableColumn(addToShipmentColumn));
+       setupCheckboxColumn();
 
         allOrders = SqlUtil.getAllOrders();
         if (create) {
@@ -224,61 +224,75 @@ public class CreateAndUpdateShipmentController {
 
 
     }
+    private void setupCheckboxColumn() {
+        addToShipmentColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
+        addToShipmentColumn.setCellFactory(column -> {
+            CheckBoxTableCell<OrderTable, Boolean> cell = new CheckBoxTableCell<>();
+            cell.selectedStateCallbackProperty().set(item -> {
+                if (cell.getTableRow() != null && cell.getTableRow().getItem() != null) {
+                    OrderTable order = cell.getTableRow().getItem();
+                    return order.selectedProperty();
+                }
+                return null;
+            });
+
+            return cell;
+        });
+        ordersTable.getColumns().add(4, addToShipmentColumn);
+        ordersTable.setEditable(true);
+    }
 
     private void applyInitialSelection(
             List<OrderTable> allOrders,
             List<OrderTable> shipmentOrders
     ) {
         totalWeight = 0;
-
         if (allOrders == null) return;
-
-        // Create
+        removeOrderListeners();
         if (isCreateMode) {
             for (OrderTable order : allOrders) {
-                order.setSelected(false);
+                order.setSelectedSilent(false);
             }
-        }
-        // Update
-        else {
+        } else {
             if (shipmentOrders == null) return;
-
             Set<Integer> shipmentIds = new HashSet<>();
             for (OrderTable shippedOrder : shipmentOrders) {
                 shipmentIds.add(shippedOrder.getOrderId().get());
             }
+
             for (OrderTable order : allOrders) {
-                if (shipmentIds.contains(order.getOrderId())) {
-                    order.setSelected(true);
+                if (shipmentIds.contains(order.getOrderId().get())) {
+                    order.setSelectedSilent(true);
                     totalWeight += order.getOrderWeight().get();
                 } else {
-                    order.setSelected(false);
+                    order.setSelectedSilent(false);
                 }
             }
         }
-
+        initializeOrderListeners();
         updateTotalWeightField();
     }
-
-
     private void initializeOrderListeners() {
         if (allOrders == null) return;
-
+        orderListeners.clear();
         for (OrderTable order : allOrders) {
-            order.selectedProperty().addListener((obs, wasSelected, isNowSelected) -> {
-
+            ChangeListener<Boolean> listener = (obs, wasSelected, isNowSelected) -> {
+                if (order.updatingSelectionProperty()) {
+                    return;
+                }
                 if (isNowSelected) {
                     totalWeight += order.getOrderWeight().get();
                 } else {
                     totalWeight -= order.getOrderWeight().get();
                 }
-
                 totalWeight = Math.max(0, totalWeight);
-                updateTotalWeightField();
-            });
+                Platform.runLater(this::updateTotalWeightField);
+            };
+            order.selectedProperty().addListener(listener);
+            orderListeners.add(listener);
         }
+        listenersInitialized = true;
     }
-
     private void updateTotalWeightField() {
         totalWeightField.setText(totalWeight + "");
     }
