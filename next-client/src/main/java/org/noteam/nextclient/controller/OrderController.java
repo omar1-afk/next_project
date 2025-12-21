@@ -336,7 +336,12 @@ public class OrderController implements Initializable {
     }
 
     public class CreateOrderPopupController{
+        @FXML
+        BorderPane orderDetailsPopup;
 
+        public BorderPane getOrderDetailsPopup() {
+            return orderDetailsPopup;
+        }
     }
 
 }
