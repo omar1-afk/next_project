@@ -18,6 +18,8 @@ module org.noteam.nextclient {
 
     exports org.noteam.nextclient.controller;
 
+    opens org.noteam.nextclient.dto to com.google.gson;
+
     opens org.noteam.nextclient.scene to javafx.fxml;
 
     exports org.noteam.nextclient.scene;

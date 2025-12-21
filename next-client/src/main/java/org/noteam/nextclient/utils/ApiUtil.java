@@ -3,6 +3,9 @@ package org.noteam.nextclient.utils;
 import com.google.gson.JsonObject;
 
 import javax.imageio.IIOException;
+
+import org.noteam.nextclient.Config;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -27,7 +30,11 @@ public class ApiUtil {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(requestMethod.toString());
             if (jsObject != null && requestMethod != RequestMethod.GET) {
+                connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
+                if (Config.TOKEN != null) {
+                    connection.setRequestProperty("Authorization", "Bearer " + Config.TOKEN);
+                }
                 connection.setDoOutput(true);
                 try (OutputStream outputStream = connection.getOutputStream()) {
                     byte[] input = jsObject.toString().getBytes(StandardCharsets.UTF_8);

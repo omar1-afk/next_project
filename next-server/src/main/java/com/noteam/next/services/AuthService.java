@@ -40,7 +40,7 @@ public class AuthService {
 		if (!checkPassword(password, user.getPassword())) {
 			throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
 		}
-		return util.generateToken(user.getId());
+		return util.generateToken(user.getId(), email);
 	}
 
 	public boolean validateEmployee(String token) {
@@ -52,9 +52,9 @@ public class AuthService {
 		if (!validateEmployee(token)) {
 			return employee;
 		}
-		int id = util.getIdFromToken(token);
+		String email = util.getEmailFromToken(token);
 		try {
-			employee = userService.findById(id);
+			employee = userService.findByEmail(email);
 		} catch (NumberFormatException e) {
 			System.out.println("Long parsing for id from string to long");
 		}
@@ -62,10 +62,8 @@ public class AuthService {
 	}
 
 	public Admin createAdmin(Admin admin) {
-		logger.severe("SDASDASD " + admin.getPassword());
 		admin.setPassword(
 				hashPassword(admin.getPassword()));
-		logger.severe("SDASDASD " + admin.getPassword());
 		return userService.createAdmin(admin);
 	}
 

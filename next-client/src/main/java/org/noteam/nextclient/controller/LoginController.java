@@ -8,10 +8,13 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.noteam.nextclient.Config;
+import org.noteam.nextclient.dto.LoginResponse;
 import org.noteam.nextclient.models.Employee;
 import org.noteam.nextclient.scene.DataEntryWindow;
 import org.noteam.nextclient.utils.ApiUtil;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
@@ -48,13 +51,14 @@ public class LoginController {
         passwordField.textProperty().bindBidirectional(passwordVisibleField.textProperty());
         password = passwordField.getText();
         email = emailField.getText();
-        if (password.length() <= 8 || email.length() <= 8) {
+        if (password.length() <= 4 || email.length() <= 4) {
             alert("Email and/or password are incorrect");
             return;
         }
 
         Platform.runLater(() -> {
             JsonObject data = new JsonObject();
+            log.info("Config.Token " + Config.TOKEN);
 
             data.addProperty("email", email);
             data.addProperty("password", password);
@@ -62,11 +66,18 @@ public class LoginController {
             try {
                 HttpURLConnection con = ApiUtil.fetchApi("/api/v1/login",
                         ApiUtil.RequestMethod.POST, data);
-                log.severe("" + con.getResponseCode());
+                if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    String body = ApiUtil.readResponse(con);
+                    Gson gson = new Gson();
+                    LoginResponse res = gson.fromJson(body, LoginResponse.class);
+                    Config.TOKEN = res.getToken();
+                }
+                log.info("" + con.getResponseCode());
 
             } catch (IOException e) {
-
+                log.severe(e.toString());
             }
+            log.info("Config.Token " + Config.TOKEN);
         });
     }
 
