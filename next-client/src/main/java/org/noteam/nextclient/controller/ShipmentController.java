@@ -262,13 +262,13 @@ public class ShipmentController {
             CreateAndUpdateShipmentController controller=loader.getController();
             controller.setShipment(shipment );
             controller.fillData(false);
-            MainController mainController=loader.getController();
-            mainController.getViewPane().getChildren().add(controller.getCreateShipmentPane());
-            //Stage stage = new Stage();
-            //stage.setTitle("Update Shipment");
-            //stage.setScene(new Scene(parent));
-            //stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.showAndWait();
+            //MainController mainController=loader.getController();
+            //mainController.getViewPane().getChildren().add(controller.getCreateShipmentPane());
+            Stage stage = new Stage();
+            stage.setTitle("Update Shipment");
+            stage.setScene(new Scene(parent));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
             if (completed) {completedShipmentTable.refresh();}
             else{inCompletedShipmentTable.refresh();}
         }

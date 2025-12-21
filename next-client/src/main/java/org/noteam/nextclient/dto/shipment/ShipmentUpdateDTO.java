@@ -1,5 +1,7 @@
 package org.noteam.nextclient.dto.shipment;
 
+import org.noteam.nextclient.models.DriverObj;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -11,6 +13,7 @@ public class ShipmentUpdateDTO {
     private final int cityId;
     private final String shippingDate;
     private final int totalWeight;
+   private final DriverObj driver;
     private ShipmentUpdateDTO(Builder builder) {
         this.shipmentId = builder.shipmentId;
         this.orderIds = Collections.unmodifiableList(new ArrayList<>(builder.orderIds));
@@ -19,6 +22,8 @@ public class ShipmentUpdateDTO {
         this.cityId = builder.cityId;
         this.shippingDate = builder.shippingDate;
         this.totalWeight = builder.totalWeight;
+        this.driver=builder.driver;
+
     }
 
     public static class Builder {
@@ -29,6 +34,7 @@ public class ShipmentUpdateDTO {
         private int cityId;
         private String shippingDate;
         private int totalWeight;
+        private DriverObj driver;
 
         public Builder shipmentId(int shipmentId) {
             this.shipmentId = shipmentId;
@@ -57,8 +63,13 @@ public class ShipmentUpdateDTO {
             return this;
         }
 
-        public Builder shippingDate(String shippingDate) {
+         public Builder shippingDate(String shippingDate) {
             this.shippingDate = shippingDate;
+            return this;
+        }
+
+        public Builder driver(DriverObj driver) {
+            this.driver = driver;
             return this;
         }
 
@@ -71,6 +82,7 @@ public class ShipmentUpdateDTO {
             validate();
             return new ShipmentUpdateDTO(this);
         }
+
 
         private void validate() {
             if (shipmentId <= 0) throw new IllegalArgumentException("Shipment ID must be positive");
@@ -92,4 +104,8 @@ public class ShipmentUpdateDTO {
     public int getCityId() { return cityId; }
     public String getShippingDate() { return shippingDate; }
     public int getTotalWeight() { return totalWeight; }
+
+    public DriverObj getDriver() {
+        return driver;
+    }
 }

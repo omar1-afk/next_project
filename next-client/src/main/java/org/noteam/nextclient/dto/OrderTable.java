@@ -10,15 +10,23 @@ public class OrderTable {
     private IntegerProperty orderPrice=new SimpleIntegerProperty();
     private IntegerProperty orderWeight=new SimpleIntegerProperty();
     private BooleanProperty selected=new SimpleBooleanProperty(false);
-
+        private final BooleanProperty updatingSelection = new SimpleBooleanProperty(false);
+        public void setSelected(boolean selected) {
+            this.updatingSelection.set(true);
+            this.selected.set(selected);
+            this.updatingSelection.set(false);
+        }
+        public void setSelectedSilent(boolean selected) {
+            this.selected.set(selected);
+        }
     public BooleanProperty selectedProperty() {
         return selected;
     }
-    public void setSelected(boolean value) {
-        selected.set(value);
-    }
     public Boolean isSelected() {
         return selected.get();
+    }
+    public Boolean updatingSelectionProperty() {
+        return updatingSelection.get();
     }
 
     public OrderTable(int orderId, int orderPrice, int orderWeight) {

@@ -16,6 +16,7 @@ public class ShipmentDisplayDTO {
         private boolean isComplete;
         private int cityId;
         private int driverId;
+        private String driverName;
        private int vehicleId;
        private VehicleObj vehicle;
        private Country country=new Country(1,"Egypt");
@@ -40,7 +41,47 @@ public class ShipmentDisplayDTO {
 
     }
 
-        // Getters and Setters
+    public VehicleObj getVehicle() {
+        return vehicle;
+    }
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public StringProperty getCityName() {
+        return cityName;
+    }
+
+    public StringProperty getShippingDate() {
+        return shippingDate;
+    }
+
+    public IntegerProperty getTotalWeight() {
+        return totalWeight;
+    }
+
+    public IntegerProperty getShipmentId() {
+        return shipmentId;
+    }
+
+    public void setShipmentId(IntegerProperty shipmentId) {
+        this.shipmentId = shipmentId;
+    }
+
+    // Getters and Setters
         public IntegerProperty shipmentIdProperty() { return shipmentId; }
         public void setShipmentId(int shipmentId) { this.shipmentId.set( shipmentId); }
 

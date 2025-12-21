@@ -43,7 +43,7 @@ public class DriverController {
 
     @GetMapping("/all")
     ResponseEntity<List<Driver>> getAllDrivers(
-            @RequestParam(defaultValue ="createdAt" )String sortBy,
+            @RequestParam(defaultValue ="created_at" )String sortBy,
             @RequestParam(defaultValue = "DESC")String sortDir){
         List<Driver> driverList = driverService.getAllDrivers(sortBy,sortDir);
         if(driverList.isEmpty()){
@@ -58,7 +58,7 @@ public class DriverController {
     ResponseEntity<Page<Driver>> getDriversByPage(
             @RequestParam(defaultValue = "0") int page
             ,@RequestParam(defaultValue = "10") int size
-            ,@RequestParam(defaultValue ="createdAt" )String sortBy
+            ,@RequestParam(defaultValue ="created_at" )String sortBy
             ,@RequestParam(defaultValue = "DESC")String sortDir){
         Page<Driver> driverPage=driverService.getDdriversByPage(page, size, sortBy, sortDir);
         if (driverPage.isEmpty()){
