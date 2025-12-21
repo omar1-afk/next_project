@@ -338,9 +338,54 @@ public class OrderController implements Initializable {
     public class CreateOrderPopupController{
         @FXML
         BorderPane orderDetailsPopup;
-
+        @FXML
+        TextField countryFeild;
+        @FXML
+        TextField cityFeild;
+        @FXML
+        TextField regionFeild;
+        @FXML
+        TextField addressFeild;
+        @FXML
+        TextField senderNameFeild;
+        @FXML
+        TextField senderEmailFeild;
+        @FXML
+        TextField senderScnFeild;
+        @FXML
+        TextField senderPhoneFeild;
+        @FXML
+        TextField receiverNameFeild;
+        @FXML
+        TextField receiverEmailFeild;
+        @FXML
+        TextField receiverScnFeild;
+        @FXML
+        TextField receiverPhoneFeild;
+        @FXML
+        TextField crnFeild;
+        @FXML
+        TextField boxesNumberFeild;
+        @FXML
+        TextField priceFeild;
+        @FXML
+        TextField weightFeild;
+        @FXML
+        CheckBox isFlammable;
+        @FXML
+        CheckBox isBreakable;
+        @FXML
+        Button cancelOrderBtn;
+        @FXML
+        Button createOrderBtn;
         public BorderPane getOrderDetailsPopup() {
             return orderDetailsPopup;
+        }
+        public void onCancelOrderBtnClick(){
+
+        }
+        public void  onCreateOrderBtn(){
+
         }
     }
 
