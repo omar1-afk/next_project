@@ -10,10 +10,8 @@ module org.noteam.nextclient {
     requires java.sql;
     requires javafx.base;
     requires spring.data.commons;
-    requires javafx.graphics;
     requires io.github.cdimascio.dotenv.java;
     requires spring.web;
-    requires spring.webflux;
     requires com.fasterxml.jackson.databind;
 
 

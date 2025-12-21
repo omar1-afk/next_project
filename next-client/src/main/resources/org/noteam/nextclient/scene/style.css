@@ -3,13 +3,13 @@
     -fx-font-family: 'SansSerif';
 }
 
-.table-view .scroll-bar {
+.scroll-bar {
     -fx-opacity: 0;
 }
-.table-view .scroll-bar:hover{
+.scroll-bar:hover{
     -fx-opacity: 1;
 }
-.table-view .scroll-bar:pressed{
+.scroll-bar:pressed{
     -fx-opacity: 1;
 }
 .scroll-bar .increment-button,
@@ -23,10 +23,10 @@
     -fx-background-color: white;
      opacity:0;/* Ensure the bottom-right corner is transparent */
 }
-.table-view .scroll-bar .track {
+.scroll-bar .track {
     -fx-background-color: white;
 }
-.table-view .scroll-bar .thumb {
+.scroll-bar .thumb {
     -fx-background-color: #F1F1F1;
 }
 .table-view .column-header-background {

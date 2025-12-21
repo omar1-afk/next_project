@@ -166,7 +166,13 @@ public class ShipmentController {
         private void completedPage(int page) {
             int fromIndex = page * PAGE_SIZE;
             int toIndex = Math.min(fromIndex + PAGE_SIZE, completedShipment.size());
-            if (fromIndex >= completedShipment.size()) return;
+            if(completedShipment.isEmpty()){
+                completeTableData.clear();
+                return;
+            }
+            else if (fromIndex >= completedShipment.size()){
+                return;
+            }
             List<ShipmentDisplayDTO> pageData =
                     completedShipment.subList(fromIndex, toIndex);
 
@@ -180,7 +186,13 @@ public class ShipmentController {
     private void inCompletedPage(int page) {
         int fromIndex = page * PAGE_SIZE;
         int toIndex = Math.min(fromIndex + PAGE_SIZE, inCompletedShipment.size());
-        if (fromIndex >= inCompletedShipment.size()) return;
+        if (inCompletedShipment.isEmpty()){
+            inCompleteTableData.clear();
+            return;
+        }
+        else if (fromIndex >= inCompletedShipment.size()){
+            return;
+        }
         List<ShipmentDisplayDTO> pageData =
                 inCompletedShipment.subList(fromIndex, toIndex);
 
@@ -401,7 +413,6 @@ public class ShipmentController {
            int id = Integer.parseInt(text);
            completedShipment.clear();
            inCompletedShipment.clear();
-           boolean complete;
            if (selected.equals("Shipment ID")) {
                shipmentRequests = SqlUtil.getShipmentById(id);
 
