@@ -37,7 +37,7 @@ public class DriverController {
     @FXML
     private TableColumn<DriverController.DriverRow, String> AgeCol;
     @FXML
-    private TableColumn<DriverController.DriverRow, Double> SCNCol;
+    private TableColumn<DriverController.DriverRow, Double> SSNCol;
     @FXML
     private TableColumn<DriverController.DriverRow, String> BusyCol;
 
@@ -52,10 +52,10 @@ public class DriverController {
 //        DriverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
 //        EmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
 //        AgeCol.setCellValueFactory(new PropertyValueFactory<>("age"));
-//        SCNCol.setCellValueFactory(new PropertyValueFactory<>("SCN"));
+//        SSNCol.setCellValueFactory(new PropertyValueFactory<>("SSN"));
 //        BusyCol.setCellValueFactory(new PropertyValueFactory<>("isbusy"));
 //        observableList = FXCollections.observableArrayList();
-//        driverList.forEach(driver->{observableList.add(new DriverRow(driver.id(), driver.name() , driver.email() , driver.age() , driver.SCN() , driver.isbusy() ));})
+//        driverList.forEach(driver->{observableList.add(new DriverRow(driver.id(), driver.name() , driver.email() , driver.age() , driver.SSN() , driver.isbusy() ));})
 //        driverTable.setItems(observableList);
 //        System.out.println(driverTable.getItems());
 
@@ -65,15 +65,15 @@ public class DriverController {
         SimpleStringProperty name;
         SimpleStringProperty email;
         SimpleIntegerProperty age;
-        SimpleStringProperty SCN;
+        SimpleStringProperty SSN;
         SimpleBooleanProperty isbusy;
 
-        public DriverRow(Integer driverID, String name, String email, Integer age, String SCN, Boolean isbusy) {
+        public DriverRow(Integer driverID, String name, String email, Integer age, String SSN, Boolean isbusy) {
             this.driverID = new SimpleIntegerProperty(driverID);
             this.name = new SimpleStringProperty(name);
             this.email = new SimpleStringProperty(email);
             this.age = new SimpleIntegerProperty(age);
-            this.SCN = new SimpleStringProperty(SCN);
+            this.SSN = new SimpleStringProperty(SSN);
             this.isbusy = new SimpleBooleanProperty(isbusy);
         }
 
@@ -125,16 +125,16 @@ public class DriverController {
             this.age.set(age);
         }
 
-        public String getSCN() {
-            return SCN.get();
+        public String getSSN() {
+            return SSN.get();
         }
 
-        public SimpleStringProperty SCNProperty() {
-            return SCN;
+        public SimpleStringProperty SSNProperty() {
+            return SSN;
         }
 
-        public void setSCN(String SCN) {
-            this.SCN.set(SCN);
+        public void setSSN(String SSN) {
+            this.SSN.set(SSN);
         }
 
         public boolean isBusy() {
