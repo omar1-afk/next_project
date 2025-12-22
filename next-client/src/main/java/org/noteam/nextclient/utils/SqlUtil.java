@@ -1,6 +1,7 @@
 package org.noteam.nextclient.utils;
 
 import com.google.gson.*;
+import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.shipment.ShipmentCreateDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentDisplayDTO;
@@ -41,6 +42,15 @@ public class SqlUtil {
         public static final String DRIVER= "driver";
         public static final String ADMIN_ID = "admin_id";
         public static final String ADMIN= "admin";
+        public static final String REGION="region";
+        public static final String BREAKABLE = "breakable";
+        public static final String FLAMABLE = "flamable";
+        public static final String STATE =  "state";
+        public static final String ADDRESS = "address";
+        public static final String SENDER_ID = "sender_id";
+        public static final String RECEIVER_ID = "receiver_id";
+        public static final String  BOX_COUNT="boxCount";
+
 
     }
     //get
@@ -113,6 +123,61 @@ public class SqlUtil {
       //  List<City> cities=new ArrayList<>();
         //return  cities;
     //}
+    public List<Order> getOrdersByPage(int pageNumber, int pageSize,String sortBy,String sortDirection,String state) {
+        List<Order> orders=new ArrayList<>();
+        HttpURLConnection connection = null;
+        try {
+            if(pageNumber>0 && pageSize>0& sortBy!=null& sortDirection!=null& state!=null) {
+                connection = ApiUtil.fetchApi(
+                        "/api/v1/order?pageNumber="+pageNumber +"pageSize="+pageSize+"sortBy="+sortBy+"sortDir="+sortDirection+"state"+state, ApiUtil.RequestMethod.GET,null
+                );}
+            else {
+                connection = ApiUtil.fetchApi(
+                        "/api/v1/order", ApiUtil.RequestMethod.GET,null
+                );
+            }
+                if (connection.getResponseCode() != 200) {
+                    System.out.println("Error getting all orders"  + connection.getResponseCode());
+                    return Collections.emptyList();
+                }
+                String result =ApiUtil.readResponse(connection);
+                JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
+                for (int i=0;i<jsonArray.size();i++){
+                    JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                    int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+                    int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
+                    int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
+                    JsonObject shipment=jsonObject.get("shipment").getAsJsonObject();
+                    int shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+                    JsonObject city=jsonObject.get("city").getAsJsonObject();
+                    int cityId = city.get(JsonFieldConstants.CITY_ID).getAsInt();
+                    String cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
+                    JsonObject receiver=jsonObject.get("receiver").getAsJsonObject();
+                    int receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
+                    JsonObject sender=jsonObject.get("sender").getAsJsonObject();
+                    int senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+                    String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
+                    String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
+                    String orderState = jsonObject.get(JsonFieldConstants.STATE).getAsString();
+                    int box= jsonObject.get(JsonFieldConstants.BOX_COUNT).getAsInt();
+                    boolean flamable= jsonObject.get(JsonFieldConstants.FLAMABLE).getAsBoolean();
+                    boolean breakable= jsonObject.get(JsonFieldConstants.BREAKABLE).getAsBoolean();
+
+                    Order order= new Order(orderId,cityName,cityId,region,address,flamable,breakable,orderPrice,orderState,orderWeight,shipmentId,receiverId,senderId,box);
+                    orders.add(order);
+                }
+                return orders;
+            }
+        catch (IOException e){
+                e.printStackTrace();
+            }
+        finally {
+                if (connection!=null){
+                    connection.disconnect();
+                }
+            }
+            return Collections.emptyList();
+        }
 
     public static List<ShipmentDisplayDTO>  getShipmentsByComplete(boolean isComplete){
         List<ShipmentDisplayDTO> shipments = new ArrayList<>();
@@ -380,6 +445,40 @@ public class SqlUtil {
 
 
     //POST
+
+    public static boolean createOrder(Order order) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+            json.addProperty(JsonFieldConstants.REGION, order.region());
+            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
+            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
+            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order", ApiUtil.RequestMethod.POST, json
+            );
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
     public static boolean createShipment(ShipmentCreateDTO shipmentCreateDTO) {
         HttpURLConnection connection = null;
         try {
@@ -418,6 +517,28 @@ public class SqlUtil {
     }
 
 
+    public static boolean attachOrDeattachShipmentById(int orderId, int shipmentId) {
+        HttpURLConnection connection = null;
+        try {
+
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order/"+orderId+"shipment/"+shipmentId, ApiUtil.RequestMethod.PATCH, null
+            );
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
     //PUT
 public static boolean updateShipment(ShipmentUpdateDTO updateDTO ) {
     HttpURLConnection connection = null;
@@ -450,6 +571,39 @@ public static boolean updateShipment(ShipmentUpdateDTO updateDTO ) {
         }
     }
 }
+
+    public static boolean updateOrder(Order order) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+            json.addProperty(JsonFieldConstants.REGION, order.region());
+            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
+            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
+            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order/"+order.id(), ApiUtil.RequestMethod.PUT, json
+            );
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
 
 
     public static boolean setShipmentAsCompleted(int shipmentId){
@@ -498,4 +652,29 @@ public static boolean deleteShipment(int shipmentId){
         }
     }
 }
+
+// delete
+public static boolean deleteOrder(int orderId){
+    HttpURLConnection connection = null;
+    try {
+        connection =ApiUtil.fetchApi(
+                "/api/v1/order/"+orderId,ApiUtil.RequestMethod.DELETE,null
+        );
+        if (connection.getResponseCode()!=200){
+            // System.out.println("Error deleting shipment by id"+ connection.getResponseCode());
+            return false;
+        }
+        return true;
+    }
+    catch (Exception e){
+        e.printStackTrace();
+        return false;
+    }
+    finally {
+        if (connection!=null){
+            connection.disconnect();
+        }
+    }
 }
+}
+

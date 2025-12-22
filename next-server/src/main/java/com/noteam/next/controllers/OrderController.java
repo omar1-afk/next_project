@@ -88,15 +88,15 @@ public class OrderController {
             return ResponseEntity.ok("The order with id: " + id + " is updated successfully!");
         }
     }
-    @PatchMapping("/{id}")
-    ResponseEntity<String> attachOrDeattachShipmentById(@PathVariable("id") int id, @RequestBody Shipment shipment){
+    @PatchMapping("/{id}/shipment/{shipmentId}")
+    ResponseEntity<String> attachOrDeattachShipmentById(@PathVariable("id") int id, @PathVariable("shipmentId") int shipmentId){
         Optional<Order> orderOptional= orderService.getOrderById(id);
         if(orderOptional.isEmpty()){
             return ResponseEntity.notFound().build();
         }
         else {
-            if(shipment.getShipment_id()!=null){
-                if(orderService.attachShipmentById(id,shipment)) {
+            if(shipmentId>0){
+                if(orderService.attachShipmentById(id,shipmentId)) {
                     return ResponseEntity.ok("Shipment is attached to order successfully!");
                 }
                 else {

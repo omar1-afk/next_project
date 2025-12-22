@@ -89,7 +89,7 @@ public class ShipmentController {
     private int completedCurrentPage = 0;
     private int inCompletedCurrentPage = 0;
 
-    private final int PAGE_SIZE = 30;
+    private final int PAGE_SIZE = 14;
 
 
     @FXML
@@ -158,8 +158,8 @@ public class ShipmentController {
             inCompletedShipment.setAll(originalInCompletedShipment);
             completedPage(0);
             inCompletedPage(0);
-           completedShipmentTable.setFixedCellSize(55);
-           inCompletedShipmentTable.setFixedCellSize(55);
+           completedShipmentTable.setFixedCellSize(41);
+           inCompletedShipmentTable.setFixedCellSize(45);
             completedShipmentTable.setItems(completeTableData);
             inCompletedShipmentTable.setItems(inCompleteTableData);
         }

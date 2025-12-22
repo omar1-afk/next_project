@@ -5,9 +5,9 @@ import com.noteam.next.entities.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public record OrderRequest(int id, City city, String region
+public record OrderRequest(int id,  String region
         , String address, boolean flameable, boolean breakable
-        , int price, State state, int weight, Shipment shipment
-        , Receiver receiver, Sender sender, int boxesCount
-        , LocalDateTime createdAt, LocalDate updatedAt) {
+        , int price, State state, int weight
+        , int boxesCount, LocalDateTime createdAt, LocalDate updatedAt
+        ,int senderId, int receiverId, int shipmentId,int cityId) {
 }

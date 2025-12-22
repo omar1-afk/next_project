@@ -14,6 +14,7 @@ module org.noteam.nextclient {
     requires spring.web;
     requires spring.webflux;
     requires com.fasterxml.jackson.databind;
+    requires org.noteam.nextclient;
 
 
     opens org.noteam.nextclient to javafx.fxml;
