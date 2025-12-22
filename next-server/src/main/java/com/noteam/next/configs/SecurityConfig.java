@@ -18,7 +18,6 @@ import com.noteam.next.filter.SecurityFilter;
 class SecurityConfig {
 
     @Bean
-
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityFilter debugFilter) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())

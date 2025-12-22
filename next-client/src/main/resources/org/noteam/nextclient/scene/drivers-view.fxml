@@ -32,7 +32,7 @@
                   <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
                   <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <Button fx:id="createDriverBtn" graphicTextGap="0.0" mnemonicParsing="false" styleClass="create-button" text="Create Driver" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                        <Button fx:id="createDriverBtn" onAction="#handleOpenCreateDriver" graphicTextGap="0.0" mnemonicParsing="false" styleClass="create-button" text="Create Driver" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
@@ -121,7 +121,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="NamePane" onMouseClicked="#getDriverByNane" style="-fx-background-radius: 8px;">
+                  <AnchorPane fx:id="NamePane" onMouseClicked="#getDriverByName" style="-fx-background-radius: 8px;">
                      <children>
                         <Label style="-fx-font-weight: 700;" text="Name">
                            <padding>
@@ -151,9 +151,6 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="shippingPane" style="-fx-background-radius: 8px;" />
-                  <AnchorPane fx:id="deliveredPane" style="-fx-background-radius: 8px;" />
-                  <AnchorPane fx:id="returnedPane" style="-fx-background-radius: 8px;" />
                </children>
             </HBox>
             <HBox>
@@ -208,7 +205,7 @@
                               </AnchorPane>
                            </graphic>
                         </TableColumn>
-                        <TableColumn fx:id="SCNCol" minWidth="80.0" prefWidth="250.0" resizable="false" styleClass="city-cell" text="Social Security Number">
+                        <TableColumn fx:id="SSNCol" minWidth="80.0" prefWidth="250.0" resizable="false" styleClass="city-cell" text="Social Security Number">
                            <graphic>
                               <AnchorPane scaleX="0.6" scaleY="0.6">
                                  <children>

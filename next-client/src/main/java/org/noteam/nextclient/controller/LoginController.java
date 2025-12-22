@@ -2,7 +2,10 @@ package org.noteam.nextclient.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -27,6 +30,12 @@ public class LoginController {
     private StackPane passwordFieldsStack;
     @FXML
     private javafx.scene.control.TextField emailField;
+
+    private Stage mainStage;
+
+    public void setMainStage(Stage mainStage) {
+        this.mainStage = mainStage;
+    }
 
     private String email = "";
 
@@ -71,6 +80,7 @@ public class LoginController {
                     Gson gson = new Gson();
                     LoginResponse res = gson.fromJson(body, LoginResponse.class);
                     Config.TOKEN = res.getToken();
+                    switchToDashboard();
                 }
                 log.info("" + con.getResponseCode());
 
@@ -79,6 +89,21 @@ public class LoginController {
             }
             log.info("Config.Token " + Config.TOKEN);
         });
+    }
+
+    private void switchToDashboard() {
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/noteam/nextclient/scene/main-view.fxml"));
+            Parent root = loader.load();
+            MainController shipmentController = loader.getController();
+            Scene scene = new Scene(root, 1440, 720);
+
+            mainStage.setScene(scene);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML

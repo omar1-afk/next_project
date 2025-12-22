@@ -135,7 +135,8 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
-                        </StackPane>
+                           </StackPane>
+
                         <StackPane fx:id="shipmentsPane" layoutX="10.0" layoutY="90.0" onMouseClicked="#onShipmentsClick" onMouseEntered="#onShipmentsMouseEnter" onMouseExited="#onShipmentsMouseExit" prefHeight="40.0" prefWidth="224.0">
                            <children>
                               <Rectangle fx:id="shipmentsBG" arcHeight="50.0" arcWidth="50.0" fill="#d9d9d9" height="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="224.0" />

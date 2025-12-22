@@ -19,7 +19,7 @@ public class ReceiverController {
         this.receiverService = receiverService;
     }
 
-    //create
+    // create
     @PostMapping
     public ResponseEntity<Receiver> createReceiver(@RequestBody Receiver receiver) {
         Receiver createdReceiver = receiverService.save(receiver);
