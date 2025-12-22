@@ -44,6 +44,11 @@ public class SqlUtil {
         public static final String DRIVER_AGE = "age";
         public static final String DRIVER_SSN = "social_security_number";
         public static final String DRIVER_IS_BUSY = "isbusy";
+      public static final String V_LICENSE_PLATE = "licensePlate";
+      public static final String V_WEIGHT_LIMIT = "weightLimit";
+      public static final String V_IS_AVAILABLE = "available";
+      public static final String V_IS_USED = "used";
+      public static final String V_TYPE = "type";
     }
 
     // get
@@ -560,5 +565,84 @@ public class SqlUtil {
       e.printStackTrace();
       return false;
     }
+  }
+  // Create a New Vehicle -----------
+  public static boolean createVehicle(String plate, int weight, String type) {
+    com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+    // Use "licensePlate" and "weightLimit" to match your Server Entity
+    json.addProperty("licensePlate", plate);
+    json.addProperty("weightLimit", weight);
+    json.addProperty("type", type.toUpperCase()); // "VAN" or "TRUCK" ------------
+    json.addProperty("available", true);
+    json.addProperty("used", false);
+
+    // POST /api/v1/vehicles
+    java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicles", ApiUtil.RequestMethod.POST, json);
+    try {
+      return connection != null && (connection.getResponseCode() == 200 || connection.getResponseCode() == 201);
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  // Update an Existing Vehicle -------------
+  public static boolean updateVehicle(int id, String plate, int weight, String type) {
+    com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+    json.addProperty("licensePlate", plate);
+    json.addProperty("weightLimit", weight);
+    json.addProperty("type", type.toUpperCase());
+
+    // PUT /api/v1/vehicles/{id}
+    java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicles/" + id, ApiUtil.RequestMethod.PUT, json);
+    try {
+      return connection != null && connection.getResponseCode() == 200;
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static List<Vehicle> getAllVehicles() {
+    List<Vehicle> vehicles = new ArrayList<>();
+    HttpURLConnection connection = null;
+    try {
+      // @RequestMapping --------------
+      connection = ApiUtil.fetchApi("/api/v1/vehicles", ApiUtil.RequestMethod.GET, null);
+
+      if (connection == null || connection.getResponseCode() != 200) {
+        return Collections.emptyList();
+      }
+
+      String result = ApiUtil.readResponse(connection);
+      JsonArray jsonArray = JsonParser.parseString(result).getAsJsonArray();
+
+      for (JsonElement element : jsonArray) {
+        JsonObject obj = element.getAsJsonObject();
+
+        Vehicle v = new Vehicle(
+          obj.get(JsonFieldConstants.VEHICLE_ID).getAsInt(),
+          obj.get(JsonFieldConstants.V_WEIGHT_LIMIT).getAsInt(),
+          obj.get(JsonFieldConstants.V_LICENSE_PLATE).getAsString(),
+          obj.get(JsonFieldConstants.V_IS_AVAILABLE).getAsBoolean(),
+          obj.get(JsonFieldConstants.V_IS_USED).getAsBoolean()
+        );
+
+        // Enum conversion ------
+        if (obj.has(JsonFieldConstants.V_TYPE)) {
+          String typeStr = obj.get(JsonFieldConstants.V_TYPE).getAsString().toUpperCase();
+          // server "VAN"/"TRUCK" --> client's enum
+          v.setVehicleType(Vehicle.vehicleType.valueOf(typeStr));
+        }
+
+        vehicles.add(v);
+      }
+      return vehicles;
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (connection != null) connection.disconnect();
+    }
+    return Collections.emptyList();
   }
 }

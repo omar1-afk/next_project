@@ -27,15 +27,23 @@ import java.util.ResourceBundle;
 
 public class DriverController implements Initializable {
 
-  @FXML private BorderPane driverPane;
-  @FXML private Label DriverNumLabel;
-  @FXML private TextField searchFeild;
-  @FXML private AnchorPane AllPane, NamePane, AgePane;
+  @FXML
+  private BorderPane driverPane;
+  @FXML
+  private Label DriverNumLabel;
+  @FXML
+  private TextField searchFeild;
+  @FXML
+  private AnchorPane AllPane, NamePane, AgePane;
 
-  @FXML private TableView<DriverRow> DriverTable;
-  @FXML private TableColumn<DriverRow, Integer> DriverIDCol;
-  @FXML private TableColumn<DriverRow, String> DriverNameCol, EmailCol, AgeCol, SSNCol;
-  @FXML private TableColumn<DriverRow, Boolean> BusyCol;
+  @FXML
+  private TableView<DriverRow> DriverTable;
+  @FXML
+  private TableColumn<DriverRow, Integer> DriverIDCol;
+  @FXML
+  private TableColumn<DriverRow, String> DriverNameCol, EmailCol, AgeCol, SSNCol;
+  @FXML
+  private TableColumn<DriverRow, Boolean> BusyCol;
 
   private ObservableList<DriverRow> observableList;
   private List<Driver> allFetchedDrivers;
