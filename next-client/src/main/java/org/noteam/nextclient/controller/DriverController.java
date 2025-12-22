@@ -6,17 +6,19 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import org.noteam.nextclient.models.Driver;
 import org.noteam.nextclient.utils.SqlUtil;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,52 +27,49 @@ import java.util.ResourceBundle;
 
 public class DriverController implements Initializable {
 
-  // UI Layout Components ------
-  @FXML
-  private BorderPane driverPane;
-  @FXML
-  private Label DriverNumLabel;
-  @FXML
-  private TextField searchFeild;
-  @FXML
-  private AnchorPane AllPane;
-  @FXML
-  private AnchorPane NamePane;
-  @FXML
-  private AnchorPane AgePane;
+  @FXML private BorderPane driverPane;
+  @FXML private Label DriverNumLabel;
+  @FXML private TextField searchFeild;
+  @FXML private AnchorPane AllPane, NamePane, AgePane;
 
-  // Table Components ------
-  @FXML
-  private TableView<DriverRow> DriverTable;
-  @FXML
-  private TableColumn<DriverRow, Integer> DriverIDCol;
-  @FXML
-  private TableColumn<DriverRow, String> DriverNameCol;
-  @FXML
-  private TableColumn<DriverRow, String> EmailCol;
-  @FXML
-  private TableColumn<DriverRow, String> AgeCol;
-  @FXML
-  private TableColumn<DriverRow, String> SSNCol;
-  @FXML
-  private TableColumn<DriverRow, Boolean> BusyCol;
+  @FXML private TableView<DriverRow> DriverTable;
+  @FXML private TableColumn<DriverRow, Integer> DriverIDCol;
+  @FXML private TableColumn<DriverRow, String> DriverNameCol, EmailCol, AgeCol, SSNCol;
+  @FXML private TableColumn<DriverRow, Boolean> BusyCol;
 
   private ObservableList<DriverRow> observableList;
+  private List<Driver> allFetchedDrivers;
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-    List<Driver> driverList = SqlUtil.getAllDrivers();
-    setDriverTableView(driverList);
+    // Double-Click ---------
+    DriverTable.setRowFactory(tv -> {
+      TableRow<DriverRow> row = new TableRow<>();
+      row.setOnMouseClicked(event -> {
+        if (event.getClickCount() == 2 && (!row.isEmpty())) {
+          showUpdateWindow(row.getItem());
+        }
+      });
+      return row;
+    });
 
-//    testing -------------------------
-//    List<Driver> driverList = new ArrayList<>();
-//    driverList.add(new Driver(1, "Omar", "", 25, "123456", "omar@test.com", "123", false));
-//    setDriverTableView(driverList);
+    refreshTable();
+
+    // TESTING DATA instead of server -------------
+//
+//    allFetchedDrivers = new ArrayList<>();
+//    allFetchedDrivers.add(new Driver(1, "Omar", "", 25, "123456", "omar@test.com", "123", false));
+//    allFetchedDrivers.add(new Driver(2, "Test User", "", 30, "999-99-9999", "test@mail.com", "pass", true));
+//    setDriverTableView(allFetchedDrivers);
+
   }
 
+  public void refreshTable() {
+    allFetchedDrivers = SqlUtil.getAllDrivers();
+    setDriverTableView(allFetchedDrivers);
+  }
 
   public void setDriverTableView(List<Driver> driverList) {
-    // Mapping Table Columns to DriverRow getters
     DriverIDCol.setCellValueFactory(new PropertyValueFactory<>("driverID"));
     DriverNameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
     EmailCol.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -95,12 +94,68 @@ public class DriverController implements Initializable {
     DriverNumLabel.setText(driverList.size() + " Drivers");
   }
 
-  // --- Tab Switching Methods (Matches FXML #onMouseClicked) ---
+  //  Update Window Logic ------------
+
+  private void showUpdateWindow(DriverRow selectedRow) {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/update-driver.fxml"));
+      Parent root = loader.load();
+
+      UpdateDriverController controller = loader.getController();
+
+      Driver driverToUpdate = findDriverInList(selectedRow.getDriverID());
+
+      if (driverToUpdate != null) {
+        controller.setDriverData(driverToUpdate);
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Update Driver: " + driverToUpdate.getName());
+
+        // Refresh table when window is closed
+        stage.setOnHidden(e -> refreshTable());
+
+        stage.show();
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // Create Window Logic ------------
+  @FXML
+  private void handleOpenCreateDriver() {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/create-driver.fxml"));
+      Parent root = loader.load();
+
+      Stage stage = new Stage();
+      stage.setScene(new Scene(root));
+      stage.setTitle("Create New Driver");
+
+      // Refresh table when window is closed (so the new driver appears)
+      stage.setOnHidden(e -> refreshTable());
+
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private Driver findDriverInList(int id) {
+    if (allFetchedDrivers == null) return null;
+    return allFetchedDrivers.stream()
+      .filter(d -> d.getDriverId() == id)
+      .findFirst()
+      .orElse(null);
+  }
+
+  // Tab Sorting -----------------
 
   @FXML
   public void getDriverByName() {
     makeStateActive(NamePane);
-    if (observableList != null && !observableList.isEmpty()) {
+    if (observableList != null) {
       observableList.sort(Comparator.comparing(row -> row.getName().toLowerCase()));
     }
   }
@@ -108,7 +163,8 @@ public class DriverController implements Initializable {
   @FXML
   public void getDriverByAge() {
     makeStateActive(AgePane);
-    if (observableList != null && !observableList.isEmpty()) {
+    if (observableList != null) {
+      // Use standard String comparison since Age is "X years"
       observableList.sort(Comparator.comparing(DriverRow::getAge));
     }
   }
@@ -116,7 +172,7 @@ public class DriverController implements Initializable {
   @FXML
   public void getAllDrivers() {
     makeStateActive(AllPane);
-    if (observableList != null && !observableList.isEmpty()) {
+    if (observableList != null) {
       observableList.sort(Comparator.comparingInt(DriverRow::getDriverID));
     }
   }
@@ -132,17 +188,11 @@ public class DriverController implements Initializable {
     AgePane.setStyle("-fx-background-radius: 8px; -fx-background-color: transparent;");
   }
 
-  public BorderPane getDriverPane() {
-    return driverPane;
-  }
-
+  public BorderPane getDriverPane() { return driverPane; }
 
   public static class DriverRow {
     private final SimpleIntegerProperty driverID;
-    private final SimpleStringProperty name;
-    private final SimpleStringProperty email;
-    private final SimpleStringProperty age;
-    private final SimpleStringProperty SSN;
+    private final SimpleStringProperty name, email, age, SSN;
     private final SimpleBooleanProperty busy;
 
     public DriverRow(Integer id, String name, String email, Integer age, String ssn, Boolean busy) {

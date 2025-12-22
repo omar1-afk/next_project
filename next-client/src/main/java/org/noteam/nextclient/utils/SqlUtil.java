@@ -522,4 +522,43 @@ public class SqlUtil {
     }
     return Collections.emptyList();
   }
+
+  public static boolean updateDriver(int id, String name, int age, String email, String password, String ssn) {
+    com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+    json.addProperty("name", name);
+    json.addProperty("age", age);
+    json.addProperty("email", email);
+    json.addProperty("password", password);
+    json.addProperty("social_security_number", ssn);
+    json.addProperty("image", ""); // Pass empty or current image string
+    json.addProperty("isbusy", false);
+
+    java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver/" + id, ApiUtil.RequestMethod.PUT, json);
+    try {
+      return connection != null && connection.getResponseCode() == 200;
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
+
+  public static boolean createNewDriver(String name, int age, String email, String password, String ssn) {
+    com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+    json.addProperty("name", name);
+    json.addProperty("age", age);
+    json.addProperty("email", email);
+    json.addProperty("password", password);
+    json.addProperty("social_security_number", ssn);
+    json.addProperty("image", "");
+    json.addProperty("isbusy", false);
+
+    //@PostMapping: /api/v1/driver
+    java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver", ApiUtil.RequestMethod.POST, json);
+    try {
+      return connection != null && connection.getResponseCode() == 200;
+    } catch (java.io.IOException e) {
+      e.printStackTrace();
+      return false;
+    }
+  }
 }

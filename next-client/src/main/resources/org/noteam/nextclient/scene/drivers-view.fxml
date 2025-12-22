@@ -32,7 +32,7 @@
                   <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
                   <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <Button fx:id="createDriverBtn" graphicTextGap="0.0" mnemonicParsing="false" styleClass="create-button" text="Create Driver" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                        <Button fx:id="createDriverBtn" onAction="#handleOpenCreateDriver" graphicTextGap="0.0" mnemonicParsing="false" styleClass="create-button" text="Create Driver" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>
