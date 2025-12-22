@@ -151,9 +151,6 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="shippingPane" style="-fx-background-radius: 8px;" />
-                  <AnchorPane fx:id="deliveredPane" style="-fx-background-radius: 8px;" />
-                  <AnchorPane fx:id="returnedPane" style="-fx-background-radius: 8px;" />
                </children>
             </HBox>
             <HBox>
@@ -208,7 +205,7 @@
                               </AnchorPane>
                            </graphic>
                         </TableColumn>
-                        <TableColumn fx:id="SCNCol" minWidth="80.0" prefWidth="250.0" resizable="false" styleClass="city-cell" text="Social Security Number">
+                        <TableColumn fx:id="SSNCol" minWidth="80.0" prefWidth="250.0" resizable="false" styleClass="city-cell" text="Social Security Number">
                            <graphic>
                               <AnchorPane scaleX="0.6" scaleY="0.6">
                                  <children>
