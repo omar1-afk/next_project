@@ -11,9 +11,12 @@ import java.util.Objects;
 
 public class CreateDriverController {
 
-  @FXML private TextField driverNameField, ssnField, driverEmailField, ageField, passwordTextField;
-  @FXML private PasswordField passwordField;
-  @FXML private ImageView togglePasswordImage;
+  @FXML
+  private TextField driverNameField, ssnField, driverEmailField, ageField, passwordTextField;
+  @FXML
+  private PasswordField passwordField;
+  @FXML
+  private ImageView togglePasswordImage;
 
   private boolean isPasswordVisible = false;
 
