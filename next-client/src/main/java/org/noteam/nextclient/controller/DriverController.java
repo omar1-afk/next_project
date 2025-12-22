@@ -19,6 +19,7 @@ import org.noteam.nextclient.utils.SqlUtil;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -97,21 +98,27 @@ public class DriverController implements Initializable {
   // --- Tab Switching Methods (Matches FXML #onMouseClicked) ---
 
   @FXML
-  public void getAllDrivers() {
-    makeStateActive(AllPane);
-//    --------------------------
-  }
-
-  @FXML
-  public void getDriverByNane() {
+  public void getDriverByName() {
     makeStateActive(NamePane);
-//    --------------------------
+    if (observableList != null && !observableList.isEmpty()) {
+      observableList.sort(Comparator.comparing(row -> row.getName().toLowerCase()));
+    }
   }
 
   @FXML
   public void getDriverByAge() {
     makeStateActive(AgePane);
-//    --------------------------
+    if (observableList != null && !observableList.isEmpty()) {
+      observableList.sort(Comparator.comparing(DriverRow::getAge));
+    }
+  }
+
+  @FXML
+  public void getAllDrivers() {
+    makeStateActive(AllPane);
+    if (observableList != null && !observableList.isEmpty()) {
+      observableList.sort(Comparator.comparingInt(DriverRow::getDriverID));
+    }
   }
 
   private void makeStateActive(AnchorPane statePane) {

@@ -121,7 +121,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="NamePane" onMouseClicked="#getDriverByNane" style="-fx-background-radius: 8px;">
+                  <AnchorPane fx:id="NamePane" onMouseClicked="#getDriverByName" style="-fx-background-radius: 8px;">
                      <children>
                         <Label style="-fx-font-weight: 700;" text="Name">
                            <padding>
