@@ -56,7 +56,7 @@ public class OrderController {
       @RequestParam(defaultValue = "DESC")String sortDir
       ,@RequestParam(defaultValue = "ALL")String state){
     try{
-      List<Order> orderList = orderService.getOrdersByState(state,sortBy, sortDir);
+      List<Order> orderList = orderService.getOrdersByState(sortBy, sortDir,state);
       if (orderList.isEmpty()) {
         return ResponseEntity.notFound().build();
       } else {

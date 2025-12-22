@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -83,12 +84,14 @@ public class OrderService {
   public List<Order> getOrdersByState(String sortBy, String sortDir,String state){
     log.info("Order service: getting orders by state sorted by "+ sortBy+",("+ sortDir+")");
     if(state.equals("ALL")){
+      log.info("ORDER SERVICE: ALL");
       return orderRepository.findAll();
     }else if (state.equals(State.PICKED.name()) || state.equals(State.PACKAGING.name())
       || state.equals(State.DELEVERED.name()) || state.equals(State.RETURNED.name()) || state.equals(State.SHIPPING.name())){
+      log.info("ORDER SERVICE: " + state.toString());
       return orderRepository.findAllByState(State.valueOf(state),Sort.by(Sort.Direction.fromString(sortDir)));
     }else{
-      return null;
+      return Collections.emptyList();
     }
   }
     public Optional<Order> getOrderById(int id){

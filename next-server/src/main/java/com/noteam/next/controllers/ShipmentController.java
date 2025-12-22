@@ -55,6 +55,7 @@ public class ShipmentController {
     }
     //get
     @GetMapping
+    
     public ResponseEntity<List<Shipment>> getAllShipments() {
         logger.info("Getting all shipments" );
         try {
