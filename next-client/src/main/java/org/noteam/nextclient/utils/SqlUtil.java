@@ -40,7 +40,10 @@ public class SqlUtil {
         public static final String DRIVER = "driver";
         public static final String ADMIN_ID = "admin_id";
         public static final String ADMIN = "admin";
-
+        public static final String DRIVER_EMAIL = "email";
+        public static final String DRIVER_AGE = "age";
+        public static final String DRIVER_SSN = "social_security_number";
+        public static final String DRIVER_IS_BUSY = "isbusy";
     }
 
     // get
@@ -475,4 +478,48 @@ public class SqlUtil {
             }
         }
     }
+
+  // Add these to JsonFieldConstants inside SqlUtil if they are missing
+  public static final String DRIVER_EMAIL = "email";
+  public static final String DRIVER_AGE = "age";
+  public static final String DRIVER_SSN = "social_security_number";
+  public static final String DRIVER_IS_BUSY = "isbusy";
+
+  public static List<Driver> getAllDrivers() {
+    List<Driver> drivers = new ArrayList<>();
+    HttpURLConnection connection = null;
+    try {
+      // Path matches your Server's Controller: @RequestMapping("/api/v1/driver") + @GetMapping("/all")
+      connection = ApiUtil.fetchApi("/api/v1/driver/all", ApiUtil.RequestMethod.GET, null);
+
+      if (connection == null || connection.getResponseCode() != 200) {
+        return Collections.emptyList();
+      }
+
+      String result = ApiUtil.readResponse(connection);
+      JsonArray jsonArray = JsonParser.parseString(result).getAsJsonArray();
+
+      for (int i = 0; i < jsonArray.size(); i++) {
+        JsonObject obj = jsonArray.get(i).getAsJsonObject();
+
+        // Extracting all fields to match your org.noteam.nextclient.models.Driver class
+        int id = obj.get(JsonFieldConstants.DRIVER_ID).getAsInt();
+        String name = obj.get(JsonFieldConstants.DRIVER_NAME).getAsString();
+        String email = obj.get(JsonFieldConstants.DRIVER_EMAIL).getAsString();
+        int age = obj.get(JsonFieldConstants.DRIVER_AGE).getAsInt();
+        String ssn = obj.get(JsonFieldConstants.DRIVER_SSN).getAsString();
+        boolean isBusy = obj.get(JsonFieldConstants.DRIVER_IS_BUSY).getAsBoolean();
+        String image = obj.has("image") && !obj.get("image").isJsonNull() ? obj.get("image").getAsString() : "";
+        
+        Driver driver = new Driver(id, name, image, age, ssn, email, "", isBusy);
+        drivers.add(driver);
+      }
+      return drivers;
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      if (connection != null) connection.disconnect();
+    }
+    return Collections.emptyList();
+  }
 }

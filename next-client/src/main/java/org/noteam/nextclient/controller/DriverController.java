@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import org.noteam.nextclient.models.Driver;
+import org.noteam.nextclient.utils.SqlUtil;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -57,10 +58,13 @@ public class DriverController implements Initializable {
 
   @Override
   public void initialize(URL url, ResourceBundle resourceBundle) {
-    // Initial setup - You can call your API/Service here
-    List<Driver> driverList = new ArrayList<>();
-    driverList.add(new Driver(1, "Omar", "", 25, "123456", "omar@test.com", "123", false));
+    List<Driver> driverList = SqlUtil.getAllDrivers();
     setDriverTableView(driverList);
+
+//    testing -------------------------
+//    List<Driver> driverList = new ArrayList<>();
+//    driverList.add(new Driver(1, "Omar", "", 25, "123456", "omar@test.com", "123", false));
+//    setDriverTableView(driverList);
   }
 
 

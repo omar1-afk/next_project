@@ -12,8 +12,9 @@ module org.noteam.nextclient {
     requires spring.data.commons;
     requires io.github.cdimascio.dotenv.java;
     requires com.fasterxml.jackson.databind;
+  requires org.json;
 
-    opens org.noteam.nextclient to javafx.fxml, com.google.gson;
+  opens org.noteam.nextclient to javafx.fxml, com.google.gson;
 
     exports org.noteam.nextclient;
 
