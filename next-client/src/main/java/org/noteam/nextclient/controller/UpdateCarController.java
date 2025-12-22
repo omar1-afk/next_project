@@ -8,59 +8,60 @@ import org.noteam.nextclient.utils.SqlUtil;
 
 public class UpdateCarController {
 
-  @FXML
-  private TextField carTypeField;
+    @FXML
+    private TextField carTypeField;
 
-  @FXML
-  private TextField weightLimitField;
+    @FXML
+    private TextField weightLimitField;
 
-  @FXML
-  private TextField carPlateField;
+    @FXML
+    private TextField carPlateField;
 
-  private int currentVehicleId = 0;
+    private int currentVehicleId;
+    private Vehicle vehicle;
 
-
-  public void setVehicleData(Vehicle vehicle) {
-    if (vehicle != null) {
-      this.currentVehicleId = vehicle.getVehicleId();
-      carTypeField.setText(vehicle.getVehicleType().toString());
-      weightLimitField.setText(String.valueOf(vehicle.getWight()));
-      carPlateField.setText(vehicle.getLicensePlate());
+    public void setVehicleData(Vehicle vehicle) {
+        if (vehicle != null) {
+            this.vehicle = vehicle;
+            this.currentVehicleId = vehicle.getVehicleId();
+            carTypeField.setText(vehicle.getVehicleType().toString());
+            weightLimitField.setText(String.valueOf(vehicle.getWight()));
+            carPlateField.setText(vehicle.getLicensePlate());
+        }
     }
-  }
 
-  @FXML
-  private void handleUpdateCar() {
-    try {
-      String type = carTypeField.getText().trim().toUpperCase();
+    @FXML
+    private void handleUpdateCar() {
+        try {
+            String type = carTypeField.getText().trim().toUpperCase();
 
-      String weightRaw = weightLimitField.getText().replaceAll("[^0-9]", "");
-      int weight = Integer.parseInt(weightRaw);
+            String weightRaw = weightLimitField.getText().replaceAll("[^0-9]", "");
+            int weight = Integer.parseInt(weightRaw);
 
-      String plate = carPlateField.getText().trim();
+            String plate = carPlateField.getText().trim();
 
-      boolean success;
-      if (currentVehicleId == 0) {
-        success = SqlUtil.createVehicle(plate, weight, type);
-      } else {
-        success = SqlUtil.updateVehicle(currentVehicleId, plate, weight, type);
-      }
+            boolean success;
+            if (vehicle == null) {
+                success = SqlUtil.createVehicle(plate, weight, type);
+            } else {
+                success = SqlUtil.updateVehicle(vehicle.getVehicleId(), plate, weight, type);
+            }
 
-      if (success) {
-        closeWindow();
-      } else {
-        System.err.println("Failed to save vehicle changes to the server.");
-      }
+            if (success) {
+                closeWindow();
+            } else {
+                System.err.println("Failed to save vehicle changes to the server.");
+            }
 
-    } catch (NumberFormatException e) {
-      System.err.println("Error: Weight must be a valid number.");
-    } catch (Exception e) {
-      e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.err.println("Error: Weight must be a valid number.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  private void closeWindow() {
-    Stage stage = (Stage) carTypeField.getScene().getWindow();
-    stage.close();
-  }
+    private void closeWindow() {
+        Stage stage = (Stage) carTypeField.getScene().getWindow();
+        stage.close();
+    }
 }

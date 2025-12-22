@@ -37,6 +37,12 @@ public class SecurityFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain) throws ServletException, IOException {
 
+        log.severe("___________________-");
+        log.severe("path: " + request.getPathInfo());
+        log.severe("uri: " + request.getRequestURI());
+        log.severe("param: " + request.getParameterNames());
+        log.severe("___________________-");
+
         // Check Authorization header
         String authHeader = request.getHeader("Authorization");
 

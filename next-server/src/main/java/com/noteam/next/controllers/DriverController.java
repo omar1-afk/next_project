@@ -72,6 +72,24 @@ public class DriverController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Driver> loginDriver(@RequestParam String email, @RequestParam String password) {
+        // find the Driver data that contains the following email
+        Optional<Driver> driverOptional = driverService.getDriverByEmail(email);
+
+        if (driverOptional.isEmpty()) {
+            // Driver was not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        // check if the passwords don't match
+        if (!password.equals(driverOptional.get().getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @PostMapping
     public ResponseEntity<DriverResponse> createDriver(@RequestBody Driver driver) {
         try {
