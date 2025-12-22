@@ -1,7 +1,6 @@
 package org.noteam.nextclient.utils;
 
 import com.google.gson.*;
-import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.State;
 import org.noteam.nextclient.dto.shipment.ShipmentCreateDTO;
@@ -9,7 +8,6 @@ import org.noteam.nextclient.dto.shipment.ShipmentDisplayDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentUpdateDTO;
 import org.noteam.nextclient.models.*;
 import org.noteam.nextclient.models.Driver;
-import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -22,50 +20,50 @@ import java.util.List;
 public class SqlUtil {
 
     public class JsonFieldConstants {
-        public static final String SHIPMENT_ID = "shipment_id";
-        public static final String TOTAL_WEIGHT = "total_weight";
-        public static final String SHIPPING_DATE = "shipping_date";
-        public static final String IS_COMPLETE = "isComplete";
-        public static final String ORDERS_LIST = "orderList";
-        public static final String ORDER_ID = "id";
-        public static final String ORDER_WEIGHT = "weight";
-        public static final String ORDER_PRICE = "price";
-        public static final String CITY  = "city";
-        public static final String CITY_ID = "id";
-        public static final String CITY_NAME = "name";
-        public static final String COUNTRY = "country";
-        public static final String COUNTRY_ID = "id";
-        public static final String COUNTRY_NAME = "name";
-        public static final String VEHICLE = "vehicle";
-        public static final String VEHICLE_ID = "vehicleId";
-        public static final String DRIVER_ID = "driver_id";
-        public static final String DRIVER_NAME = "name";
-        public static final String DRIVER = "driver";
-        public static final String ADMIN_ID = "admin_id";
-        public static final String ADMIN= "admin";
-        public static final String REGION="region";
-        public static final String BREAKABLE = "breakable";
-        public static final String FLAMABLE = "flamable";
-        public static final String STATE =  "state";
-        public static final String ADDRESS = "address";
-        public static final String SENDER_ID = "senderId";
-        public static final String RECEIVER_ID = "receiver_id";
-        public static final String  BOX_COUNT="boxCount";
-
-        public static final String ADMIN = "admin";
-        public static final String DRIVER_EMAIL = "email";
-        public static final String DRIVER_AGE = "age";
-        public static final String DRIVER_SSN = "social_security_number";
-        public static final String DRIVER_IS_BUSY = "isbusy";
+      public static final String SHIPMENT_ID = "shipment_id";
+      public static final String TOTAL_WEIGHT = "total_weight";
+      public static final String SHIPPING_DATE = "shipping_date";
+      public static final String IS_COMPLETE = "isComplete";
+      public static final String ORDERS_LIST = "orderList";
+      public static final String ORDER_ID = "id";
+      public static final String ORDER_WEIGHT = "weight";
+      public static final String ORDER_PRICE = "price";
+      public static final String CITY  = "city";
+      public static final String CITY_ID = "id";
+      public static final String CITY_NAME = "name";
+      public static final String COUNTRY  = "country";
+      public static final String COUNTRY_ID = "id";
+      public static final String COUNTRY_NAME = "name";
+      public static final String VEHICLE= "vehicle";
+      public static final String VEHICLE_ID = "vehicleId";
+      public static final String DRIVER_ID = "driver_id";
+      public static final String DRIVER_NAME = "name";
+      public static final String DRIVER= "driver";
+      public static final String ADMIN_ID = "admin_id";
+      public static final String ADMIN= "admin";
+      public static final String REGION="region";
+      public static final String BREAKABLE = "breakable";
+      public static final String DRIVER_EMAIL = "email";
+      public static final String FLAMABLE = "flamable";
+      public static final String STATE =  "state";
+      public static final String DRIVER_AGE = "age";
+      public static final String DRIVER_SSN = "social_security_number";
+      public static final String ADDRESS = "address";
+      public static final String DRIVER_IS_BUSY = "isbusy";
+      public static final String SENDER_ID = "senderId";
+      public static final String RECEIVER_ID = "receiver_id";
+      public static final String  BOX_COUNT="boxCount";
       public static final String V_LICENSE_PLATE = "licensePlate";
       public static final String V_WEIGHT_LIMIT = "weightLimit";
       public static final String V_IS_AVAILABLE = "available";
       public static final String V_IS_USED = "used";
       public static final String V_TYPE = "type";
+
     }
-    //get
-    public static List<DriverObj> getAvailableAndNotBusyDrivers(){
-        List<DriverObj> drivers= new ArrayList<>();
+
+    // get
+    public static List<DriverObj> getAvailableAndNotBusyDrivers() {
+        List<DriverObj> drivers = new ArrayList<>();
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
@@ -124,67 +122,12 @@ public class SqlUtil {
         }
         return Collections.emptyList();
     }
-    //public static List<City> getAllCities(){
-      //  List<City> cities=new ArrayList<>();
-        //return  cities;
-    //}
-    public static List<Order> getOrders( String sortBy, String sortDirection, String state) {
-        List<Order> orders=new ArrayList<>();
-        HttpURLConnection connection = null;
-        try {
-            if(sortBy!=null& sortDirection!=null& state!=null) {
-                connection = ApiUtil.fetchApi(
-                        "/api/v1/order/all/state?sortBy="+sortBy+"sortDir="+sortDirection+"state"+state, ApiUtil.RequestMethod.GET,null
-                );}
-            else {
-                connection = ApiUtil.fetchApi(
-                        "/api/v1/order/all/state", ApiUtil.RequestMethod.GET,null
-                );
-            }
-                if (connection.getResponseCode() != 200) {
-                    System.out.println("Error getting all orders"  + connection.getResponseCode());
-                    return Collections.emptyList();
-                }
-                String result =ApiUtil.readResponse(connection);
-                JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-                for (int i=0;i<jsonArray.size();i++){
-                    JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                    int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
-                    int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
-                    int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
-                    JsonObject shipment=jsonObject.get("shipment").getAsJsonObject();
-                    int shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
-                    JsonObject city=jsonObject.get("city").getAsJsonObject();
-                    int cityId = city.get(JsonFieldConstants.CITY_ID).getAsInt();
-                    String cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
-                    JsonObject receiver=jsonObject.get("receiver").getAsJsonObject();
-                    int receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
-                    JsonObject sender=jsonObject.get("sender").getAsJsonObject();
-                    int senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
-                    String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
-                    String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
-                    State orderState = State.valueOf(jsonObject.get(JsonFieldConstants.STATE).getAsString());
-                    int box= jsonObject.get(JsonFieldConstants.BOX_COUNT).getAsInt();
-                    boolean flamable= jsonObject.get(JsonFieldConstants.FLAMABLE).getAsBoolean();
-                    boolean breakable= jsonObject.get(JsonFieldConstants.BREAKABLE).getAsBoolean();
+    // public static List<City> getAllCities(){
+    // List<City> cities=new ArrayList<>();
+    // return cities;
+    // }
 
-                    Order order= new Order(orderId,cityName,cityId,region,address,flamable,breakable,orderPrice,orderState,orderWeight,shipmentId,receiverId,senderId,box,LocalDate.now());
-                    orders.add(order);
-                }
-                return orders;
-            }
-        catch (IOException e){
-                e.printStackTrace();
-            }
-        finally {
-                if (connection!=null){
-                    connection.disconnect();
-                }
-            }
-            return Collections.emptyList();
-        }
-
-    public static List<ShipmentDisplayDTO>  getShipmentsByComplete(boolean isComplete){
+    public static List<ShipmentDisplayDTO> getShipmentsByComplete(boolean isComplete) {
         List<ShipmentDisplayDTO> shipments = new ArrayList<>();
         List<Integer> ordersIds = new ArrayList<Integer>();
         HttpURLConnection connection = null;
@@ -202,17 +145,17 @@ public class SqlUtil {
 
                 JsonObject shipmentObject = jsonArray.get(i).getAsJsonObject();
                 int shipmentId = shipmentObject.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
-                  JsonObject driverObject = shipmentObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
-                   int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
-                   String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
-                    JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
-                    int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
+                JsonObject driverObject = shipmentObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
+                int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
+                String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
+                JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
+                int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
 
-                    JsonObject cityObject = shipmentObject.get(JsonFieldConstants.CITY).getAsJsonObject();
-                    int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
-                   String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
-                   JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
-                   int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
+                JsonObject cityObject = shipmentObject.get(JsonFieldConstants.CITY).getAsJsonObject();
+                int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
+                String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
+                JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
+                int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
 
                 String countryName = CountryObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
 
@@ -228,10 +171,10 @@ public class SqlUtil {
                 JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN).getAsJsonObject();
                 int adminId = adminObject.get(JsonFieldConstants.ADMIN_ID).getAsInt();
                 int totalWeight = shipmentObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
-                String shippingDate =shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
-                Country country=new Country(countryId,countryName);
-                City city=new City(cityId,cityName,country);
-                DriverObj driver=new DriverObj(driverId,driverName);
+                String shippingDate = shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
+                Country country = new Country(countryId, countryName);
+                City city = new City(cityId, cityName, country);
+                DriverObj driver = new DriverObj(driverId, driverName);
                 ShipmentDisplayDTO shipment = new ShipmentDisplayDTO(shipmentId,
                         totalWeight,
                         shippingDate,
@@ -254,7 +197,7 @@ public class SqlUtil {
         return Collections.emptyList();
     }
 
-    public static List<ShipmentDisplayDTO> getShipmentById(int shipmentId){
+    public static List<ShipmentDisplayDTO> getShipmentById(int shipmentId) {
         List<ShipmentDisplayDTO> shipments = new ArrayList<>();
         HttpURLConnection connection = null;
         try {
@@ -281,18 +224,16 @@ public class SqlUtil {
             JsonObject vehicleObject = jsonObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
             int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
 
-
-        Country country=new Country(countryId,countryName);
-        City city=new City(cityId,cityName,country);
-        DriverObj driver=new DriverObj(driverId,driverName);
-        ShipmentDisplayDTO shipmentRequest = new ShipmentDisplayDTO
-                (shipmentId,totalWeight,shippingDate,cityName,countryName, complete, cityId,
-                        driverId,
-                        vehicleId,city,driver);
-        shipments.add(shipmentRequest);
-        return shipments;
-        }
-        catch (IOException e){
+            Country country = new Country(countryId, countryName);
+            City city = new City(cityId, cityName, country);
+            DriverObj driver = new DriverObj(driverId, driverName);
+            ShipmentDisplayDTO shipmentRequest = new ShipmentDisplayDTO(shipmentId, totalWeight, shippingDate, cityName,
+                    countryName, complete, cityId,
+                    driverId,
+                    vehicleId, city, driver);
+            shipments.add(shipmentRequest);
+            return shipments;
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             if (connection != null) {
@@ -400,55 +341,16 @@ public class SqlUtil {
             return orders;
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        finally {
-            if (connection!=null){
+        } finally {
+            if (connection != null) {
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
     }
-  public static List<Country> getAllCountries() {
-    List<Country>countries= new ArrayList<>() ;
-    HttpURLConnection connection = null;
-    try {
-      connection = ApiUtil.fetchApi(
-        "/api/v1/country/all", ApiUtil.RequestMethod.GET, null
-      );
-      if (connection.getResponseCode() != 200) {
-        System.out.println("Error getting all orders"  + connection.getResponseCode());
-        return Collections.emptyList();
-      }
-      String result =ApiUtil.readResponse(connection);
-      JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-      for (int i=0;i<jsonArray.size();i++){
-        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-        int countryId = jsonObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
-        String  countryName = jsonObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
-         JsonArray citiesRaw = jsonObject.get("cities").getAsJsonArray();
-        List<City> cities = new ArrayList<>();
-        for (int j=0;j<jsonArray.size();j++){
-           JsonObject cityObject = citiesRaw.get(j).getAsJsonObject();
-           City city = new City(cityObject.get("id").getAsInt(),cityObject.get("name").getAsString());
-           cities.add(city);
-         }
-        Country country = new Country(countryId,countryName,cities);
-        countries.add(country);
-      }
-      return countries;
-    }
-    catch (IOException e){
-      e.printStackTrace();
-    }
-    finally {
-      if (connection!=null){
-        connection.disconnect();
-      }
-    }
-    return Collections.emptyList();
-  }
-    public static List<OrderTable> getShipmentOrders( int shipmentId) {
-        List<OrderTable>orders= new ArrayList<>() ;
+
+    public static List<OrderTable> getShipmentOrders(int shipmentId) {
+        List<OrderTable> orders = new ArrayList<>();
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
@@ -465,7 +367,7 @@ public class SqlUtil {
                 int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
                 int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
                 int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
-                OrderTable orderTable = new OrderTable(orderId,orderPrice,orderWeight);
+                OrderTable orderTable = new OrderTable(orderId, orderPrice, orderWeight);
                 orders.add(orderTable);
             }
             return orders;
@@ -479,98 +381,7 @@ public class SqlUtil {
         return Collections.emptyList();
     }
 
-
-
-    //POST
-    public static boolean createSender(Sender sender){
-      HttpURLConnection connection = null;
-      try {
-        Gson gson = new Gson();
-        JsonObject json = new JsonObject();
-        json.addProperty(JsonFieldConstants.SENDER_ID, sender.getSenderId());
-        json.addProperty(JsonFieldConstants.DRIVER_NAME, sender.getName());
-        json.addProperty("commercial_register_number", sender.getCommercial_register_number());
-        json.addProperty("email", sender.getEmail());
-        json.addProperty("phone", sender.getPhone());
-        json.addProperty("socialSecurityNumber", sender.getSocialSecurityNumber());
-        connection = ApiUtil.fetchApi(
-          "/api/v1/sender", ApiUtil.RequestMethod.POST, json
-        );
-        if (connection.getResponseCode() != 200) {
-          // System.out.println("Error creating a shipment" + connection.getResponseCode());
-          return false;
-        }
-        return true;
-      } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-      } finally {
-        if (connection != null) {
-          connection.disconnect();
-        }
-      }
-    }
-  public static boolean createReceiver(Receiver receiver){
-    HttpURLConnection connection = null;
-    try {
-      Gson gson = new Gson();
-      JsonObject json = new JsonObject();
-      json.addProperty(JsonFieldConstants.RECEIVER_ID, receiver.getReceiverId());
-      json.addProperty(JsonFieldConstants.DRIVER_NAME, receiver.getName());
-      json.addProperty("email", receiver.getEmail());
-      json.addProperty("phone", receiver.getPhone());
-      json.addProperty("socialSecurityNumber", receiver.getSocialSecurityNumber());
-      connection = ApiUtil.fetchApi(
-        "/api/v1/receiver", ApiUtil.RequestMethod.POST, json
-      );
-      if (connection.getResponseCode() != 200) {
-        // System.out.println("Error creating a shipment" + connection.getResponseCode());
-        return false;
-      }
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    } finally {
-      if (connection != null) {
-        connection.disconnect();
-      }
-    }
-  }
-
-    public static boolean createOrder(Order order) {
-        HttpURLConnection connection = null;
-        try {
-            Gson gson = new Gson();
-            JsonObject json = new JsonObject();
-            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
-            json.addProperty(JsonFieldConstants.REGION, order.region());
-            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
-            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
-            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
-            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
-            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
-            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
-            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
-            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
-            connection = ApiUtil.fetchApi(
-                    "/api/v1/order", ApiUtil.RequestMethod.POST, json
-            );
-            if (connection.getResponseCode() != 200) {
-                // System.out.println("Error creating a shipment" + connection.getResponseCode());
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
+    // POST
     public static boolean createShipment(ShipmentCreateDTO shipmentCreateDTO) {
         HttpURLConnection connection = null;
         try {
@@ -591,32 +402,10 @@ public class SqlUtil {
             json.add("orderIds", ordersArray);
 
             connection = ApiUtil.fetchApi(
-                    "/api/v1/shipments", ApiUtil.RequestMethod.POST, json);
+                    "/api/shipments", ApiUtil.RequestMethod.POST, json);
             if (connection.getResponseCode() != 200) {
-               // System.out.println("Error creating a shipment" + connection.getResponseCode());
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
-
-    public static boolean attachOrDeattachShipmentById(int orderId, int shipmentId) {
-        HttpURLConnection connection = null;
-        try {
-
-            connection = ApiUtil.fetchApi(
-                    "/api/v1/order/"+orderId+"shipment/"+shipmentId, ApiUtil.RequestMethod.PATCH, null
-            );
-            if (connection.getResponseCode() != 200) {
-                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                // System.out.println("Error creating a shipment" +
+                // connection.getResponseCode());
                 return false;
             }
             return true;
@@ -644,45 +433,10 @@ public class SqlUtil {
             json.addProperty(JsonFieldConstants.SHIPPING_DATE, date.format(formatter));
             json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, updateDTO.getTotalWeight());
 
-
-        connection = ApiUtil.fetchApi(
-                "/api/v1/shipments/update"+updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json
-        );
-        if (connection.getResponseCode() != 200) {
-           // System.out.println("Error updating shipment" + connection.getResponseCode());
-            return false;
-        }
-        return true;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    } finally {
-        if (connection != null) {
-            connection.disconnect();
-        }
-    }
-}
-
-    public static boolean updateOrder(Order order) {
-        HttpURLConnection connection = null;
-        try {
-            Gson gson = new Gson();
-            JsonObject json = new JsonObject();
-            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
-            json.addProperty(JsonFieldConstants.REGION, order.region());
-            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
-            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
-            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
-            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
-            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
-            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
-            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
-            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
             connection = ApiUtil.fetchApi(
-                    "/api/v1/order/"+order.id(), ApiUtil.RequestMethod.PUT, json
-            );
+                    "/api/v1/shipment/update" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
             if (connection.getResponseCode() != 200) {
-                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                // System.out.println("Error updating shipment" + connection.getResponseCode());
                 return false;
             }
             return true;
@@ -719,38 +473,19 @@ public class SqlUtil {
     }
 
     // delete
-public static boolean deleteShipment(int shipmentId){
-    HttpURLConnection connection = null;
-    try {
-        connection =ApiUtil.fetchApi(
-                "/api/v1/shipments/"+shipmentId,ApiUtil.RequestMethod.DELETE,null
-        );
-        if (connection.getResponseCode()!=200){
-           // System.out.println("Error deleting shipment by id"+ connection.getResponseCode());
-           return false;
-        }
-        return true;
-    }
-    catch (Exception e){
-    e.printStackTrace();
-    return false;
-    }
-    finally {
-        if (connection!=null){
-            connection.disconnect();
-        }
-    }
-}
-
-// delete
-public static boolean deleteOrder(int orderId){
-    HttpURLConnection connection = null;
-    try {
-        connection =ApiUtil.fetchApi(
-                "/api/v1/order/"+orderId,ApiUtil.RequestMethod.DELETE,null
-        );
-        if (connection.getResponseCode()!=200){
-            // System.out.println("Error deleting shipment by id"+ connection.getResponseCode());
+    public static boolean deleteShipment(int shipmentId) {
+        HttpURLConnection connection = null;
+        try {
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.DELETE, null);
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error deleting shipment by id"+
+                // connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         } finally {
             if (connection != null) {
@@ -919,5 +654,128 @@ public static boolean deleteOrder(int orderId){
       if (connection != null) connection.disconnect();
     }
     return Collections.emptyList();
+  }
+
+  // }
+  public static List<Order> getOrders( String sortBy, String sortDirection, String state) {
+    List<Order> orders=new ArrayList<>();
+    HttpURLConnection connection = null;
+    try {
+      if(sortBy!=null& sortDirection!=null& state!=null) {
+        connection = ApiUtil.fetchApi(
+          "/api/v1/order/all/state?sortBy="+sortBy+"sortDir="+sortDirection+"state"+state, ApiUtil.RequestMethod.GET,null
+        );}
+      else {
+        connection = ApiUtil.fetchApi(
+          "/api/v1/order/all/state", ApiUtil.RequestMethod.GET,null
+        );
+      }
+      if (connection.getResponseCode() != 200) {
+        System.out.println("Error getting all orders"  + connection.getResponseCode());
+        return Collections.emptyList();
+      }
+      String result =ApiUtil.readResponse(connection);
+      JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
+      for (int i=0;i<jsonArray.size();i++){
+        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+        int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+        int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
+        int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
+        JsonObject shipment=jsonObject.get("shipment").getAsJsonObject();
+        int shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+        JsonObject city=jsonObject.get("city").getAsJsonObject();
+        int cityId = city.get(JsonFieldConstants.CITY_ID).getAsInt();
+        String cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
+        JsonObject receiver=jsonObject.get("receiver").getAsJsonObject();
+        int receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
+        JsonObject sender=jsonObject.get("sender").getAsJsonObject();
+        int senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+        String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
+        String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
+        State orderState = State.valueOf(jsonObject.get(JsonFieldConstants.STATE).getAsString());
+        int box= jsonObject.get(JsonFieldConstants.BOX_COUNT).getAsInt();
+        boolean flamable= jsonObject.get(JsonFieldConstants.FLAMABLE).getAsBoolean();
+        boolean breakable= jsonObject.get(JsonFieldConstants.BREAKABLE).getAsBoolean();
+        Order order= new Order(orderId,cityName,cityId,region,address,flamable,breakable,orderPrice,orderState,orderWeight,shipmentId,receiverId,senderId,box,LocalDate.now());
+        orders.add(order);
+      }
+      return orders;
+    }
+    catch (IOException e){
+      e.printStackTrace();
+    }
+    finally {
+      if (connection!=null){
+        connection.disconnect();
+      }
+    }
+    return Collections.emptyList();
+  }
+
+  public static List<Country> getAllCountries() {
+    List<Country>countries= new ArrayList<>() ;
+    HttpURLConnection connection = null;
+    try {
+      connection = ApiUtil.fetchApi(
+        "/api/v1/country/all", ApiUtil.RequestMethod.GET, null
+      );
+      if (connection.getResponseCode() != 200) {
+        System.out.println("Error getting all orders"  + connection.getResponseCode());
+        return Collections.emptyList();
+      }
+      String result =ApiUtil.readResponse(connection);
+      JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
+      for (int i=0;i<jsonArray.size();i++){
+        JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+        int countryId = jsonObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
+        String  countryName = jsonObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
+        JsonArray citiesRaw = jsonObject.get("cities").getAsJsonArray();
+        List<City> cities = new ArrayList<>();
+        for (int j=0;j<jsonArray.size();j++){
+          JsonObject cityObject = citiesRaw.get(j).getAsJsonObject();
+          City city = new City(cityObject.get("id").getAsInt(),cityObject.get("name").getAsString());
+          cities.add(city);
+        }
+        Country country = new Country(countryId,countryName,cities);
+        countries.add(country);
+      }
+      return countries;
+    }
+    catch (IOException e){
+      e.printStackTrace();
+    }
+    finally {
+      if (connection!=null){
+        connection.disconnect();
+      }
+    }
+    return Collections.emptyList();
+  }
+  public static boolean createReceiver(Receiver receiver){
+    HttpURLConnection connection = null;
+    try {
+      Gson gson = new Gson();
+      JsonObject json = new JsonObject();
+      json.addProperty(JsonFieldConstants.RECEIVER_ID, receiver.getReceiverId());
+      json.addProperty(JsonFieldConstants.DRIVER_NAME, receiver.getName());
+      json.addProperty("email", receiver.getEmail());
+      json.addProperty("phone", receiver.getPhone());
+      json.addProperty("socialSecurityNumber", receiver.getSocialSecurityNumber());
+      connection = ApiUtil.fetchApi(
+        "/api/v1/receiver", ApiUtil.RequestMethod.POST, json
+      );
+      if (connection.getResponseCode() != 200) {
+        // System.out.println("Error creating a shipment" + connection.getResponseCode());
+        return false;
+      }
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
   }
 }
