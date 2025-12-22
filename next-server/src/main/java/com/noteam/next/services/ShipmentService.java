@@ -197,7 +197,7 @@ try{
                 shipment.setCreated_at(LocalDateTime.now());
                 Shipment createdShipment = shipmentRepository.save(shipment);
                 if (orders != null && !orders.isEmpty()) {
-                    ordersService.attachShipmentByIds(orders, createdShipment); // name
+                    ordersService.attachShipmentByIds(orders, createdShipment.getShipment_id()); // name
                 }
              return createdShipment;
         } catch (Exception e) {
@@ -246,7 +246,7 @@ try{
         existingShipment.setUpdated_at(LocalDateTime.now());
         Shipment savedShipment = shipmentRepository.save(existingShipment);
         if (orders != null && !orders.isEmpty()) {
-            ordersService.attachShipmentByIds(orders, savedShipment);
+            ordersService.attachShipmentByIds(orders, savedShipment.getShipment_id());
         }
         return savedShipment;
        } catch (Exception e) {

@@ -1,6 +1,7 @@
 package org.noteam.nextclient.utils;
 
 import com.google.gson.*;
+import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.shipment.ShipmentCreateDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentDisplayDTO;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class SqlUtil {
 
+
     public class JsonFieldConstants {
         public static final String SHIPMENT_ID = "shipment_id";
         public static final String TOTAL_WEIGHT = "total_weight";
@@ -27,89 +29,157 @@ public class SqlUtil {
         public static final String ORDER_ID = "id";
         public static final String ORDER_WEIGHT = "weight";
         public static final String ORDER_PRICE = "price";
-        public static final String CITY = "city";
+        public static final String CITY  = "city";
         public static final String CITY_ID = "id";
         public static final String CITY_NAME = "name";
-        public static final String COUNTRY = "country";
+        public static final String COUNTRY  = "country";
         public static final String COUNTRY_ID = "id";
         public static final String COUNTRY_NAME = "name";
-        public static final String VEHICLE = "vehicle";
+        public static final String VEHICLE= "vehicle";
         public static final String VEHICLE_ID = "vehicleId";
         public static final String DRIVER_ID = "driver_id";
         public static final String DRIVER_NAME = "name";
-        public static final String DRIVER = "driver";
+        public static final String DRIVER= "driver";
         public static final String ADMIN_ID = "admin_id";
-        public static final String ADMIN = "admin";
+        public static final String ADMIN= "admin";
+        public static final String REGION="region";
+        public static final String BREAKABLE = "breakable";
+        public static final String FLAMABLE = "flamable";
+        public static final String STATE =  "state";
+        public static final String ADDRESS = "address";
+        public static final String SENDER_ID = "sender_id";
+        public static final String RECEIVER_ID = "receiver_id";
+        public static final String  BOX_COUNT="boxCount";
+
 
     }
-
-    // get
-    public static List<DriverObj> getAvailableAndNotBusyDrivers() {
-        List<DriverObj> drivers = new ArrayList<>();
+    //get
+    public static List<DriverObj> getAvailableAndNotBusyDrivers(){
+        List<DriverObj> drivers= new ArrayList<>();
         HttpURLConnection connection = null;
         try {
-            connection = ApiUtil.fetchApi(
-                    "/api/v1/driver/all", ApiUtil.RequestMethod.GET, null);
-            if (connection.getResponseCode() != 200) {
-                System.out.println("Error getting drivers" + connection.getResponseCode());
+            connection =ApiUtil.fetchApi(
+                    "/api/v1/driver/all",ApiUtil.RequestMethod.GET,null
+            );
+            if (connection.getResponseCode()!=200){
+                System.out.println("Error getting drivers"+ connection.getResponseCode());
                 return Collections.emptyList();
             }
-            String result = ApiUtil.readResponse(connection);
+            String result =ApiUtil.readResponse(connection);
 
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i=0;i<jsonArray.size();i++) {
                 JsonObject driverObject = jsonArray.get(i).getAsJsonObject();
                 int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
                 String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
-                DriverObj driver = new DriverObj(driverId, driverName);
+                DriverObj driver=new DriverObj(driverId,driverName);
                 drivers.add(driver);
             }
-            return drivers;
-        } catch (IOException e) {
+                return drivers;
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
 
     }
-
-    public static List<Integer> getAvailableVehicles() {
-        List<Integer> vehicles = new ArrayList<>();
+    public static List< Integer> getAvailableVehicles(){
+        List<Integer> vehicles=new ArrayList<>();
         HttpURLConnection connection = null;
         try {
-            connection = ApiUtil.fetchApi(
-                    "/api/v1/vehicles", ApiUtil.RequestMethod.GET, null);
-            if (connection.getResponseCode() != 200) {
-                System.out.println("Error getting vehicles" + connection.getResponseCode());
+            connection =ApiUtil.fetchApi(
+                    "/api/v1/vehicles",ApiUtil.RequestMethod.GET,null
+            );
+            if (connection.getResponseCode()!=200){
+                System.out.println("Error getting vehicles"+ connection.getResponseCode());
                 return Collections.emptyList();
             }
-            String result = ApiUtil.readResponse(connection);
+            String result =ApiUtil.readResponse(connection);
 
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i=0;i<jsonArray.size();i++) {
                 JsonObject vehicleObject = jsonArray.get(i).getAsJsonObject();
                 int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
-                vehicles.add(vehicleId);
+               vehicles.add(vehicleId);
             }
             return vehicles;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
     }
-    // public static List<City> getAllCities(){
-    // List<City> cities=new ArrayList<>();
-    // return cities;
-    // }
+    //public static List<City> getAllCities(){
+      //  List<City> cities=new ArrayList<>();
+        //return  cities;
+    //}
+    public List<Order> getOrdersByPage(int pageNumber, int pageSize,String sortBy,String sortDirection,String state) {
+        List<Order> orders=new ArrayList<>();
+        HttpURLConnection connection = null;
+        try {
+            if(pageNumber>0 && pageSize>0& sortBy!=null& sortDirection!=null& state!=null) {
+                connection = ApiUtil.fetchApi(
+                        "/api/v1/order?pageNumber="+pageNumber +"pageSize="+pageSize+"sortBy="+sortBy+"sortDir="+sortDirection+"state"+state, ApiUtil.RequestMethod.GET,null
+                );}
+            else {
+                connection = ApiUtil.fetchApi(
+                        "/api/v1/order", ApiUtil.RequestMethod.GET,null
+                );
+            }
+                if (connection.getResponseCode() != 200) {
+                    System.out.println("Error getting all orders"  + connection.getResponseCode());
+                    return Collections.emptyList();
+                }
+                String result =ApiUtil.readResponse(connection);
+                JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
+                for (int i=0;i<jsonArray.size();i++){
+                    JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                    int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+                    int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
+                    int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
+                    JsonObject shipment=jsonObject.get("shipment").getAsJsonObject();
+                    int shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+                    JsonObject city=jsonObject.get("city").getAsJsonObject();
+                    int cityId = city.get(JsonFieldConstants.CITY_ID).getAsInt();
+                    String cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
+                    JsonObject receiver=jsonObject.get("receiver").getAsJsonObject();
+                    int receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
+                    JsonObject sender=jsonObject.get("sender").getAsJsonObject();
+                    int senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+                    String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
+                    String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
+                    String orderState = jsonObject.get(JsonFieldConstants.STATE).getAsString();
+                    int box= jsonObject.get(JsonFieldConstants.BOX_COUNT).getAsInt();
+                    boolean flamable= jsonObject.get(JsonFieldConstants.FLAMABLE).getAsBoolean();
+                    boolean breakable= jsonObject.get(JsonFieldConstants.BREAKABLE).getAsBoolean();
 
-    public static List<ShipmentDisplayDTO> getShipmentsByComplete(boolean isComplete) {
+                    Order order= new Order(orderId,cityName,cityId,region,address,flamable,breakable,orderPrice,orderState,orderWeight,shipmentId,receiverId,senderId,box);
+                    orders.add(order);
+                }
+                return orders;
+            }
+        catch (IOException e){
+                e.printStackTrace();
+            }
+        finally {
+                if (connection!=null){
+                    connection.disconnect();
+                }
+            }
+            return Collections.emptyList();
+        }
+
+    public static List<ShipmentDisplayDTO>  getShipmentsByComplete(boolean isComplete){
         List<ShipmentDisplayDTO> shipments = new ArrayList<>();
         List<Integer> ordersIds = new ArrayList<Integer>();
         HttpURLConnection connection = null;
@@ -120,31 +190,30 @@ public class SqlUtil {
                 System.out.println("Error getting shipments by complete" + connection.getResponseCode());
                 return Collections.emptyList();
             }
-            String result = ApiUtil.readResponse(connection);
+            String result =ApiUtil.readResponse(connection);
 
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i=0;i<jsonArray.size();i++) {
 
                 JsonObject shipmentObject = jsonArray.get(i).getAsJsonObject();
                 int shipmentId = shipmentObject.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
-                JsonObject driverObject = shipmentObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
-                int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
-                String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
-                JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
-                int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
+                  JsonObject driverObject = shipmentObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
+                   int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
+                   String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
+                    JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
+                    int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
 
-                JsonObject cityObject = shipmentObject.get(JsonFieldConstants.CITY).getAsJsonObject();
-                int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
-                String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
-                JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
-                int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
+                    JsonObject cityObject = shipmentObject.get(JsonFieldConstants.CITY).getAsJsonObject();
+                    int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
+                   String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
+                   JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
+                   int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
 
                 String countryName = CountryObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
 
-                if (shipmentObject.has(JsonFieldConstants.ORDERS_LIST)
-                        && !shipmentObject.get(JsonFieldConstants.ORDERS_LIST).isJsonNull()) {
+                if (shipmentObject.has(JsonFieldConstants.ORDERS_LIST) && !shipmentObject.get(JsonFieldConstants.ORDERS_LIST).isJsonNull()){
                     JsonArray orderListArray = shipmentObject.get(JsonFieldConstants.ORDERS_LIST).getAsJsonArray();
-                    for (int x = 0; x < orderListArray.size(); x++) {
+                    for ( int x=0 ;x<orderListArray.size();x++){
                         JsonObject orderObject = orderListArray.get(x).getAsJsonObject();
                         int orderId = orderObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
                         ordersIds.add(orderId);
@@ -153,72 +222,78 @@ public class SqlUtil {
                 JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN).getAsJsonObject();
                 int adminId = adminObject.get(JsonFieldConstants.ADMIN_ID).getAsInt();
                 int totalWeight = shipmentObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
-                String shippingDate = shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
-                Country country = new Country(countryId, countryName);
-                City city = new City(cityId, cityName, country);
-                DriverObj driver = new DriverObj(driverId, driverName);
+                String shippingDate =shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
+                Country country=new Country(countryId,countryName);
+                City city=new City(cityId,cityName,country);
+                DriverObj driver=new DriverObj(driverId,driverName);
                 ShipmentDisplayDTO shipment = new ShipmentDisplayDTO(shipmentId,
                         totalWeight,
                         shippingDate,
                         cityName,
                         countryName,
-                        isComplete,
+                        isComplete  ,
                         cityId,
                         driverId,
-                        vehicleId, city, driver);
+                        vehicleId,city,driver
+                );
                 shipments.add(shipment);
+                }
+               return  shipments;
             }
-            return shipments;
-        } catch (IOException e) {
+        catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
     }
 
-    public static List<ShipmentDisplayDTO> getShipmentById(int shipmentId) {
+    public static List<ShipmentDisplayDTO> getShipmentById(int shipmentId){
         List<ShipmentDisplayDTO> shipments = new ArrayList<>();
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
                     "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.GET, null);
             if (connection.getResponseCode() != 200) {
-                System.out.println("Error getting  Shipment by id" + connection.getResponseCode());
+                System.out.println("Error getting  Shipment by id"  + connection.getResponseCode());
                 return null;
             }
-            String result = ApiUtil.readResponse(connection);
-            JsonObject jsonObject = new JsonParser().parse(result).getAsJsonObject();
-            int totalWeight = jsonObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
-            String shippingDate = jsonObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
-            boolean complete = jsonObject.get(JsonFieldConstants.IS_COMPLETE).getAsBoolean();
-            JsonObject cityObject = jsonObject.get(JsonFieldConstants.CITY).getAsJsonObject();
-            int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
-            String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
-            JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
-            int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
-            String countryName = CountryObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
-            JsonObject driverObject = jsonObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
-            int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
-            String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
-            JsonObject vehicleObject = jsonObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
-            int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
+        String result =ApiUtil.readResponse(connection);
+        JsonObject jsonObject = new JsonParser().parse(result).getAsJsonObject();
+        int totalWeight = jsonObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
+        String shippingDate =jsonObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
+        boolean complete = jsonObject.get(JsonFieldConstants.IS_COMPLETE).getAsBoolean();
+        JsonObject cityObject = jsonObject.get(JsonFieldConstants.CITY).getAsJsonObject();
+        int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
+        String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
+        JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
+        int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
+        String countryName = CountryObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
+        JsonObject driverObject = jsonObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
+        int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
+        String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
+        JsonObject vehicleObject = jsonObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
+        int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
 
-            Country country = new Country(countryId, countryName);
-            City city = new City(cityId, cityName, country);
-            DriverObj driver = new DriverObj(driverId, driverName);
-            ShipmentDisplayDTO shipmentRequest = new ShipmentDisplayDTO(shipmentId, totalWeight, shippingDate, cityName,
-                    countryName, complete, cityId,
-                    driverId,
-                    vehicleId, city, driver);
-            shipments.add(shipmentRequest);
-            return shipments;
-        } catch (IOException e) {
+
+        Country country=new Country(countryId,countryName);
+        City city=new City(cityId,cityName,country);
+        DriverObj driver=new DriverObj(driverId,driverName);
+        ShipmentDisplayDTO shipmentRequest = new ShipmentDisplayDTO
+                (shipmentId,totalWeight,shippingDate,cityName,countryName, complete, cityId,
+                        driverId,
+                        vehicleId,city,driver);
+        shipments.add(shipmentRequest);
+        return shipments;
+        }
+        catch (IOException e){
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
@@ -253,9 +328,8 @@ public class SqlUtil {
             }
         }
     }
-
     private static ShipmentDisplayDTO extractShipmentFromJson(JsonObject shipmentObject) {
-        try {
+       try {
             int shipmentId = shipmentObject.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
             int totalWeight = shipmentObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
             String shippingDate = shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
@@ -271,19 +345,18 @@ public class SqlUtil {
             String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
             JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
             int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
-            Country country = new Country(countryId, countryName);
-            City city = new City(cityId, cityName, country);
-            DriverObj driver = new DriverObj(driverId, driverName);
+            Country country=new Country(countryId,countryName);
+            City city=new City(cityId,cityName,country);
+            DriverObj driver=new DriverObj(driverId,driverName);
             return new ShipmentDisplayDTO(shipmentId, totalWeight, shippingDate,
-                    cityName, countryName, complete, cityId,
+                    cityName, countryName, complete ,cityId,
                     driverId,
-                    vehicleId, city, driver);
+                    vehicleId,city,driver);
         } catch (Exception e) {
             System.err.println("Error extracting shipment from JSON: " + e.getMessage());
             return null;
         }
     }
-
     public static List<ShipmentDisplayDTO> getShipmentsByCityId(int cityId) {
         return getShipmentsByCriteria("/api/v1/shipment/city/" + cityId);
     }
@@ -301,93 +374,95 @@ public class SqlUtil {
     }
 
     public static List<OrderTable> getAllOrders() {
-        List<OrderTable> orders = new ArrayList<>();
+        List<OrderTable>orders= new ArrayList<>() ;
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
-                    "/api/v1/order/all", ApiUtil.RequestMethod.GET, null);
+                    "/api/v1/order/all", ApiUtil.RequestMethod.GET, null
+            );
             if (connection.getResponseCode() != 200) {
-                System.out.println("Error getting all orders" + connection.getResponseCode());
+                System.out.println("Error getting all orders"  + connection.getResponseCode());
                 return Collections.emptyList();
             }
-            String result = ApiUtil.readResponse(connection);
+            String result =ApiUtil.readResponse(connection);
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
-                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
-                int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
-                int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
-                OrderTable orderTable = new OrderTable(orderId, orderPrice, orderWeight);
+            for (int i=0;i<jsonArray.size();i++){
+               JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+               int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+               int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
+               int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
+                OrderTable orderTable = new OrderTable(orderId,orderPrice,orderWeight);
                 orders.add(orderTable);
             }
             return orders;
-        } catch (IOException e) {
+        }
+        catch (IOException e){
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
     }
-
-    public static List<OrderTable> getShipmentOrders(int shipmentId) {
-        List<OrderTable> orders = new ArrayList<>();
+    public static List<OrderTable> getShipmentOrders( int shipmentId) {
+        List<OrderTable>orders= new ArrayList<>() ;
         HttpURLConnection connection = null;
         try {
             connection = ApiUtil.fetchApi(
                     "/api/v1/shipment/" + shipmentId + "/orders", ApiUtil.RequestMethod.GET, null);
             if (connection.getResponseCode() != 200) {
-                // System.out.println("Error getting orders in shipment by id" +
-                // connection.getResponseCode());
+                //System.out.println("Error getting orders in shipment by id" + connection.getResponseCode());
                 return Collections.emptyList();
             }
-            String result = ApiUtil.readResponse(connection);
+            String result =ApiUtil.readResponse(connection);
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
-            for (int i = 0; i < jsonArray.size(); i++) {
+            for (int i=0;i<jsonArray.size();i++){
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
                 int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
                 int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
                 int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
-                OrderTable orderTable = new OrderTable(orderId, orderPrice, orderWeight);
+                OrderTable orderTable = new OrderTable(orderId,orderPrice,orderWeight);
                 orders.add(orderTable);
             }
             return orders;
-        } catch (IOException e) {
+        }
+        catch (IOException e){
             e.printStackTrace();
-        } finally {
-            if (connection != null) {
+        }
+        finally {
+            if (connection!=null){
                 connection.disconnect();
             }
         }
         return Collections.emptyList();
     }
 
-    // POST
-    public static boolean createShipment(ShipmentCreateDTO shipmentCreateDTO) {
+
+
+    //POST
+
+    public static boolean createOrder(Order order) {
         HttpURLConnection connection = null;
         try {
             Gson gson = new Gson();
             JsonObject json = new JsonObject();
-            json.addProperty(JsonFieldConstants.VEHICLE_ID, shipmentCreateDTO.getVehicleId());
-            json.addProperty(JsonFieldConstants.DRIVER_ID, shipmentCreateDTO.getDriverId());
-            json.addProperty(JsonFieldConstants.CITY_ID, shipmentCreateDTO.getCityId());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate date = LocalDate.parse(shipmentCreateDTO.getShippingDate(), formatter);
-            json.addProperty(JsonFieldConstants.SHIPPING_DATE, date.format(formatter));
-            json.addProperty(JsonFieldConstants.ADMIN_ID, shipmentCreateDTO.getAdminId());
-            json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, shipmentCreateDTO.getTotalWeight());
-            JsonArray ordersArray = new JsonArray();
-            for (Integer orderId : shipmentCreateDTO.getOrderIds()) {
-                ordersArray.add(orderId);
-            }
-            json.add("orderIds", ordersArray);
-
+            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+            json.addProperty(JsonFieldConstants.REGION, order.region());
+            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
+            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
+            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
             connection = ApiUtil.fetchApi(
-                    "/api/shipments", ApiUtil.RequestMethod.POST, json);
+                    "/api/v1/order", ApiUtil.RequestMethod.POST, json
+            );
             if (connection.getResponseCode() != 200) {
-                // System.out.println("Error creating a shipment" +
-                // connection.getResponseCode());
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
                 return false;
             }
             return true;
@@ -401,24 +476,118 @@ public class SqlUtil {
         }
     }
 
-    // PUT
-    public static boolean updateShipment(ShipmentUpdateDTO updateDTO) {
+    public static boolean createShipment(ShipmentCreateDTO shipmentCreateDTO) {
         HttpURLConnection connection = null;
         try {
             Gson gson = new Gson();
             JsonObject json = new JsonObject();
-            json.addProperty(JsonFieldConstants.VEHICLE_ID, updateDTO.getVehicleId());
-            json.addProperty(JsonFieldConstants.DRIVER_ID, updateDTO.getDriverId());
-            json.addProperty(JsonFieldConstants.CITY_ID, updateDTO.getCityId());
+            json.addProperty(JsonFieldConstants.VEHICLE_ID, shipmentCreateDTO.getVehicleId());
+            json.addProperty(JsonFieldConstants.DRIVER_ID, shipmentCreateDTO.getDriverId());
+            json.addProperty(JsonFieldConstants.CITY_ID, shipmentCreateDTO.getCityId());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate date = LocalDate.parse(updateDTO.getShippingDate(), formatter);
+            LocalDate date= LocalDate.parse(shipmentCreateDTO.getShippingDate(), formatter);
             json.addProperty(JsonFieldConstants.SHIPPING_DATE, date.format(formatter));
-            json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, updateDTO.getTotalWeight());
+            json.addProperty(JsonFieldConstants.ADMIN_ID, shipmentCreateDTO.getAdminId());
+            json.addProperty(JsonFieldConstants.TOTAL_WEIGHT,shipmentCreateDTO.getTotalWeight());
+            JsonArray ordersArray = new JsonArray();
+            for (Integer orderId : shipmentCreateDTO.getOrderIds()) {
+                ordersArray.add(orderId);
+            }
+            json.add("orderIds", ordersArray);
 
             connection = ApiUtil.fetchApi(
-                    "/api/v1/shipment/update" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
+                    "/api/v1/shipments", ApiUtil.RequestMethod.POST, json);
             if (connection.getResponseCode() != 200) {
-                // System.out.println("Error updating shipment" + connection.getResponseCode());
+               // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+
+    public static boolean attachOrDeattachShipmentById(int orderId, int shipmentId) {
+        HttpURLConnection connection = null;
+        try {
+
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order/"+orderId+"shipment/"+shipmentId, ApiUtil.RequestMethod.PATCH, null
+            );
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    //PUT
+public static boolean updateShipment(ShipmentUpdateDTO updateDTO ) {
+    HttpURLConnection connection = null;
+    try {
+        Gson gson = new Gson();
+        JsonObject json = new JsonObject();
+        json.addProperty(JsonFieldConstants.VEHICLE_ID, updateDTO.getVehicleId());
+        json.addProperty(JsonFieldConstants.DRIVER_ID, updateDTO.getDriverId());
+        json.addProperty(JsonFieldConstants.CITY_ID,updateDTO.getCityId());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date= LocalDate.parse(updateDTO.getShippingDate(), formatter);
+        json.addProperty(JsonFieldConstants.SHIPPING_DATE, date.format(formatter));
+        json.addProperty(JsonFieldConstants.TOTAL_WEIGHT,updateDTO.getTotalWeight());
+
+
+        connection = ApiUtil.fetchApi(
+                "/api/v1/shipments/update"+updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json
+        );
+        if (connection.getResponseCode() != 200) {
+           // System.out.println("Error updating shipment" + connection.getResponseCode());
+            return false;
+        }
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        if (connection != null) {
+            connection.disconnect();
+        }
+    }
+}
+
+    public static boolean updateOrder(Order order) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+            json.addProperty(JsonFieldConstants.REGION, order.region());
+            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+            json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
+            json.addProperty(JsonFieldConstants.SENDER_ID,order.sender());
+            json.addProperty(JsonFieldConstants.RECEIVER_ID,order.receiver());;
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order/"+order.id(), ApiUtil.RequestMethod.PUT, json
+            );
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" + connection.getResponseCode());
                 return false;
             }
             return true;
@@ -452,27 +621,52 @@ public class SqlUtil {
             }
         }
 
-    }
-
+}
     // delete
-    public static boolean deleteShipment(int shipmentId) {
-        HttpURLConnection connection = null;
-        try {
-            connection = ApiUtil.fetchApi(
-                    "/api/v1/shipment/" + shipmentId, ApiUtil.RequestMethod.DELETE, null);
-            if (connection.getResponseCode() != 200) {
-                // System.out.println("Error deleting shipment by id"+
-                // connection.getResponseCode());
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
+public static boolean deleteShipment(int shipmentId){
+    HttpURLConnection connection = null;
+    try {
+        connection =ApiUtil.fetchApi(
+                "/api/v1/shipments/"+shipmentId,ApiUtil.RequestMethod.DELETE,null
+        );
+        if (connection.getResponseCode()!=200){
+           // System.out.println("Error deleting shipment by id"+ connection.getResponseCode());
+           return false;
+        }
+        return true;
+    }
+    catch (Exception e){
+    e.printStackTrace();
+    return false;
+    }
+    finally {
+        if (connection!=null){
+            connection.disconnect();
         }
     }
+}
+
+// delete
+public static boolean deleteOrder(int orderId){
+    HttpURLConnection connection = null;
+    try {
+        connection =ApiUtil.fetchApi(
+                "/api/v1/order/"+orderId,ApiUtil.RequestMethod.DELETE,null
+        );
+        if (connection.getResponseCode()!=200){
+            // System.out.println("Error deleting shipment by id"+ connection.getResponseCode());
+            return false;
+        }
+        return true;
+    }
+    catch (Exception e){
+        e.printStackTrace();
+        return false;
+    }
+    finally {
+        if (connection!=null){
+            connection.disconnect();
+        }
+    }
+}
 }

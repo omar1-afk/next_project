@@ -106,28 +106,33 @@ public class OrderController {
             return ResponseEntity.status(e.getStatusCode()).build();
         }
     }
-    @PatchMapping("/{id}")
-    ResponseEntity<String> attachOrDeattachShipmentById(@PathVariable("id") int id, @RequestBody Shipment shipment){
-        try{
-            Optional<Order> orderOptional = orderService.getOrderById(id);
-            if (orderOptional.isEmpty()) {
-                return ResponseEntity.notFound().build();
-            } else {
-                if (shipment.getShipment_id() != null) {
-                    if (orderService.attachShipmentById(id, shipment)) {
-                        return ResponseEntity.ok("Shipment is attached to order successfully!");
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
-                } else {
-                    if (orderService.deattachShipmentById(id)) {
-                        return ResponseEntity.ok("Shipment is deattached to order successfully!");
-                    } else {
-                        return ResponseEntity.notFound().build();
-                    }
+    @PatchMapping("/{id}/shipment/{shipmentId}")
+    ResponseEntity<String> attachOrDeattachShipmentById(@PathVariable("id") int id, @PathVariable("shipmentId") int shipmentId){
+      try{
+
+        Optional<Order> orderOptional= orderService.getOrderById(id);
+        if(orderOptional.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+        else {
+            if(shipmentId>0){
+                if(orderService.attachShipmentById(id,shipmentId)) {
+                    return ResponseEntity.ok("Shipment is attached to order successfully!");
+                }
+                else {
+                    return ResponseEntity.notFound().build();
+                }
+            }
+            else {
+                if(orderService.deattachShipmentById(id)) {
+                    return ResponseEntity.ok("Shipment is deattached to order successfully!");
+                }
+                else {
+                    return ResponseEntity.notFound().build();
                 }
             }
         }
+      }
         catch(HttpClientErrorException e){
             return ResponseEntity.status(e.getStatusCode()).build();
         }
