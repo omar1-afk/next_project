@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/senders")
+@RequestMapping("/api/v1/sender")
 public class SenderController {
 
     private final SenderService senderService;

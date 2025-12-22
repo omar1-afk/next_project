@@ -80,6 +80,17 @@ public class OrderService {
             return null;
         }
     }
+  public List<Order> getOrdersByState(String sortBy, String sortDir,String state){
+    log.info("Order service: getting orders by state sorted by "+ sortBy+",("+ sortDir+")");
+    if(state.equals("ALL")){
+      return orderRepository.findAll();
+    }else if (state.equals(State.PICKED.name()) || state.equals(State.PACKAGING.name())
+      || state.equals(State.DELEVERED.name()) || state.equals(State.RETURNED.name()) || state.equals(State.SHIPPING.name())){
+      return orderRepository.findAllByState(State.valueOf(state),Sort.by(Sort.Direction.fromString(sortDir)));
+    }else{
+      return null;
+    }
+  }
     public Optional<Order> getOrderById(int id){
         log.info("Order service: getting order by id: "+ id);
         return orderRepository.findById(id);

@@ -50,6 +50,24 @@ public class OrderController {
             return ResponseEntity.status(e.getStatusCode()).build();
         }
     }
+    @GetMapping("/all/state")
+  ResponseEntity<List<Order>> getAllOrdersByState(
+      @RequestParam(defaultValue ="createdAt" )String sortBy,
+      @RequestParam(defaultValue = "DESC")String sortDir
+      ,@RequestParam(defaultValue = "ALL")String state){
+    try{
+      List<Order> orderList = orderService.getOrdersByState(state,sortBy, sortDir);
+      if (orderList.isEmpty()) {
+        return ResponseEntity.notFound().build();
+      } else {
+        log.info("Order controller: getting all orders sorted by " + sortBy + ",(" + sortDir + ")");
+        return ResponseEntity.ok(orderList);
+      }
+    }
+    catch(HttpClientErrorException e){
+      return ResponseEntity.status(e.getStatusCode()).build();
+    }
+  }
     @GetMapping
     ResponseEntity<Page<Order>> getOrdersByPage(
             @RequestParam(defaultValue = "0") int page
@@ -141,16 +159,11 @@ public class OrderController {
     @DeleteMapping("/{id}")
     ResponseEntity<String> deleteOrderById(@PathVariable("id") int id){
         log.info("Order controller: Deleting order by id: "+ id);
-        try{
-            if (orderService.deleteOrderById(id)) {
-                return ResponseEntity.ok("The order with id: " + id + " is deleted successfully!");
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+        if(orderService.deleteOrderById(id)){
+            return ResponseEntity.ok("The order with id: " + id + " is deleted successfully!");
         }
-        catch(HttpClientErrorException e){
-            return ResponseEntity.status(e.getStatusCode()).build();
+        else{
+            return ResponseEntity.notFound().build();
         }
-
     }
 }

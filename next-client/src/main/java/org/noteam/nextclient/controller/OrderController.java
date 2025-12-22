@@ -6,18 +6,27 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.SVGPath;
+import javafx.stage.Stage;
 import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.State;
+import org.noteam.nextclient.scene.DataEntryWindow;
+import org.noteam.nextclient.utils.SqlUtil;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -67,36 +76,19 @@ public class OrderController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         List<Order> orderList = Arrays.asList(
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Alexanderia","s","a",true,false,50,State.PICKED,30, LocalDate.now(),0,4,5,4,LocalDateTime.now(),LocalDate.now()),
-                new Order(1,"Egypt","Cairo","s","a",true,false,50,State.PICKED,30, LocalDate.now(),1,2,3,5,LocalDateTime.now(),LocalDate.now())
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now())
+
         );
-        setOrderTableView(orderList);
+        setOrderTableView(SqlUtil.getOrders(null,null,"All"));
     }
     public void setOrderTableView(List<Order> orderList){
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
@@ -109,10 +101,10 @@ public class OrderController implements Initializable {
         observableList = FXCollections.observableArrayList();
         orderList.forEach(order->{
             if(order.shipment()==0){
-            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),order.createdAt())) ;
+            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),LocalDateTime.now())) ;
             }
             else {
-            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),order.createdAt(),order.shipment())) ;
+            observableList.add(new OrderRow(order.id(),order.weight(),order.city(),order.state(),order.price(),LocalDateTime.now(),order.shipment())) ;
 
             }
                 }
@@ -134,6 +126,7 @@ public class OrderController implements Initializable {
         cerateOrderIcon.setFill(Color.WHITE);
 //        syncOrderBtn.setStyle("-fx-background-color: #F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;");
     }
+
     @FXML
     public void onSearchFeildKeyTyped(){
         if (searchFeild.getText().length() > 15){
@@ -143,27 +136,50 @@ public class OrderController implements Initializable {
     @FXML
     public void getAllOrders(){
         makeStateActive(allPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,"ALL"));
     }
     @FXML
     public void getPickedOrders(){
-        makeStateActive(pickedPane);
+      makeStateActive(pickedPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,State.PICKED.name()));
+
     }
     @FXML
     public void getPackagingOrders(){
         makeStateActive(packagingPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,State.PACKAGING.name()));
     }
     @FXML
     public void getShippingOrders(){
         makeStateActive(shippingPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,State.SHIPPING.name()));
     }
     @FXML
     public void getDeliveredOrders(){
         makeStateActive(deliveredPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,State.DELEVERED.name()));
     }
     @FXML
     public void getReturnedOrders(){
         makeStateActive(returnedPane);
+      setOrderTableView(SqlUtil.getOrders(null,null,State.RETURNED.name()));
     }
+  @FXML
+  public void onCreateOrderBtnClick(MouseEvent e){
+    try{
+
+      Stage currentStage = (Stage) ((Node) e.getSource()).getScene().getWindow();
+      FXMLLoader loader = new FXMLLoader(
+        getClass().getResource("/org/noteam/nextclient/scene/create-order-popup.fxml"));
+      Parent root = loader.load();
+
+      DataEntryWindow dataEntryWindow = new DataEntryWindow("Order Details",currentStage);
+      dataEntryWindow.setContent((Region)root);
+      dataEntryWindow.showAndWaitForResult();
+    }catch (IOException exception){
+      System.out.println(exception);
+    }
+  }
 
     protected void makeStateActive(AnchorPane statePane){
         if(!statePane.getStyle().equals("-fx-background-color: #F1F1F1; -fx-background-radius: 8px;")){

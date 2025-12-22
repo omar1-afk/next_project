@@ -42,18 +42,18 @@ public class DataEntryWindow<T> {
         // Main layout
         root = new BorderPane();
         root.setPadding(new Insets(15));
-        root.setStyle("-fx-background-color: #f5f5f5;");
+        root.setStyle("-fx-background-color: white;");
 
         // Content area - this is where you'll add your form fields
         contentArea = new VBox(15);
-        contentArea.setPadding(new Insets(20));
+//        contentArea.setPadding(new Insets(20));
         contentArea.setStyle("-fx-background-color: white; -fx-background-radius: 5;");
         root.setCenter(contentArea);
 
         // Button bar at bottom
         buttonBar = new HBox(10);
         buttonBar.setAlignment(Pos.CENTER_RIGHT);
-        buttonBar.setPadding(new Insets(15, 0, 0, 0));
+//        buttonBar.setPadding(new Insets(15, 0, 0, 0));
 
         Button cancelBtn = new Button("Cancel");
         cancelBtn.setOnAction(e -> handleCancel());
@@ -65,10 +65,12 @@ public class DataEntryWindow<T> {
                 "-fx-padding: 10 25; -fx-font-size: 13px; -fx-font-weight: bold;");
 
         buttonBar.getChildren().addAll(cancelBtn, submitBtn);
-        root.setBottom(buttonBar);
+//        root.setBottom(buttonBar);
 
         // Scene setup
-        Scene scene = new Scene(root, width, height);
+        Scene scene = new Scene(root
+//          ,width, height
+        );
         stage.setScene(scene);
 
         // Handle window close button (X)

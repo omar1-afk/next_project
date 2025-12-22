@@ -15,7 +15,7 @@ import java.util.List;
 public class CountryController {
     @Autowired
     CountryService countryService;
-    @GetMapping("/All")
+    @GetMapping("/all")
     ResponseEntity<List<Country>> getAllCountries(){
         List<Country> countryList = countryService.getAllCountries();
         if(countryList.isEmpty()){

@@ -9,10 +9,14 @@ public class Country {
     private String name;
     private List<City> cities ;
 
-    public Country(Integer country_id, String name) {
+    public Country(Integer country_id, String name,List<City>cities) {
         this.country_id = country_id;
-       // this.cities = cities;
+       this.cities = cities;
         this.name = name;
+    }
+    public Country(Integer country_id, String name) {
+      this.country_id = country_id;
+      this.name = name;
     }
 
     public Integer getCountry_id() {

@@ -1,9 +1,10 @@
 package org.noteam.nextclient.models;
 
-public class Sender {
 
 
-  private Integer senderId;
+public class Receiver {
+
+  private Integer receiverId;
 
   private String name;
 
@@ -11,18 +12,18 @@ public class Sender {
 
   private String phone;
 
-  private String commercial_register_number;
-
   private String email;
 
+  // Constructor
+  public Receiver() {
+  }
 
-
-  public Integer getSenderId() {
-    return senderId;
+  public Integer getReceiverId() {
+    return receiverId;
   }
 
   // public void setReceiverId(Integer receiverId) { (we don't need to set the
-  // sender id)
+  // receiver id)
   // this.receiverId = receiverId;
   // }
 
@@ -50,14 +51,6 @@ public class Sender {
     this.phone = phone;
   }
 
-  public String getCommercial_register_number() {
-    return commercial_register_number;
-  }
-
-  public void setCommercial_register_number(String commercial_register_number) {
-    this.commercial_register_number = commercial_register_number;
-  }
-
   public String getEmail() {
     return email;
   }
@@ -66,5 +59,4 @@ public class Sender {
     this.email = email;
   }
 
-  
 }

@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="orderPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.noteam.nextclient.controller.OrderController">
+<BorderPane fx:id="orderPane" style="-fx-background-color: white;" styleClass="table-view" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.OrderController">
    <top>
       <VBox>
          <children>
@@ -56,7 +56,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                        <Button fx:id="createOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" onMouseEntered="#onCreateOrderBtnMouseEnter" onMouseExited="#onCreateOrderBtnMouseExit" styleClass="create-button" text="Create order" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
+                        <Button fx:id="createOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#onCreateOrderBtnClick" onMouseEntered="#onCreateOrderBtnMouseEnter" onMouseExited="#onCreateOrderBtnMouseExit" styleClass="create-button" text="Create order" textAlignment="RIGHT" textFill="WHITE" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

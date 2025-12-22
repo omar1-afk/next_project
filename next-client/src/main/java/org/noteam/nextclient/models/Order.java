@@ -10,7 +10,7 @@ public class Order {
     private int orderId;
     private Shipment shipment;
     private Sender sender;
-    private Reciever receiver;
+    private Receiver receiver;
     private Country country;
     private City city;
     private String region;
@@ -29,7 +29,7 @@ public class Order {
 
     private int boxs;
 
-    public Order(int orderId, int boxs, int weight, int price, boolean breakable, boolean flammable, String address, String region, City city, Country country, Reciever receiver, Sender sender, Shipment shipment) {
+    public Order(int orderId, int boxs, int weight, int price, boolean breakable, boolean flammable, String address, String region, City city, Country country, Receiver receiver, Sender sender, Shipment shipment) {
         this.orderId = orderId;
         this.boxs = boxs;
         this.weight = weight;
@@ -69,11 +69,11 @@ public class Order {
         this.sender = sender;
     }
 
-    public Reciever getReceiver() {
+    public Receiver getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(Reciever receiver) {
+    public void setReceiver(Receiver receiver) {
         this.receiver= receiver;
     }
 
