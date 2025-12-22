@@ -6,13 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/shipments")
+@RequestMapping("/api/v1/shipment")
 public class ShipmentController {
 
     @Autowired
@@ -20,16 +22,22 @@ public class ShipmentController {
 
     private static final Logger logger = Logger.getLogger(ShipmentController.class.getName());
     public static class ShipmentRequest {
+        private int shipmentId;
         private List<Integer> orderIds;
         private int adminId;
         private int vehicleId;
         private int driverId;
         private double totalWeight;
-        private Date shippingDate;
+        private LocalDate shippingDate;
         private int cityId;
 
 
         // Getters and setters
+
+        public int getShipmentId() {
+            return shipmentId;
+        }
+
         public List<Integer> getOrderIds() { return orderIds; }
         public void setOrderIds(List<Integer> orderIds) { this.orderIds = orderIds; }
         public int getAdminId() { return adminId; }
@@ -40,8 +48,8 @@ public class ShipmentController {
         public void setDriverId(int driverId) { this.driverId = driverId; }
         public double getTotalWeight() { return totalWeight; }
         public void setTotalWeight(double totalWeight) { this.totalWeight = totalWeight; }
-        public Date getShippingDate() { return shippingDate; }
-        public void setShippingDate(Date shippingDate) { this.shippingDate = shippingDate; }
+        public LocalDate getShippingDate() { return shippingDate; }
+        public void setShippingDate(LocalDate shippingDate) { this.shippingDate = shippingDate; }
         public int getCityId() { return cityId; }
         public void setCityId(int cityId) { this.cityId = cityId; }
     }
@@ -181,9 +189,7 @@ public class ShipmentController {
     @PostMapping
     public ResponseEntity<?> createShipment(@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("create a shipment ");
-         /*
-        admin authentication
-         */
+
         try {
            Shipment createdShipment = shipmentService.createShipment(
                     shipmentRequest.getOrderIds(),
@@ -208,15 +214,13 @@ public class ShipmentController {
 }
     //update
     @PutMapping("/update/{shipment_id}")
-    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id, @RequestBody ShipmentRequest shipmentRequest ) {
+    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id,@RequestBody ShipmentRequest shipmentRequest ) {
         logger.info("update a shipment number" + shipment_id);
-         /*
-        admin authentication
-         */
+
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
                     shipmentRequest.getOrderIds(),
-                    shipmentRequest.getAdminId(),
+                    //shipmentRequest.getAdminId(),
                     shipment_id,
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),

@@ -1,5 +1,7 @@
 package com.noteam.next.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
@@ -38,16 +40,15 @@ public class Order {
     private int weight;
     @ManyToOne
     @JoinColumn(name = "shipment_id",nullable = true)
+    @JsonBackReference
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties("orderList")
     Shipment shipment;
     @ManyToOne
     @JoinColumn(name="receiver_id",nullable = true)
-    @JsonIgnoreProperties("orders")
     Receiver receiver;
     @ManyToOne
     @JoinColumn(name="sender_id",nullable = true)
-    @JsonIgnoreProperties("orders")
     Sender sender;
     @Column(name = "boxes_count")
     int boxesCount;
