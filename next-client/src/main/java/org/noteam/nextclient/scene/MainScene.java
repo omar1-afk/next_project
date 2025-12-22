@@ -9,32 +9,37 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.noteam.nextclient.controller.LoginController;
 
 import java.util.Objects;
 
 public class MainScene extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("main-view.fxml"));
-        Scene scene=new Scene(root,1440,720);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-scene.fxml"));
+        Parent root = loader.load();
+
+        LoginController controller = loader.getController();
+        controller.setMainStage(stage);
+
+        Scene scene = new Scene(root, 1440, 720);
         stage.setTitle("Next Application");
         String css = getClass().getResource("style.css").toExternalForm();
         // In Main.java
         scene.getStylesheets().add(css);
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/noteam/nextclient/assets/logo.png")));
+        Image icon = new Image(
+                Objects.requireNonNull(getClass().getResourceAsStream("/org/noteam/nextclient/assets/logo.png")));
         stage.getIcons().add(icon);
         stage.setResizable(false);
         scene.getAccelerators().put(
                 new KeyCodeCombination(KeyCode.F11),
                 () -> {
-                    if(stage.isFullScreen()){
+                    if (stage.isFullScreen()) {
                         stage.setFullScreen(false);
-                    }
-                    else {
+                    } else {
                         stage.setFullScreen(true);
                     }
-                }
-        );
+                });
         stage.setFullScreen(true);
         stage.setScene(scene);
         stage.show();

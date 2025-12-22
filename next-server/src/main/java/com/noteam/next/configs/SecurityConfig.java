@@ -21,12 +21,12 @@ class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, SecurityFilter debugFilter) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/v1/admin").permitAll()
-                        .requestMatchers("/api/v1/login").permitAll()
-                        .requestMatchers("/api/v1/me").permitAll()
-                        .requestMatchers("/api/v1/order/**").hasAnyAuthority("admin", "employee")
-                        .anyRequest().authenticated())
+                // .authorizeHttpRequests(auth -> auth
+                // .requestMatchers(HttpMethod.POST, "/api/v1/admin").permitAll()
+                // .requestMatchers("/api/v1/login").permitAll()
+                // .requestMatchers("/api/v1/me").permitAll()
+                // .requestMatchers("/api/v1/order/**").hasAnyAuthority("admin", "employee")
+                // .anyRequest().authenticated())
                 .addFilterBefore(debugFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
