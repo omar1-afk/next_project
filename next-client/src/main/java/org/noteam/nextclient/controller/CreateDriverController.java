@@ -18,7 +18,7 @@ public class CreateDriverController {
   private boolean isPasswordVisible = false;
 
   @FXML
-  private void handleCreateDriver() { // Rename this in your FXML onAction
+  private void handleCreateDriver() {
     try {
       String name = driverNameField.getText();
       int age = Integer.parseInt(ageField.getText());
