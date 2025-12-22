@@ -35,7 +35,7 @@ public class DriverService {
 
     public List<Driver> getAllDrivers(String sortBy, String sortDir) {
         logger.info("Driver service: getting all Drivers sorted by " + sortBy + ",(" + sortDir + ")");
-        return driverRepository.findAll(Sort.by(Sort.Direction.fromString(sortDir), sortBy));
+        return driverRepository.findAll();
     }
 
     public Page<Driver> getDdriversByPage(int page, int size, String sortBy, String sortDir) {

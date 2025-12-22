@@ -1,6 +1,5 @@
 package com.noteam.next.controllers;
 
-
 import com.noteam.next.entities.Vehicle;
 import com.noteam.next.services.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,7 @@ public class VehicleController {
     public ResponseEntity<?> getVehicles(
             @RequestParam(required = false) String type,
             @RequestParam(required = false) Boolean available,
-            @RequestParam(required = false) Boolean used
-    ) {
+            @RequestParam(required = false) Boolean used) {
         try {
             List<Vehicle> vehicles = vehicleService.getAllVehicles();
 
@@ -85,8 +83,7 @@ public class VehicleController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateVehicle(
             @PathVariable int id,
-            @RequestBody Vehicle updates
-    ) {
+            @RequestBody Vehicle updates) {
         Optional<Vehicle> existingOpt = vehicleService.getVehicleById(id);
 
         if (existingOpt.isEmpty()) {
