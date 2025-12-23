@@ -35,23 +35,23 @@ public class ShipmentController {
         // Getters and setters
 
         public int getShipmentId() {
-            return shipmentId;
+            return shipment_id;
         }
 
         public List<Integer> getOrderIds() { return orderIds; }
         public void setOrderIds(List<Integer> orderIds) { this.orderIds = orderIds; }
-        public int getAdminId() { return adminId; }
-        public void setAdminId(int adminId) { this.adminId = adminId; }
-        public int getVehicleId() { return vehicleId; }
-        public void setVehicleId(int vehicleId) { this.vehicleId = vehicleId; }
-        public int getDriverId() { return driverId; }
-        public void setDriverId(int driverId) { this.driverId = driverId; }
-        public double getTotalWeight() { return totalWeight; }
-        public void setTotalWeight(double totalWeight) { this.totalWeight = totalWeight; }
-        public LocalDate getShippingDate() { return shippingDate; }
-        public void setShippingDate(LocalDate shippingDate) { this.shippingDate = shippingDate; }
-        public int getCityId() { return cityId; }
-        public void setCityId(int cityId) { this.cityId = cityId; }
+        public int getAdminId() { return admin_id; }
+        public void setAdminId(int adminId) { this.admin_id = adminId; }
+        public int getVehicleId() { return vehicle_id; }
+        public void setVehicleId(int vehicleId) { this.vehicle_id = vehicleId; }
+        public int getDriverId() { return driver_id; }
+        public void setDriverId(int driverId) { this.driver_id = driverId; }
+        public double getTotalWeight() { return total_weight; }
+        public void setTotalWeight(double totalWeight) { this.total_weight = totalWeight; }
+        public LocalDate getShippingDate() { return shipping_date; }
+        public void setShippingDate(LocalDate shippingDate) { this.shipping_date = shippingDate; }
+        public int getCityId() { return city_id; }
+        public void setCityId(int cityId) { this.city_id = cityId; }
     }
     //get
     @GetMapping

@@ -32,7 +32,7 @@
                   <Pane maxWidth="30000.0" minWidth="1.0" HBox.hgrow="ALWAYS" />
                   <HBox spacing="8.0" HBox.hgrow="SOMETIMES">
                      <children>
-                        <Button id="sync-button" fx:id="syncOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" styleClass="sync-button" text="Sync orders" textFill="#232323" HBox.hgrow="NEVER">
+                        <Button id="sync-button" fx:id="syncOrderBtn" graphicTextGap="0.0" mnemonicParsing="false" onMouseClicked="#onSyncOrderBtnCLick" styleClass="sync-button" text="Sync orders" textFill="#232323" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets />
                            </HBox.margin>

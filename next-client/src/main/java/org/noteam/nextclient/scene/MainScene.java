@@ -17,13 +17,13 @@ import java.util.Objects;
 public class MainScene extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-scene.fxml"));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-scene.fxml"));
         Parent root = loader.load();
-        MainController mainController = loader.getController();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
+//        MainController mainController = loader.getController();
 
-//        LoginController controller = loader.getController();
-//        controller.setMainStage(stage);
+        LoginController controller = loader.getController();
+        controller.setMainStage(stage);
 
         Scene scene = new Scene(root, 1440, 720);
         stage.setTitle("Next Application");

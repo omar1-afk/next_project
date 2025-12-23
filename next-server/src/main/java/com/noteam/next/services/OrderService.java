@@ -32,17 +32,17 @@ public class OrderService {
 
     //Create new order
     public boolean createOrder(OrderRequest request) {
-        Optional<City> cityOptional= cityRepository.findById(request.cityId());
-        Optional<Sender> senderOptional= senderRepository.findById(request.senderId());
-        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiverId());
+        Optional<City> cityOptional= cityRepository.findById(request.city_id());
+        Optional<Sender> senderOptional= senderRepository.findById(request.sender_id());
+        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiver_id());
         if (cityOptional.isEmpty() ) {
-            log.severe("City id " + request.cityId() + " does not exist");
+            log.severe("City id " + request.city_id() + " does not exist");
         }
         if (senderOptional.isEmpty() ) {
-            log.severe("Sender id " + request.senderId() + " does not exist");
+            log.severe("Sender id " + request.sender_id() + " does not exist");
         }
         if (receiverOptional.isEmpty() ) {
-            log.severe("Receiver id " + request.receiverId() + " does not exist");
+            log.severe("Receiver id " + request.receiver_id() + " does not exist");
         }
         int maxWeight = 250;
         if (request.weight() > maxWeight) {
@@ -101,9 +101,9 @@ public class OrderService {
     //-------------------------------------------------------------------------------------------------------
     //update order
     public int updateOrderById(int id,OrderRequest request) {
-        Optional<City> cityOptional= cityRepository.findById(request.cityId());
-        Optional<Sender> senderOptional= senderRepository.findById(request.senderId());
-        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiverId());
+        Optional<City> cityOptional= cityRepository.findById(request.city_id());
+        Optional<Sender> senderOptional= senderRepository.findById(request.sender_id());
+        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiver_id());
         Optional <Shipment> shipmentOptional = shipmentRepository.findById(id);
         int maxWeight = 250;
         Optional<Order> orderOptional= getOrderById(id);

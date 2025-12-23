@@ -77,17 +77,17 @@ public class OrderController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        List<Order> orderList = Arrays.asList(
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
-                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now())
-
-        );
+//        List<Order> orderList = Arrays.asList(
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now()),
+//                new Order(1,"Egypt",1,"s","a",true,false,50,State.PICKED,30, 58,0,4,5,LocalDate.now())
+//
+//        );
         setOrderTableView(SqlUtil.getOrders(null,null,"All"));
     }
     public void setOrderTableView(List<Order> orderList){
@@ -125,6 +125,11 @@ public class OrderController implements Initializable {
         cerateOrderIcon.setStroke(Color.WHITE);
         cerateOrderIcon.setFill(Color.WHITE);
 //        syncOrderBtn.setStyle("-fx-background-color: #F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;");
+    }
+    @FXML
+    public void onSyncOrderBtnCLick(){
+      orderTable.getItems().clear();
+      setOrderTableView(SqlUtil.getOrders(null,null,"All"));
     }
 
     @FXML
