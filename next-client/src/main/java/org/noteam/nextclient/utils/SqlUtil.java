@@ -1,6 +1,8 @@
 package org.noteam.nextclient.utils;
 
 import com.google.gson.*;
+
+import org.noteam.nextclient.dto.MeResponse;
 import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.State;
@@ -16,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SqlUtil {
 
@@ -368,7 +371,7 @@ public class SqlUtil {
             JsonArray jsonArray = new JsonParser().parse(result).getAsJsonArray();
             for (int i = 0; i < jsonArray.size(); i++) {
                 JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
-                int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+                int orderId = jsonObject.get(JsonFieldConstants.ID).getAsInt();
                 int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
                 int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
                 OrderTable orderTable = new OrderTable(orderId, orderPrice, orderWeight);
@@ -406,8 +409,8 @@ public class SqlUtil {
             json.add("orderIds", ordersArray);
 
             connection = ApiUtil.fetchApi(
-                    "/api/shipments", ApiUtil.RequestMethod.POST, json);
-            if (connection.getResponseCode() != 200) {
+                    "/api/v1/shipment", ApiUtil.RequestMethod.POST, json);
+            if (connection.getResponseCode() != 201) {
                 // System.out.println("Error creating a shipment" +
                 // connection.getResponseCode());
                 return false;
@@ -436,6 +439,11 @@ public class SqlUtil {
             LocalDate date = LocalDate.parse(updateDTO.getShippingDate(), formatter);
             json.addProperty(JsonFieldConstants.SHIPPING_DATE, date.format(formatter));
             json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, updateDTO.getTotalWeight());
+            JsonArray ordersArray = new JsonArray();
+            for (Integer orderId : updateDTO.getOrderIds()) {
+                ordersArray.add(orderId);
+            }
+            json.add("orderIds", ordersArray);
 
             connection = ApiUtil.fetchApi(
                     "/api/v1/shipment/update/" + updateDTO.getId(), ApiUtil.RequestMethod.PUT, json);
@@ -690,24 +698,25 @@ public class SqlUtil {
                 int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
                 int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
                 int shipmentId = 0;
-                if (jsonObject.get("shipment").getAsJsonObject().isJsonNull()) {
+                System.out.println("Shipment" + jsonObject.get("shipment").isJsonNull());
+                if (!jsonObject.get("shipment").isJsonNull()) {
                     JsonObject shipment = jsonObject.get("shipment").getAsJsonObject();
-                    shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+                    shipmentId = shipment.get(JsonFieldConstants.ID).getAsInt();
                 }
                 int cityId = 0;
                 String cityName = null;
-                if (!jsonObject.get("city").getAsJsonObject().isJsonNull()) {
+                if (!jsonObject.get("city").isJsonNull()) {
                     JsonObject city = jsonObject.get("city").getAsJsonObject();
                     cityId = city.get("id").getAsInt();
                     cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
                 }
                 String receiverEmail = null;
-                if (!jsonObject.get("receiver").getAsJsonObject().isJsonNull()) {
+                if (!jsonObject.get("receiver").isJsonNull()) {
                     JsonObject receiver = jsonObject.get("receiver").getAsJsonObject();
                     receiverEmail = receiver.get("email").getAsString();
                 }
-                String senderEmail =null;
-                if (!jsonObject.get("sender").getAsJsonObject().isJsonNull()) {
+                String senderEmail = null;
+                if (!jsonObject.get("sender").isJsonNull()) {
                     JsonObject sender = jsonObject.get("sender").getAsJsonObject();
                     senderEmail = sender.get("email").getAsString();
                 }
@@ -810,65 +819,92 @@ public class SqlUtil {
             }
         }
     }
-  public static boolean createSender(Sender sender) {
-    HttpURLConnection connection = null;
-    try {
-      Gson gson = new Gson();
-      JsonObject json = new JsonObject();
-      json.addProperty(JsonFieldConstants.ID, sender.getSenderId());
-      json.addProperty(JsonFieldConstants.DRIVER_NAME, sender.getName());
-      json.addProperty("email", sender.getEmail());
-      json.addProperty("phone", sender.getPhone());
-      json.addProperty("socialSecurityNumber", sender.getSocialSecurityNumber());
-      json.addProperty("commercialRegisterNumber",sender.getCommercialRegisterNumber());
-      connection = ApiUtil.fetchApi(
-        "/api/v1/sender", ApiUtil.RequestMethod.POST, json);
-      if (connection.getResponseCode() != 200) {
-        // System.out.println("Error creating a shipment" +
-        // connection.getResponseCode());
-        return false;
-      }
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    } finally {
-      if (connection != null) {
-        connection.disconnect();
-      }
-    }
-  }
 
-  public static boolean createNewOrder(Order order) {
-    HttpURLConnection connection = null;
-    try {
-      Gson gson = new Gson();
-      JsonObject json = new JsonObject();
-      json.addProperty(JsonFieldConstants.ADDRESS, order.address());
-      json.addProperty(JsonFieldConstants.REGION, order.region());
-      json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
-      json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
-      json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
-      json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
-      json.addProperty(JsonFieldConstants.STATE, order.state().toString());
-      json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
-      json.addProperty("receiverEmail",order.receiverEmail());
-      json.addProperty("senderEmail" ,order.senderEmail());;
-      connection = ApiUtil.fetchApi(
-        "/api/v1/order", ApiUtil.RequestMethod.POST, json
-      );
-      if (connection.getResponseCode() != 200) {
-        // System.out.println("Error creating a shipment" + connection.getResponseCode());
-        return false;
-      }
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    } finally {
-      if (connection != null) {
-        connection.disconnect();
-      }
+    public static boolean createSender(Sender sender) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.addProperty(JsonFieldConstants.ID, sender.getSenderId());
+            json.addProperty(JsonFieldConstants.DRIVER_NAME, sender.getName());
+            json.addProperty("email", sender.getEmail());
+            json.addProperty("phone", sender.getPhone());
+            json.addProperty("socialSecurityNumber", sender.getSocialSecurityNumber());
+            json.addProperty("commercialRegisterNumber", sender.getCommercialRegisterNumber());
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/sender", ApiUtil.RequestMethod.POST, json);
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" +
+                // connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
     }
-  }
+
+    public static boolean createNewOrder(Order order) {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            JsonObject json = new JsonObject();
+            json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+            json.addProperty(JsonFieldConstants.REGION, order.region());
+            json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+            json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+            json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+            json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+            json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+            json.addProperty(JsonFieldConstants.SHIPMENT_ID, order.shipment());
+            json.addProperty("receiverEmail", order.receiverEmail());
+            json.addProperty("senderEmail", order.senderEmail());
+            ;
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/order", ApiUtil.RequestMethod.POST, json);
+            if (connection.getResponseCode() != 200) {
+                // System.out.println("Error creating a shipment" +
+                // connection.getResponseCode());
+                return false;
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    public static MeResponse getMe() {
+        HttpURLConnection connection = null;
+        try {
+            Gson gson = new Gson();
+            connection = ApiUtil.fetchApi(
+                    "/api/v1/me", ApiUtil.RequestMethod.GET, null);
+            Logger log = Logger.getAnonymousLogger();
+            log.severe("Connection Response code" + Integer.valueOf(connection.getResponseCode()));
+            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            String body = ApiUtil.readResponse(connection);
+            MeResponse me = gson.fromJson(body, MeResponse.class);
+            log.severe("me id " + me.id());
+            return me;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
 }

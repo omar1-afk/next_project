@@ -11,6 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 public class ApiUtil {
     private static final String SPRINGBOOT_URL = "http://localhost:8080";
@@ -23,17 +24,23 @@ public class ApiUtil {
         DELETE
     }
 
+    private static String token;
+
+    public static void setToken(String token) {
+        ApiUtil.token = token;
+    }
+
     public static HttpURLConnection fetchApi(String path, RequestMethod requestMethod, JsonObject jsObject) {
         try {
             URL url = new URL(SPRINGBOOT_URL + path);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod(requestMethod.toString());
+            if (token != null) {
+                connection.setRequestProperty("Authorization", "Bearer " + token);
+            }
             if (jsObject != null && requestMethod != RequestMethod.GET) {
                 connection.setRequestProperty("Content-Type", "application/json");
                 connection.setRequestProperty("Accept", "application/json");
-                if (Config.TOKEN != null) {
-                    connection.setRequestProperty("Authorization", "Bearer " + Config.TOKEN);
-                }
                 connection.setDoOutput(true);
                 try (OutputStream outputStream = connection.getOutputStream()) {
                     byte[] input = jsObject.toString().getBytes(StandardCharsets.UTF_8);

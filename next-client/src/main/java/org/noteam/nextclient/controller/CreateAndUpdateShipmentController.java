@@ -12,6 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+
+import org.noteam.nextclient.dto.MeResponse;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.shipment.ShipmentCreateDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentDisplayDTO;
@@ -232,7 +234,7 @@ public class CreateAndUpdateShipmentController {
 
             return cell;
         });
-        ordersTable.getColumns().add(4, addToShipmentColumn);
+        ordersTable.getColumns().add(3, addToShipmentColumn);
         ordersTable.setEditable(true);
     }
 
@@ -335,7 +337,6 @@ public class CreateAndUpdateShipmentController {
         List<OrderTable> selectedOrders = allOrders.stream().filter(OrderTable::isSelected).toList();
         List<Integer> ordersIds = new ArrayList<>();
         for (OrderTable order : selectedOrders) {
-            order.getOrderId();
             ordersIds.add(order.getOrderId().get());
         }
         // if(completedCheck.isSelected()) {
@@ -357,57 +358,67 @@ public class CreateAndUpdateShipmentController {
         String shippingDate = shippingDatePicker.getValue().toString();
         // shipmentRequest=new
         // ShipmentRequest(ordersIds,shipmentId,vehicleId,driverId,totalWeight,shippingDate,cityId);
-        if (create) {
-            ShipmentCreateDTO createDTO = new ShipmentCreateDTO.Builder()
-                    .orderIds(ordersIds)
-                    .vehicleId(vehicleId)
-                    .driverId(driverId)
-                    .cityId(cityId)
-                    .shippingDate(shippingDate)
-                    .adminId(adminController.getAdmin().getAdminId())
-                    .totalWeight(totalWeight)
-                    .build();
-
-            if (SqlUtil.createShipment(createDTO)) {
-                Stage stage = (Stage) updateButton.getScene().getWindow();
-                stage.close();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Could not Create Shipment");
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        Stage stage = (Stage) updateButton.getScene().getWindow();
-
-                    }
-                });
-            }
+        MeResponse admin = SqlUtil.getMe();
+        if (admin == null || admin.id() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Authentication failed");
+            alert.setContentText("Not Allowed");
+            alert.showAndWait();
+            // System.exit(-1);
         } else {
-            ShipmentUpdateDTO updateDTO = new ShipmentUpdateDTO.Builder()
-                    .id(shipmentId)
-                    .orderIds(ordersIds)
-                    .vehicleId(vehicleId)
-                    .driverId(driverId)
-                    .cityId(cityId)
-                    .shippingDate(shippingDate)
-                    .totalWeight(totalWeight)
-                    .build();
-            if (SqlUtil.updateShipment(updateDTO)) {
-                Stage stage = (Stage) updateButton.getScene().getWindow();
-                stage.close();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Could not Update Shipment");
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        Stage stage = (Stage) updateButton.getScene().getWindow();
+            if (create) {
+                ShipmentCreateDTO createDTO = new ShipmentCreateDTO.Builder()
+                        .orderIds(ordersIds)
+                        .vehicleId(vehicleId)
+                        .driverId(driverId)
+                        .cityId(cityId)
+                        .shippingDate(shippingDate)
+                        // .adminId(adminController.getAdmin().getAdminId())
+                        .adminId(admin.id())
+                        .totalWeight(totalWeight)
+                        .build();
 
-                    }
-                });
+                if (SqlUtil.createShipment(createDTO)) {
+                    Stage stage = (Stage) updateButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Could not Create Shipment");
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            Stage stage = (Stage) updateButton.getScene().getWindow();
+
+                        }
+                    });
+                }
+            } else {
+                ShipmentUpdateDTO updateDTO = new ShipmentUpdateDTO.Builder()
+                        .id(shipmentId)
+                        .orderIds(ordersIds)
+                        .vehicleId(vehicleId)
+                        .driverId(driverId)
+                        .cityId(cityId)
+                        .shippingDate(shippingDate)
+                        .totalWeight(totalWeight)
+                        .build();
+                if (SqlUtil.updateShipment(updateDTO)) {
+                    Stage stage = (Stage) updateButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Could not Update Shipment");
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            Stage stage = (Stage) updateButton.getScene().getWindow();
+
+                        }
+                    });
+
+                }
 
             }
-
         }
 
     }

@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface ReceiverRepository extends JpaRepository<Receiver, Integer> {
 
-  List<Receiver> findAllByEmail(String email);
+    List<Receiver> findAllByEmail(String email);
+
+    Receiver findByEmail(String email);
 
 }
