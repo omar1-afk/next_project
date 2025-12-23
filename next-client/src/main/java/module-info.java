@@ -14,7 +14,7 @@ module org.noteam.nextclient {
     requires com.fasterxml.jackson.databind;
     requires org.json;
 
-    opens org.noteam.nextclient.models to javafx.base;
+  opens org.noteam.nextclient.models to javafx.base;
 
     opens org.noteam.nextclient to javafx.fxml, com.google.gson;
 

@@ -690,13 +690,13 @@ public class SqlUtil {
                 int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
                 int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
                 int shipmentId = 0;
-                if (jsonObject.get("shipment").getAsJsonObject().isJsonNull()) {
+                if (!jsonObject.get("shipment").isJsonNull()) {
                     JsonObject shipment = jsonObject.get("shipment").getAsJsonObject();
-                    shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+                    shipmentId = shipment.get(JsonFieldConstants.ID).getAsInt();
                 }
                 int cityId = 0;
                 String cityName = null;
-                if (!jsonObject.get("city").getAsJsonObject().isJsonNull()) {
+                if (!jsonObject.get("city").isJsonNull()) {
                     JsonObject city = jsonObject.get("city").getAsJsonObject();
                     cityId = city.get("id").getAsInt();
                     cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();

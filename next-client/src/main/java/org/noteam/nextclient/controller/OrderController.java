@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.fxml.LoadException;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -77,7 +78,7 @@ public class OrderController implements Initializable {
     @FXML
     private TableColumn<OrderRow,Double> priceCol;
     @FXML
-    private TableColumn<OrderRow,String> shipmentCol;
+    private TableColumn<OrderRow,HBox> shipmentCol;
     @FXML
     private TableColumn<OrderRow,String> createdAtCol;
     private ObservableList<OrderRow> observableList;
@@ -191,7 +192,10 @@ public class OrderController implements Initializable {
       DataEntryWindow dataEntryWindow = new DataEntryWindow("Order Details",currentStage);
       dataEntryWindow.setContent((Region)root);
       dataEntryWindow.showAndWaitForResult();
-    }catch (IOException exception){
+    } catch (LoadException exception){
+      exception.printStackTrace();
+      System.out.println(exception.getCause());
+    } catch (IOException exception){
       System.out.println(exception);
     }
   }
@@ -366,83 +370,6 @@ public class OrderController implements Initializable {
         }
     }
 
-    public class CreateOrderPopupController{
-        @FXML
-        BorderPane orderDetailsPopup;
-        @FXML
-        TextField countryFeild;
-        @FXML
-        ContextMenu countryMenu;
-        @FXML
-        TextField cityFeild;
-        @FXML
-        ContextMenu cityMenu;
-        @FXML
-        TextField regionFeild;
-        @FXML
-        TextField addressFeild;
-        @FXML
-        TextField senderNameFeild;
-        @FXML
-        TextField senderEmailFeild;
-        @FXML
-        TextField senderScnFeild;
-        @FXML
-        TextField senderPhoneFeild;
-        @FXML
-        TextField receiverNameFeild;
-        @FXML
-        TextField receiverEmailFeild;
-        @FXML
-        TextField receiverScnFeild;
-        @FXML
-        TextField receiverPhoneFeild;
-        @FXML
-        TextField crnFeild;
-        @FXML
-        TextField boxesNumberFeild;
-        @FXML
-        TextField priceFeild;
-        @FXML
-        TextField weightFeild;
-        @FXML
-        CheckBox isFlammable;
-        @FXML
-        CheckBox isBreakable;
-        @FXML
-        Button cancelOrderBtn;
-        @FXML
-        Button createOrderBtn;
-        public BorderPane getOrderDetailsPopup() {
-            return orderDetailsPopup;
-        }
-        public void onCancelOrderBtnClick(MouseEvent event){
-          Stage currentStage=(Stage)((Node)event.getSource()).getScene().getWindow();
-          currentStage.close();
-        }
-        public void  onCreateOrderBtn(){
-          Sender sender = new Sender(null,senderNameFeild.getText(),senderScnFeild.getText(),senderPhoneFeild.getText(),crnFeild.getText(),senderEmailFeild.getText());
-          SqlUtil.createSender(sender);
-          Receiver receiver = new Receiver(null,receiverNameFeild.getText(),senderScnFeild.getText(),senderPhoneFeild.getText(),senderEmailFeild.getText());
-          SqlUtil.createSender(sender);
-          SqlUtil.createReceiver(receiver);
-          List<Country>countries=SqlUtil.getAllCountries();
-          Country country = countries.getFirst();
 
-
-          Order newOrder = new Order(0,country.getCities().get(3).getName()
-            ,3
-            ,regionFeild.getText()
-            ,addressFeild.getText()
-            ,isFlammable.isSelected()
-            ,isBreakable.isSelected()
-            ,Integer.parseInt(priceFeild.getText())
-            ,State.PICKED
-            ,Integer.parseInt(weightFeild.getText())
-            ,0,
-            receiver.getEmail()
-            ,sender.getEmail(),Integer.parseInt(boxesNumberFeild.getText()),LocalDate.now());
-       }
-    }
 
 }

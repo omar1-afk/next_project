@@ -8,6 +8,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -99,7 +101,15 @@ public class LoginController {
             Parent root = loader.load();
             MainController shipmentController = loader.getController();
             Scene scene = new Scene(root, 1440, 720);
-
+          scene.getAccelerators().put(
+            new KeyCodeCombination(KeyCode.F11),
+            () -> {
+              if (mainStage.isFullScreen()) {
+                mainStage.setFullScreen(false);
+              } else {
+                mainStage.setFullScreen(true);
+              }
+            });
             mainStage.setScene(scene);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="orderDetailsPane" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="orderDetailsPane" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.noteam.nextclient.controller.CreateOrderPopupController">
    <center>
       <VBox BorderPane.alignment="CENTER">
          <children>
@@ -47,7 +47,7 @@
                         </Label>
                         <TextField fx:id="countryFeild" prefWidth="240.0" promptText="e.g, Egypt" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
                            <contextMenu>
-                              <ContextMenu fx:id="countryMenu">
+                              <ContextMenu>
                                  <items>
                                     <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
                                  </items>
@@ -65,7 +65,7 @@
                         </Label>
                         <TextField fx:id="cityFeild" prefWidth="240.0" promptText="e.g, Cairo" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
                            <contextMenu>
-                              <ContextMenu fx:id="cityMenu">
+                              <ContextMenu>
                                  <items>
                                     <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
                                  </items>
@@ -141,7 +141,7 @@
                               <Font name="SansSerif Bold" size="10.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="senderSCNFeild" prefWidth="240.0" promptText="e.g, 30123456789012" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
+                        <TextField fx:id="senderScnFeild" prefWidth="240.0" promptText="e.g, 30123456789012" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;" />
                      </children>
                   </VBox>
                   <VBox prefWidth="240.0" spacing="8.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -217,7 +217,7 @@
                   </VBox>
                   <HBox alignment="TOP_CENTER" fillHeight="false" spacing="50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
                      <children>
-                        <Button fx:id="cancelOrderBtn" alignment="TOP_CENTER" mnemonicParsing="false" prefWidth="213.6" styleClass="cancel-btn" text="Cancel">
+                        <Button fx:id="cancelOrderBtn" alignment="TOP_CENTER" mnemonicParsing="false" onMouseClicked="#onCancelOrderBtnClick" prefWidth="213.6" styleClass="cancel-btn" text="Cancel">
                            <padding>
                               <Insets bottom="16.5" left="45.5" right="45.5" top="16.5" />
                            </padding>
@@ -225,7 +225,7 @@
                               <Font name="SansSerif Bold" size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="createOrderBtn" alignment="TOP_CENTER" mnemonicParsing="false" styleClass="create-order-btn" text="Create Order" textFill="WHITE">
+                        <Button fx:id="createOrderBtn" alignment="TOP_CENTER" mnemonicParsing="false" onMouseClicked="#onCreateOrderBtn" styleClass="create-order-btn" text="Create Order" textFill="WHITE">
                            <padding>
                               <Insets bottom="16.5" left="45.5" right="45.5" top="16.5" />
                            </padding>
