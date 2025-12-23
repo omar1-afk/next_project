@@ -138,7 +138,7 @@ public class ShipmentController {
     public ResponseEntity<List<Shipment>> getAllShipmentsByVehicleId(@PathVariable int vehicle_id) {
         logger.info("Getting all shipments  by vehicle_id" + vehicle_id);
         try {
-            List<Shipment> shipments = shipmentService.getAllShipmentsByVehicle_id(vehicle_id);
+            List<Shipment> shipments = shipmentService.getAllShipmentsByVehicleId(vehicle_id);
             if (shipments.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }

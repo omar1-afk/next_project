@@ -98,7 +98,7 @@ public class DriverController {
             DriverResponse body = new DriverResponse(
                     newDriver.getName(),
                     newDriver.getEmail(),
-                    newDriver.getSocial_security_number(),
+                    newDriver.getSocialSecurityNumber(),
                     newDriver.getIsBusy(),
                     newDriver.getImage(),
                     newDriver.getAge());
@@ -118,7 +118,7 @@ public class DriverController {
                 driver.getAge(),
                 driver.getEmail(),
                 driver.getPassword(),
-                driver.getSocial_security_number(),
+                driver.getSocialSecurityNumber(),
                 driver.getImage(),
                 driver.getIsBusy());
         if (result == 0) {
