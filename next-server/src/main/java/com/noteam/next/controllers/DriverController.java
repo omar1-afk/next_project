@@ -24,9 +24,9 @@ public class DriverController {
     private AuthService authService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<Driver> getDriverById(@RequestParam int id) {
-        logger.info("Getting driver by id: " + id);
-        Optional<Driver> driverOptional = driverService.getDriverById(id);
+    public ResponseEntity<Driver> getDriverById(@RequestParam int driver_id) {
+        logger.info("Getting driver by id: " + driver_id);
+        Optional<Driver> driverOptional = driverService.getDriverById(driver_id);
         if (driverOptional.isEmpty())
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         else
@@ -46,7 +46,7 @@ public class DriverController {
 
     @GetMapping("/all")
     ResponseEntity<List<Driver>> getAllDrivers(
-            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "created_at") String sortBy,
             @RequestParam(defaultValue = "DESC") String sortDir) {
         List<Driver> driverList = driverService.getAllDrivers(sortBy, sortDir);
         if (driverList.isEmpty()) {
@@ -60,7 +60,7 @@ public class DriverController {
     @GetMapping
     ResponseEntity<Page<Driver>> getDriversByPage(
             @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "createdAt") String sortBy,
+            @RequestParam(defaultValue = "created_at") String sortBy,
             @RequestParam(defaultValue = "DESC") String sortDir) {
         Page<Driver> driverPage = driverService.getDdriversByPage(page, size, sortBy, sortDir);
         if (driverPage.isEmpty()) {
@@ -98,8 +98,8 @@ public class DriverController {
             DriverResponse body = new DriverResponse(
                     newDriver.getName(),
                     newDriver.getEmail(),
-                    newDriver.getSocialSecurityNumber(),
-                    newDriver.getIsbusy(),
+                    newDriver.getSocial_security_number(),
+                    newDriver.getIsBusy(),
                     newDriver.getImage(),
                     newDriver.getAge());
             return ResponseEntity.status(HttpStatus.OK).body(body);
@@ -109,30 +109,30 @@ public class DriverController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<String> updateDriverById(@PathVariable("id") int id,
+    ResponseEntity<String> updateDriverById(@PathVariable("id") int driver_id,
             @RequestBody Driver driver) {
-        logger.info("Driver controller: Updating Driver by id: " + id);
+        logger.info("Driver controller: Updating Driver by id: " + driver_id);
         int result = driverService.updatedriver(
-                id,
+                driver_id,
                 driver.getName(),
                 driver.getAge(),
                 driver.getEmail(),
                 driver.getPassword(),
-                driver.getSocialSecurityNumber(),
+                driver.getSocial_security_number(),
                 driver.getImage(),
-                driver.getIsbusy());
+                driver.getIsBusy());
         if (result == 0) {
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.ok("The Driver with id: " + id + " is updated successfully!");
+            return ResponseEntity.ok("The Driver with id: " + driver_id + " is updated successfully!");
         }
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteDriverById(@PathVariable("id") int id) {
-        logger.info("Driver controller: Deleting Driver by id: " + id);
-        if (driverService.deleteDriverById(id)) {
-            return ResponseEntity.ok("The Driver with id: " + id + " is deleted successfully!");
+    ResponseEntity<String> deleteDriverById(@PathVariable("id") int driver_id) {
+        logger.info("Driver controller: Deleting Driver by id: " + driver_id);
+        if (driverService.deleteDriverById(driver_id)) {
+            return ResponseEntity.ok("The Driver with id: " + driver_id + " is deleted successfully!");
         } else {
             return ResponseEntity.notFound().build();
         }

@@ -97,11 +97,11 @@ public class Driver implements User {
         this.password = password;
     }
 
-    public Boolean getIsbusy() {
+    public Boolean getIsBusy() {
         return isBusy;
     }
 
-    public void setIsbusy(Boolean isBusy) {
+    public void setIsBusy(Boolean isBusy) {
         this.isBusy = isBusy;
     }
 

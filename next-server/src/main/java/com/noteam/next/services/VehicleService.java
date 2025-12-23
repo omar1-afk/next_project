@@ -55,6 +55,6 @@ public class VehicleService {
     }
 
     public List<Vehicle> getAvailableVehicles() {
-        return repository.findByAvailable(true);
+        return repository.findByIsAvailable(true);
     }
 }

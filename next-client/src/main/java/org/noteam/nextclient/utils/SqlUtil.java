@@ -57,7 +57,7 @@ public class SqlUtil {
         public static final String V_LICENSE_PLATE = "licensePlate";
         public static final String V_WEIGHT_LIMIT = "weightLimit";
         public static final String V_IS_AVAILABLE = "isAvailable";
-        public static final String V_IS_USED = "IsUsed";
+        public static final String V_IS_USED = "isUsed";
         public static final String V_TYPE = "type";
 
     }
@@ -147,16 +147,16 @@ public class SqlUtil {
                 JsonObject shipmentObject = jsonArray.get(i).getAsJsonObject();
                 int shipmentId = shipmentObject.get(JsonFieldConstants.ID).getAsInt();
                 JsonObject driverObject = shipmentObject.get(JsonFieldConstants.DRIVER).getAsJsonObject();
-                int driverId = driverObject.get(JsonFieldConstants.DRIVER_ID).getAsInt();
+                int driverId = driverObject.get(JsonFieldConstants.ID).getAsInt();
                 String driverName = driverObject.get(JsonFieldConstants.DRIVER_NAME).getAsString();
                 JsonObject vehicleObject = shipmentObject.get(JsonFieldConstants.VEHICLE).getAsJsonObject();
-                int vehicleId = vehicleObject.get(JsonFieldConstants.VEHICLE_ID).getAsInt();
+                int vehicleId = vehicleObject.get(JsonFieldConstants.ID).getAsInt();
 
                 JsonObject cityObject = shipmentObject.get(JsonFieldConstants.CITY).getAsJsonObject();
-                int cityId = cityObject.get(JsonFieldConstants.CITY_ID).getAsInt();
+                int cityId = cityObject.get(JsonFieldConstants.ID).getAsInt();
                 String cityName = cityObject.get(JsonFieldConstants.CITY_NAME).getAsString();
                 JsonObject CountryObject = cityObject.get(JsonFieldConstants.COUNTRY).getAsJsonObject();
-                int countryId = CountryObject.get(JsonFieldConstants.COUNTRY_ID).getAsInt();
+                int countryId = CountryObject.get(JsonFieldConstants.ID).getAsInt();
 
                 String countryName = CountryObject.get(JsonFieldConstants.COUNTRY_NAME).getAsString();
 
@@ -165,14 +165,14 @@ public class SqlUtil {
                     JsonArray orderListArray = shipmentObject.get(JsonFieldConstants.ORDERS_LIST).getAsJsonArray();
                     for (int x = 0; x < orderListArray.size(); x++) {
                         JsonObject orderObject = orderListArray.get(x).getAsJsonObject();
-                        int orderId = orderObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
+                        int orderId = orderObject.get(JsonFieldConstants.ID).getAsInt();
                         ordersIds.add(orderId);
                     }
                 }
                 int adminId = 0;
-                if (shipmentObject.get(JsonFieldConstants.ADMIN_ID) != null) {
-                    JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN_ID).getAsJsonObject();
-                    adminId = adminObject.get(JsonFieldConstants.ADMIN_ID).getAsInt();
+                if (shipmentObject.get(JsonFieldConstants.ADMIN) != null) {
+                    JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN).getAsJsonObject();
+                    adminId = adminObject.get(JsonFieldConstants.ID).getAsInt();
                 }
                 int totalWeight = shipmentObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
                 String shippingDate = shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
@@ -704,12 +704,12 @@ public class SqlUtil {
                 int receiverId = 0;
                 if (!jsonObject.get("receiver").getAsJsonObject().isJsonNull()) {
                     JsonObject receiver = jsonObject.get("receiver").getAsJsonObject();
-                    receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
+                    receiverId = receiver.get(JsonFieldConstants.ID).getAsInt();
                 }
                 int senderId = 0;
                 if (!jsonObject.get("sender").getAsJsonObject().isJsonNull()) {
                     JsonObject sender = jsonObject.get("sender").getAsJsonObject();
-                    senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+                    senderId = sender.get(JsonFieldConstants.ID).getAsInt();
                 }
                 String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
                 String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();

@@ -70,7 +70,7 @@ public class UserService {
         newDriver.setSocialSecurityNumber(driver.getSocialSecurityNumber());
         newDriver.setEmail(driver.getEmail());
         newDriver.setPassword(driver.getPassword());
-        newDriver.setIsbusy(false);
+        newDriver.setIsBusy(false);
         newDriver.setCreatedAt(LocalDateTime.now());
         newDriver.setUpdatedAt(LocalDateTime.now());
         return driverRepo.save(newDriver);

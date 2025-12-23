@@ -47,7 +47,7 @@
                         </Label>
                         <TextField fx:id="countryFeild" prefWidth="240.0" promptText="e.g, Egypt" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
                            <contextMenu>
-                              <ContextMenu>
+                              <ContextMenu fx:id="countryMenu">
                                  <items>
                                     <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
                                  </items>
@@ -65,7 +65,7 @@
                         </Label>
                         <TextField fx:id="cityFeild" prefWidth="240.0" promptText="e.g, Cairo" style="-fx-background-color: #f1f1f1; -fx-background-radius: 4px;">
                            <contextMenu>
-                              <ContextMenu>
+                              <ContextMenu fx:id="cityMenu">
                                  <items>
                                     <MenuItem mnemonicParsing="false" style="-fx-background-color: red;" text="Unspecified Action" />
                                  </items>

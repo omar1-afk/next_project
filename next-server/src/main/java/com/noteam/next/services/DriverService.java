@@ -23,9 +23,9 @@ public class DriverService {
     private AuthService authService;
 
     // get
-    public Optional<Driver> getDriverById(int driverId) {
-        logger.info("Getting the Driver by id: " + driverId);
-        return driverRepository.findById(driverId);
+    public Optional<Driver> getDriverById(int driver_id) {
+        logger.info("Getting the Driver by id: " + driver_id);
+        return driverRepository.findById(driver_id);
     }
 
     public Optional<Driver> getDriverByEmail(String email) {
@@ -51,51 +51,51 @@ public class DriverService {
     }
 
     // post
-    public Driver createdriver(String name, int age, String image, String socialSecurityNumber, String email,
+    public Driver createdriver(String name, int age, String image, String social_security_number, String email,
             String password, Boolean isbusy) {
         logger.info("creating a new driver");
         Driver driver = new Driver();
         driver.setName(name);
         driver.setAge(age);
         driver.setImage(image);
-        driver.setSocialSecurityNumber(socialSecurityNumber);
+        driver.setSocial_security_number(social_security_number);
         driver.setEmail(email);
         driver.setPassword(authService.hashPassword(password));
-        driver.setIsbusy(false);
-        driver.setCreatedAt(LocalDateTime.now());
-        driver.setUpdatedAt(LocalDateTime.now());
+        driver.setIsBusy(false);
+        driver.setCreated_at(LocalDateTime.now());
+        driver.setUpdated_at(LocalDateTime.now());
         return driverRepository.save(driver);
     }
 
-    public int updatedriver(int driverId, String name, int age, String image, String socialSecurityNumber,
+    public int updatedriver(int driver_id, String name, int age, String image, String social_security_number,
             String email, String password, Boolean isbusy) {
-        Optional<Driver> driverOptional = getDriverById(driverId);
+        Optional<Driver> driverOptional = getDriverById(driver_id);
         if (driverOptional.isEmpty()) {
-            logger.info("Driver service: The driver with id: " + driverId + " is not found!");
+            logger.info("Driver service: The driver with id: " + driver_id + " is not found!");
             return 0;
         } else {
-            logger.info("updating driver by id : " + driverId);
+            logger.info("updating driver by id : " + driver_id);
             Driver driver = new Driver();
             driver.setName(name);
             driver.setAge(age);
             driver.setImage(image);
-            driver.setSocialSecurityNumber(socialSecurityNumber);
+            driver.setSocial_security_number(social_security_number);
             driver.setEmail(email);
             driver.setPassword(password);
-            driver.setIsbusy(false);
-            driver.setUpdatedAt(LocalDateTime.now());
+            driver.setIsBusy(false);
+            driver.setUpdated_at(LocalDateTime.now());
             driverRepository.save(driver);
             return 1;
         }
     }
 
     // delete
-    public boolean deleteDriverById(int driverId) {
-        Optional<Driver> driverOptional = getDriverById(driverId);
+    public boolean deleteDriverById(int driver_id) {
+        Optional<Driver> driverOptional = getDriverById(driver_id);
         if (driverOptional.isEmpty()) {
             return false;
         } else {
-            driverRepository.deleteById(driverId);
+            driverRepository.deleteById(driver_id);
             return true;
         }
     }
