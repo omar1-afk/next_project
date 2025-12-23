@@ -22,7 +22,6 @@ import org.noteam.nextclient.utils.SqlUtil;
 import java.time.LocalDate;
 import java.util.*;
 
-
 public class CreateAndUpdateShipmentController {
 
     @FXML
@@ -50,7 +49,7 @@ public class CreateAndUpdateShipmentController {
     // private ComboBox<City> cityCombo;
     @FXML
     private DatePicker shippingDatePicker;
-    //  @FXML
+    // @FXML
     // private CheckBox completedCheck;
     @FXML
     private TableView<OrderTable> ordersTable;
@@ -63,11 +62,9 @@ public class CreateAndUpdateShipmentController {
     @FXML
     private TableColumn<OrderTable, Boolean> addToShipmentColumn;
     @FXML
-    private Button updateButton, ordersPrevBtn, ordersNextBtn;
-    ;
+    private Button updateButton, ordersPrevBtn, ordersNextBtn;;
     @FXML
-    private ObservableList<OrderTable> ordersTableData
-            = FXCollections.observableArrayList();
+    private ObservableList<OrderTable> ordersTableData = FXCollections.observableArrayList();
     private List<OrderTable> allOrders;
     private List<OrderTable> shipmentOrders;
     private List<Integer> vehicles;
@@ -86,10 +83,11 @@ public class CreateAndUpdateShipmentController {
         if (shipmentDisplay != null) {
             this.shipmentDisplay = shipmentDisplay;
             this.shipment = new ShipmentUpdateDTO.Builder()
-                    .shipmentId(shipmentDisplay.shipmentIdProperty().get())
+                    .id(shipmentDisplay.idProperty().get())
                     .totalWeight(shipmentDisplay.totalWeightProperty().get())
                     .vehicleId(shipmentDisplay.getVehicleId()).cityId(shipmentDisplay.getCityId())
-                    .driver(shipmentDisplay.getDriver()).driverId(shipmentDisplay.getDriverId()).shippingDate(shipmentDisplay.shippingDateProperty().get())
+                    .driver(shipmentDisplay.getDriver()).driverId(shipmentDisplay.getDriverId())
+                    .shippingDate(shipmentDisplay.shippingDateProperty().get())
                     .build();
         } else {
             this.shipment = null;
@@ -99,21 +97,15 @@ public class CreateAndUpdateShipmentController {
 
     public void fillData(boolean create) {
         vehicles = new ArrayList<>();
-        //cities = new ArrayList<>();
+        // cities = new ArrayList<>();
         drivers = new ArrayList<>();
         vehicles = SqlUtil.getAvailableVehicles();
         drivers = SqlUtil.getAvailableAndNotBusyDrivers();
         this.isCreateMode = create;
-        orderIdColumn.setCellValueFactory(c ->
-                c.getValue().getOrderId().asObject()
-        );
-        weightColumn.setCellValueFactory(c ->
-                c.getValue().getOrderWeight().asObject()
-        );
-        priceColumn.setCellValueFactory(c ->
-                c.getValue().getOrderPrice().asObject()
-        );
-       setupCheckboxColumn();
+        orderIdColumn.setCellValueFactory(c -> c.getValue().getOrderId().asObject());
+        weightColumn.setCellValueFactory(c -> c.getValue().getOrderWeight().asObject());
+        priceColumn.setCellValueFactory(c -> c.getValue().getOrderPrice().asObject());
+        setupCheckboxColumn();
 
         allOrders = SqlUtil.getAllOrders();
         if (create) {
@@ -126,14 +118,14 @@ public class CreateAndUpdateShipmentController {
             // cityCombo.setPromptText("Select City");
             shippingDatePicker.setValue(null);
             shippingDatePicker.setPromptText("Select Shipping Date");
-            //completedCheck.setSelected(false);
+            // completedCheck.setSelected(false);
             updateButton.setText("Create Shipment");
             this.shipmentDisplay = null;
         } else {
 
-            if (shipment != null && shipment.getShipmentId() > 0) {
-                shipmentOrders = SqlUtil.getShipmentOrders(shipment.getShipmentId());
-                shipmentId.setText(String.valueOf(shipment.getShipmentId()));
+            if (shipment != null && shipment.getId() > 0) {
+                shipmentOrders = SqlUtil.getShipmentOrders(shipment.getId());
+                shipmentId.setText(String.valueOf(shipment.getId()));
 
             } else {
                 shipmentOrders = Collections.emptyList();
@@ -161,11 +153,11 @@ public class CreateAndUpdateShipmentController {
                 }
             }
             City city = shipmentDisplay.getCity();
-            //if (city != null) {
-            //  for (City c : cities) {
+            // if (city != null) {
+            // for (City c : cities) {
             // if (c.getCity_id() == city.getCity_id()) {
-            //   cityCombo.setValue(c);
-            //   break;
+            // cityCombo.setValue(c);
+            // break;
             // }
             // }
             // }
@@ -201,29 +193,31 @@ public class CreateAndUpdateShipmentController {
         });
 
         driverCombo.getItems().setAll(drivers);
-            /*
-            cityCombo.setConverter(new   javafx.util.StringConverter<City>(){
-                @Override
-                public String toString(City city){
+        /*
+         * cityCombo.setConverter(new javafx.util.StringConverter<City>(){
+         *
+         * @Override
+         * public String toString(City city){
+         *
+         * return city==null ? "" : city.getName()+"-"+ city.getCountry().getName() ;
+         * }
+         *
+         * @Override
+         * public City fromString(String string){
+         * return null;
+         * }
+         * });
+         */
 
-                    return city==null ? "" : city.getName()+"-"+ city.getCountry().getName() ;
-                }
-                @Override
-                public City fromString(String string){
-                    return null;
-                }
-            });
-*/
-
-//cities=SqlUtil.getAllCities();
-// cityCombo.getItems().setAll(cities);
-        //completedCheck.setSelected(shipment.isComplete()); // add logic prevent edit
+        // cities=SqlUtil.getAllCities();
+        // cityCombo.getItems().setAll(cities);
+        // completedCheck.setSelected(shipment.isComplete()); // add logic prevent edit
         // handelCheckBox(allOrders,shipmentOrders);
         ordersPage(0);
         ordersTable.setItems(ordersTableData);
 
-
     }
+
     private void setupCheckboxColumn() {
         addToShipmentColumn.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         addToShipmentColumn.setCellFactory(column -> {
@@ -244,17 +238,18 @@ public class CreateAndUpdateShipmentController {
 
     private void applyInitialSelection(
             List<OrderTable> allOrders,
-            List<OrderTable> shipmentOrders
-    ) {
+            List<OrderTable> shipmentOrders) {
         totalWeight = 0;
-        if (allOrders == null) return;
+        if (allOrders == null)
+            return;
         removeOrderListeners();
         if (isCreateMode) {
             for (OrderTable order : allOrders) {
                 order.setSelectedSilent(false);
             }
         } else {
-            if (shipmentOrders == null) return;
+            if (shipmentOrders == null)
+                return;
             Set<Integer> shipmentIds = new HashSet<>();
             for (OrderTable shippedOrder : shipmentOrders) {
                 shipmentIds.add(shippedOrder.getOrderId().get());
@@ -272,8 +267,10 @@ public class CreateAndUpdateShipmentController {
         initializeOrderListeners();
         updateTotalWeightField();
     }
+
     private void initializeOrderListeners() {
-        if (allOrders == null) return;
+        if (allOrders == null)
+            return;
         orderListeners.clear();
         for (OrderTable order : allOrders) {
             ChangeListener<Boolean> listener = (obs, wasSelected, isNowSelected) -> {
@@ -293,17 +290,17 @@ public class CreateAndUpdateShipmentController {
         }
         listenersInitialized = true;
     }
+
     private void updateTotalWeightField() {
         totalWeightField.setText(totalWeight + "");
     }
 
-
     private void ordersPage(int page) {
         int fromIndex = page * PAGE_SIZE;
         int toIndex = Math.min(fromIndex + PAGE_SIZE, allOrders.size());
-        if (fromIndex >= allOrders.size()) return;
-        List<OrderTable> pageData =
-                allOrders.subList(fromIndex, toIndex);
+        if (fromIndex >= allOrders.size())
+            return;
+        List<OrderTable> pageData = allOrders.subList(fromIndex, toIndex);
 
         ordersTableData.setAll(pageData);
         currentPage = page;
@@ -311,7 +308,6 @@ public class CreateAndUpdateShipmentController {
         ordersPrevBtn.setDisable(currentPage == 0);
         ordersNextBtn.setDisable(toIndex >= allOrders.size());
     }
-
 
     private void removeOrderListeners() {
         if (allOrders != null && !orderListeners.isEmpty()) {
@@ -335,8 +331,7 @@ public class CreateAndUpdateShipmentController {
 
     @FXML
     private void createAndUpdateShipment(ActionEvent event) {
-        boolean create =
-                updateButton.getText().equals("Create Shipment");
+        boolean create = updateButton.getText().equals("Create Shipment");
         List<OrderTable> selectedOrders = allOrders.stream().filter(OrderTable::isSelected).toList();
         List<Integer> ordersIds = new ArrayList<>();
         for (OrderTable order : selectedOrders) {
@@ -344,23 +339,24 @@ public class CreateAndUpdateShipmentController {
             ordersIds.add(order.getOrderId().get());
         }
         // if(completedCheck.isSelected()) {
-        //    SqlUtil.setShipmentAsCompleted(shipment.getShipmentId());
+        // SqlUtil.setShipmentAsCompleted(shipment.getShipmentId());
         // }
         if (vehicleCombo.getValue() == null || driverCombo.getValue() == null ||
-                /*  cityCombo.getValue() == null || */shippingDatePicker.getValue() == null) {
+        /* cityCombo.getValue() == null || */shippingDatePicker.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Input required fields");
             alert.showAndWait();
             return;
         }
-        //ShipmentRequest shipmentRequest;
-        int shipmentId = create ? 0 : shipment.getShipmentId();
+        // ShipmentRequest shipmentRequest;
+        int shipmentId = create ? 0 : shipment.getId();
         int vehicleId = vehicleCombo.getValue();
         int driverId = driverCombo.getValue().getDriverId();
         int cityId = 1;
         String shippingDate = shippingDatePicker.getValue().toString();
-        // shipmentRequest=new ShipmentRequest(ordersIds,shipmentId,vehicleId,driverId,totalWeight,shippingDate,cityId);
+        // shipmentRequest=new
+        // ShipmentRequest(ordersIds,shipmentId,vehicleId,driverId,totalWeight,shippingDate,cityId);
         if (create) {
             ShipmentCreateDTO createDTO = new ShipmentCreateDTO.Builder()
                     .orderIds(ordersIds)
@@ -388,7 +384,7 @@ public class CreateAndUpdateShipmentController {
             }
         } else {
             ShipmentUpdateDTO updateDTO = new ShipmentUpdateDTO.Builder()
-                    .shipmentId(shipmentId)
+                    .id(shipmentId)
                     .orderIds(ordersIds)
                     .vehicleId(vehicleId)
                     .driverId(driverId)
@@ -416,17 +412,14 @@ public class CreateAndUpdateShipmentController {
 
     }
 
-
-
     @FXML
     private void orderNextPage() {
-        ordersPage( currentPage + 1);
+        ordersPage(currentPage + 1);
     }
 
     @FXML
     private void orderPrevPage() {
         ordersPage(currentPage - 1);
     }
-
 
 }

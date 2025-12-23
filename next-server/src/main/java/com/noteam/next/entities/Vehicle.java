@@ -13,7 +13,7 @@ public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer vehicleId;
+    private Integer id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -23,10 +23,10 @@ public class Vehicle {
     private String licensePlate;
 
     @Column(name = "is_available")
-    private boolean available;
+    private boolean isAvailable;
 
     @Column(name = "is_used")
-    private boolean used;
+    private boolean isUsed;
 
     @Column(name = "weight_limit")
     private Integer weightLimit;
@@ -48,8 +48,8 @@ public class Vehicle {
         updatedAt = LocalDateTime.now();
     }
 
-    public Integer getVehicleId() {
-        return vehicleId;
+    public Integer getId() {
+        return id;
     }
 
     public VehicleType getType() {
@@ -68,20 +68,20 @@ public class Vehicle {
         this.licensePlate = licensePlate;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public boolean getIsAvailable() {
+        return isAvailable;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 
-    public boolean isUsed() {
-        return used;
+    public boolean getIsUsed() {
+        return isUsed;
     }
 
-    public void setUsed(boolean used) {
-        this.used = used;
+    public void setUsed(boolean isUsed) {
+        this.isUsed = isUsed;
     }
 
     public Integer getWeightLimit() {
@@ -104,25 +104,22 @@ public class Vehicle {
         return updatedAt;
     }
 
-
-
-//    (this was the vehicle that Nesma did )
-//    public void setUpdatedAt(LocalDateTime updatedAt) {
-//        this.updatedAt = updatedAt;
-//    }
-//
-//    public int getWeight() {
-//        return weight;
-//    }
-//
-//    public void setWeight(int weight) {
-//        this.weight = weight;
-//    }
-//
-//
-//    public int getVehicle_id() {
-//        return vehicle_id;
-//    }
+    // (this was the vehicle that Nesma did )
+    // public void setUpdatedAt(LocalDateTime updatedAt) {
+    // this.updatedAt = updatedAt;
+    // }
+    //
+    // public int getWeight() {
+    // return weight;
+    // }
+    //
+    // public void setWeight(int weight) {
+    // this.weight = weight;
+    // }
+    //
+    //
+    // public int getVehicle_id() {
+    // return vehicle_id;
+    // }
 
 }
-

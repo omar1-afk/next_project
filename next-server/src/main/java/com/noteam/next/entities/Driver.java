@@ -15,7 +15,7 @@ import com.noteam.next.roles.Authorities;
 public class Driver implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer driver_id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -27,7 +27,7 @@ public class Driver implements User {
     private String image;
 
     @Column(name = "social_security_number", nullable = false)
-    private String social_security_number;
+    private String socialSecurityNumber;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -36,21 +36,17 @@ public class Driver implements User {
     private String password;
 
     @Column(name = "is_busy", nullable = false)
-    private Boolean isbusy;
+    private Boolean isBusy;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
-    public Integer getDriver_id() {
-        return driver_id;
-    }
-
-    // public void setDriver_id(Integer driver_id) { (we don't need to set the
+    // public void setid(Integer id) { (we don't need to set the
     // driver id)
-    // this.driver_id = driver_id;
+    // this.id = id;
     // }
 
     public String getName() {
@@ -77,12 +73,12 @@ public class Driver implements User {
         this.image = image;
     }
 
-    public String getSocial_security_number() {
-        return social_security_number;
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
     }
 
-    public void setSocial_security_number(String social_security_number) {
-        this.social_security_number = social_security_number;
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public String getEmail() {
@@ -102,27 +98,27 @@ public class Driver implements User {
     }
 
     public Boolean getIsbusy() {
-        return isbusy;
+        return isBusy;
     }
 
-    public void setIsbusy(Boolean isbusy) {
-        this.isbusy = isbusy;
+    public void setIsbusy(Boolean isBusy) {
+        this.isBusy = isBusy;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getUsername() {
@@ -130,7 +126,7 @@ public class Driver implements User {
     }
 
     public Integer getId() {
-        return driver_id;
+        return id;
     }
 
     @Override
