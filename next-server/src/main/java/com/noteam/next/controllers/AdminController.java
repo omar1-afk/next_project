@@ -52,7 +52,7 @@ public class AdminController {
             AdminResponse res = new AdminResponse(
                     newAdmin.getName(),
                     newAdmin.getEmail(),
-                    newAdmin.getSocial_security_number(),
+                    newAdmin.getSocialSecurityNumber(),
                     newAdmin.getImage(),
                     newAdmin.getAge());
             return ResponseEntity.status(HttpStatus.OK).body(res);

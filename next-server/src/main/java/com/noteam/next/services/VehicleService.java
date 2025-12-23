@@ -1,6 +1,5 @@
 package com.noteam.next.services;
 
-
 import com.noteam.next.entities.Vehicle;
 import com.noteam.next.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +40,15 @@ public class VehicleService {
             existing.setWeightLimit(updates.getWeightLimit());
         }
 
-        existing.setAvailable(updates.isAvailable());
-        existing.setUsed(updates.isUsed());
+        existing.setAvailable(updates.getIsAvailable());
+        existing.setUsed(updates.getIsUsed());
 
         return repository.save(existing);
     }
 
     public boolean deleteVehicle(int id) {
-        if (!repository.existsById(id)) return false;
+        if (!repository.existsById(id))
+            return false;
 
         repository.deleteById(id);
         return true;
@@ -58,4 +58,3 @@ public class VehicleService {
         return repository.findByAvailable(true);
     }
 }
-

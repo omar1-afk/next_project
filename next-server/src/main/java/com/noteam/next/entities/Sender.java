@@ -12,20 +12,19 @@ public class Sender {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // for Auto-increment
-    @Column(name = "sender_id")
-    private Integer senderId;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "socialSecurityNumber", nullable = false, unique = true) // Enforces the UNIQUE constraint
+    @Column(name = "social_security_number", nullable = false, unique = true) // Enforces the UNIQUE constraint
     private String socialSecurityNumber;
 
     @Column(name = "phone", nullable = false)
     private String phone;
 
     @Column(name = "commercial_register_number", nullable = true)
-    private String commercial_register_number;
+    private String commercialRegisterNumber;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -33,11 +32,11 @@ public class Sender {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public Integer getSenderId() {
-        return senderId;
+    public Integer getId() {
+        return id;
     }
 
     // public void setReceiverId(Integer receiverId) { (we don't need to set the
@@ -69,12 +68,12 @@ public class Sender {
         this.phone = phone;
     }
 
-    public String getCommercial_register_number() {
-        return commercial_register_number;
+    public String getCommercialRegisterNumber() {
+        return commercialRegisterNumber;
     }
 
-    public void setCommercial_register_number(String commercial_register_number) {
-        this.commercial_register_number = commercial_register_number;
+    public void setCommercialRegisterNumber(String commercialRegisterNumber) {
+        this.commercialRegisterNumber = commercialRegisterNumber;
     }
 
     public String getEmail() {

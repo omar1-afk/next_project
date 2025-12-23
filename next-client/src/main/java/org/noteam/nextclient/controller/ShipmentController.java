@@ -1,4 +1,5 @@
 package org.noteam.nextclient.controller;
+
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,14 +22,17 @@ import java.util.List;
 public class ShipmentController {
     @FXML
     private BorderPane shipmentPane;
-    public BorderPane getShipmentPane(){
+
+    public BorderPane getShipmentPane() {
         return shipmentPane;
     }
+
     private AdminController adminController;
 
     public void setAdminController(AdminController adminController) {
         this.adminController = adminController;
     }
+
     @FXML
     private TableView<ShipmentDisplayDTO> completedShipmentTable;
     @FXML
@@ -73,13 +77,10 @@ public class ShipmentController {
 
     @FXML
     private Label inCompletedPageLabel;
-     @FXML
-    private ObservableList<ShipmentDisplayDTO> completeTableData
-            = FXCollections.observableArrayList();
-     @FXML
-    private ObservableList<ShipmentDisplayDTO> inCompleteTableData
-            = FXCollections.observableArrayList();
-
+    @FXML
+    private ObservableList<ShipmentDisplayDTO> completeTableData = FXCollections.observableArrayList();
+    @FXML
+    private ObservableList<ShipmentDisplayDTO> inCompleteTableData = FXCollections.observableArrayList();
 
     private ObservableList<ShipmentDisplayDTO> completedShipment;
     private ObservableList<ShipmentDisplayDTO> inCompletedShipment;
@@ -90,7 +91,6 @@ public class ShipmentController {
     private int inCompletedCurrentPage = 0;
 
     private final int PAGE_SIZE = 14;
-
 
     @FXML
     public void initialize() {
@@ -120,33 +120,19 @@ public class ShipmentController {
             }
         });
 
-         completedShipmentIdColumn.setCellValueFactory(c->
-                 c.getValue().shipmentIdProperty().asObject()
+        completedShipmentIdColumn.setCellValueFactory(c -> c.getValue().idProperty().asObject()
 
-         );
-         completedCityColumn.setCellValueFactory(
-                 c->
-                         c.getValue().cityNameProperty()
-         );
-         completedWeightColumn.setCellValueFactory(c->
-                 c.getValue().totalWeightProperty().asObject()
+        );
+        completedCityColumn.setCellValueFactory(
+                c -> c.getValue().cityNameProperty());
+        completedWeightColumn.setCellValueFactory(c -> c.getValue().totalWeightProperty().asObject()
 
-         );
-        completedShippingDateColumn.setCellValueFactory(c->
-                c.getValue().shippingDateProperty()
         );
-        incompletedShipmentIdColumn.setCellValueFactory(c->
-                c.getValue().shipmentIdProperty().asObject()
-        );
-        incompletedCityColumn.setCellValueFactory(c->
-                c.getValue().cityNameProperty()
-        );
-        incompletedWeightColumn.setCellValueFactory(c->
-                c.getValue().totalWeightProperty().asObject()
-        );
-        incompletedShippingDateColumn.setCellValueFactory(c->
-                c.getValue().shippingDateProperty()
-        );
+        completedShippingDateColumn.setCellValueFactory(c -> c.getValue().shippingDateProperty());
+        incompletedShipmentIdColumn.setCellValueFactory(c -> c.getValue().idProperty().asObject());
+        incompletedCityColumn.setCellValueFactory(c -> c.getValue().cityNameProperty());
+        incompletedWeightColumn.setCellValueFactory(c -> c.getValue().totalWeightProperty().asObject());
+        incompletedShippingDateColumn.setCellValueFactory(c -> c.getValue().shippingDateProperty());
         setupUpdateColumn();
         setupDeleteColumn();
         originalCompletedShipment = FXCollections.observableArrayList(SqlUtil.getShipmentsByComplete(true));
@@ -174,12 +160,12 @@ public class ShipmentController {
         }
         List<ShipmentDisplayDTO> pageData = completedShipment.subList(fromIndex, toIndex);
 
-            completeTableData.setAll(pageData);
-            completedCurrentPage = page;
-            completedPageLabel.setText("" + (completedCurrentPage + 1));
-            completedPrevBtn.setDisable(completedCurrentPage == 0);
-            completedNextBtn.setDisable(toIndex >=  completedShipment.size());
-        }
+        completeTableData.setAll(pageData);
+        completedCurrentPage = page;
+        completedPageLabel.setText("" + (completedCurrentPage + 1));
+        completedPrevBtn.setDisable(completedCurrentPage == 0);
+        completedNextBtn.setDisable(toIndex >= completedShipment.size());
+    }
 
     private void inCompletedPage(int page) {
         int fromIndex = page * PAGE_SIZE;
@@ -198,7 +184,7 @@ public class ShipmentController {
         inCompletedPageLabel.setText("" + (inCompletedCurrentPage + 1));
 
         incompletedPrevBtn.setDisable(inCompletedCurrentPage == 0);
-        incompletedNextBtn.setDisable(toIndex >=  inCompletedShipment.size());
+        incompletedNextBtn.setDisable(toIndex >= inCompletedShipment.size());
     }
 
     private void setupUpdateColumn() {
@@ -211,9 +197,10 @@ public class ShipmentController {
                             .getItems()
                             .get(getIndex());
 
-                    handleUpdate(shipment , true);
+                    handleUpdate(shipment, true);
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -233,11 +220,12 @@ public class ShipmentController {
                             .getItems()
                             .get(getIndex());
 
-                    handleUpdate(shipment,false);
+                    handleUpdate(shipment, false);
                 });
             }
+
             @Override
-          protected void updateItem(Void item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
@@ -246,29 +234,31 @@ public class ShipmentController {
                 }
             }
         });
-        }
+    }
 
-
-    public void handleUpdate(ShipmentDisplayDTO shipment ,boolean completed) {
-       // System.out.println("Update shipment id = " + shipment.getShipmentId());
+    public void handleUpdate(ShipmentDisplayDTO shipment, boolean completed) {
+        // System.out.println("Update shipment id = " + shipment.getShipmentId());
         try {
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml"));
-            Parent parent=loader.load();
-            CreateAndUpdateShipmentController controller=loader.getController();
-            controller.setShipment(shipment );
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml"));
+            Parent parent = loader.load();
+            CreateAndUpdateShipmentController controller = loader.getController();
+            controller.setShipment(shipment);
             controller.fillData(false);
-            //MainController mainController=loader.getController();
-            //mainController.getViewPane().getChildren().add(controller.getCreateShipmentPane());
+            // MainController mainController=loader.getController();
+            // mainController.getViewPane().getChildren().add(controller.getCreateShipmentPane());
             Stage stage = new Stage();
             stage.setTitle("Update Shipment");
             stage.setScene(new Scene(parent));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-            if (completed) {completedShipmentTable.refresh();}
-            else{inCompletedShipmentTable.refresh();}
-        }
-        catch (Exception e) {
+            if (completed) {
+                completedShipmentTable.refresh();
+            } else {
+                inCompletedShipmentTable.refresh();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -277,21 +267,22 @@ public class ShipmentController {
             alert.showAndWait();
         }
     }
+
     @FXML
-    private void syncTableData()
-    {
+    private void syncTableData() {
         completedShipmentTable.refresh();
         inCompletedShipmentTable.refresh();
     }
 
     private void handleCreate() {
-       // System.out.println("create shipment" );
+        // System.out.println("create shipment" );
         try {
-            URL url=getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml");
+            URL url = getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml");
             System.out.println(url);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml"));
-            Parent parent=loader.load();
-            CreateAndUpdateShipmentController controller=loader.getController();
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/org/noteam/nextclient/scene/create-shipment.fxml"));
+            Parent parent = loader.load();
+            CreateAndUpdateShipmentController controller = loader.getController();
             controller.setAdminController(this.adminController);
             controller.setShipment(null);
             controller.fillData(true);
@@ -302,8 +293,7 @@ public class ShipmentController {
             stage.showAndWait();
             completedShipmentTable.refresh();
             inCompletedShipmentTable.refresh();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -313,18 +303,19 @@ public class ShipmentController {
         }
     }
 
-   private void setupDeleteColumn() {
+    private void setupDeleteColumn() {
         completedDeleteButtonColumn.setCellFactory(col -> new TableCell<>() {
 
             private final Button deleteBtn = new Button("Delete");
 
-            { deleteBtn.getStyleClass().addAll("table-button","delete-button");
+            {
+                deleteBtn.getStyleClass().addAll("table-button", "delete-button");
                 deleteBtn.setOnAction(e -> {
                     ShipmentDisplayDTO shipment = getTableView()
                             .getItems()
                             .get(getIndex());
 
-                    handleDelete(shipment,true);
+                    handleDelete(shipment, true);
                 });
             }
 
@@ -342,15 +333,16 @@ public class ShipmentController {
             private final Button deleteBtn = new Button("Delete");
 
             {
-                deleteBtn.getStyleClass().addAll("table-button","delete-button");
+                deleteBtn.getStyleClass().addAll("table-button", "delete-button");
                 deleteBtn.setOnAction(e -> {
                     ShipmentDisplayDTO shipment = getTableView()
                             .getItems()
                             .get(getIndex());
 
-                    handleDelete(shipment,false);
+                    handleDelete(shipment, false);
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -363,31 +355,33 @@ public class ShipmentController {
         });
     }
 
-    private void handleDelete(ShipmentDisplayDTO shipment , boolean completed) {
+    private void handleDelete(ShipmentDisplayDTO shipment, boolean completed) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Delete");
         alert.setHeaderText("Delete Shipment");
         alert.setContentText("Are you sure?");
         alert.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-              if(SqlUtil.deleteShipment(shipment.shipmentIdProperty().get())) {
-                    if(completed) {
+                if (SqlUtil.deleteShipment(shipment.idProperty().get())) {
+                    if (completed) {
                         completedShipment.remove(shipment);
                         completeTableData.remove(shipment);
-                    }
-                    else {
-                     inCompletedShipment.remove(shipment);
-                     inCompleteTableData.remove(shipment);
+                    } else {
+                        inCompletedShipment.remove(shipment);
+                        inCompleteTableData.remove(shipment);
                     }
                 }
-              // pop up couldn't delete
+                // pop up couldn't delete
             }
         });
     }
+
     @FXML
-    private void handleSearch(ActionEvent event ) {
-       String selected = searchComboBox.getValue().toString();
-       if(selected== null) { return; }
+    private void handleSearch(ActionEvent event) {
+        String selected = searchComboBox.getValue().toString();
+        if (selected == null) {
+            return;
+        }
         if (selected.equals("Completed")) {
             searchField.clear();
             searchField.setDisable(true);
@@ -395,67 +389,65 @@ public class ShipmentController {
             inCompletedShipment.setAll(originalInCompletedShipment);
             completedPage(0);
             inCompletedPage(0);
+        } else {
+            searchField.setDisable(false);
         }
-        else {
-           searchField.setDisable(false);
+        String text = searchField.getText();
+        if (text == null || text.isBlank()) {
+            return;
         }
-       String text= searchField.getText();
-       if(text==null ||text.isBlank()){
-               return;
-       }
-       try {
+        try {
 
-           List<ShipmentDisplayDTO> shipmentRequests = List.of();
-           int id = Integer.parseInt(text);
-           completedShipment.clear();
-           inCompletedShipment.clear();
-           boolean complete;
-           if (selected.equals("Shipment ID")) {
-               shipmentRequests = SqlUtil.getShipmentById(id);
+            List<ShipmentDisplayDTO> shipmentRequests = List.of();
+            int id = Integer.parseInt(text);
+            completedShipment.clear();
+            inCompletedShipment.clear();
+            boolean complete;
+            if (selected.equals("Shipment ID")) {
+                shipmentRequests = SqlUtil.getShipmentById(id);
 
-           } else if (selected.equals("Driver ID")) {
-               shipmentRequests = SqlUtil.getShipmentsByDriverId(id);
+            } else if (selected.equals("Driver ID")) {
+                shipmentRequests = SqlUtil.getShipmentsByDriverId(id);
 
-           } else if (selected.equals("Admin ID")) {
-               shipmentRequests = SqlUtil.getShipmentsByAdminID(id);
+            } else if (selected.equals("Admin ID")) {
+                shipmentRequests = SqlUtil.getShipmentsByAdminID(id);
 
-           } else if (selected.equals("Vehicle ID")) {
-               shipmentRequests = SqlUtil.getShipmentsByVehicleId(id);
+            } else if (selected.equals("Vehicle ID")) {
+                shipmentRequests = SqlUtil.getShipmentsByVehicleId(id);
 
-           } else if (selected.equals("City ID")) {
-               shipmentRequests = SqlUtil.getShipmentsByCityId(id);
-           }
+            } else if (selected.equals("City ID")) {
+                shipmentRequests = SqlUtil.getShipmentsByCityId(id);
+            }
 
-           for (ShipmentDisplayDTO s : shipmentRequests) {
-               if (s.isComplete()) {
-                   completedShipment.add(s);
-               } else {
-                   inCompletedShipment.add(s);
-               }
-           }
+            for (ShipmentDisplayDTO s : shipmentRequests) {
+                if (s.isComplete()) {
+                    completedShipment.add(s);
+                } else {
+                    inCompletedShipment.add(s);
+                }
+            }
 
-           setupUpdateColumn();
-           setupDeleteColumn();
-           completedPage(0);
-           inCompletedPage(0);
-           completedShipmentTable.setItems(completeTableData);
-           inCompletedShipmentTable.setItems(inCompleteTableData);
+            setupUpdateColumn();
+            setupDeleteColumn();
+            completedPage(0);
+            inCompletedPage(0);
+            completedShipmentTable.setItems(completeTableData);
+            inCompletedShipmentTable.setItems(inCompleteTableData);
 
-       }
-       catch (Exception e) {
-           Alert alert = new Alert(Alert.AlertType.ERROR);
-           alert.setTitle("Error");
-           alert.setHeaderText("Error");
-           alert.setContentText(e.getMessage());
-           alert.showAndWait();
-       }
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
-
 
     @FXML
     private void completedNextPage() {
         completedPage(completedCurrentPage + 1);
     }
+
     @FXML
     private void incompletedNextPage() {
         inCompletedPage(inCompletedCurrentPage + 1);
@@ -465,10 +457,10 @@ public class ShipmentController {
     private void completedPrevPage() {
         completedPage(completedCurrentPage - 1);
     }
+
     @FXML
     private void incompletedPrevPage() {
         inCompletedPage(inCompletedCurrentPage - 1);
     }
-
 
 }

@@ -1,4 +1,5 @@
 package com.noteam.next.controllers;
+
 import com.noteam.next.entities.Order;
 import com.noteam.next.entities.Shipment;
 import com.noteam.next.services.ShipmentService;
@@ -21,16 +22,16 @@ public class ShipmentController {
     private ShipmentService shipmentService;
 
     private static final Logger logger = Logger.getLogger(ShipmentController.class.getName());
-    public static class ShipmentRequest {
-        private int shipment_id;
-        private List<Integer> orderIds;
-        private int admin_id;
-        private int vehicle_id;
-        private int driver_id;
-        private double total_weight;
-        private LocalDate shipping_date;
-        private int city_id;
 
+    public static class ShipmentRequest {
+        private int shipmentId;
+        private List<Integer> orderIds;
+        private int adminId;
+        private int vehicleId;
+        private int driverId;
+        private double totalWeight;
+        private LocalDate shippingDate;
+        private int cityId;
 
         // Getters and setters
 
@@ -38,120 +39,155 @@ public class ShipmentController {
             return shipmentId;
         }
 
-        public List<Integer> getOrderIds() { return orderIds; }
-        public void setOrderIds(List<Integer> orderIds) { this.orderIds = orderIds; }
-        public int getAdminId() { return adminId; }
-        public void setAdminId(int adminId) { this.adminId = adminId; }
-        public int getVehicleId() { return vehicleId; }
-        public void setVehicleId(int vehicleId) { this.vehicleId = vehicleId; }
-        public int getDriverId() { return driverId; }
-        public void setDriverId(int driverId) { this.driverId = driverId; }
-        public double getTotalWeight() { return totalWeight; }
-        public void setTotalWeight(double totalWeight) { this.totalWeight = totalWeight; }
-        public LocalDate getShippingDate() { return shippingDate; }
-        public void setShippingDate(LocalDate shippingDate) { this.shippingDate = shippingDate; }
-        public int getCityId() { return cityId; }
-        public void setCityId(int cityId) { this.cityId = cityId; }
+        public List<Integer> getOrderIds() {
+            return orderIds;
+        }
+
+        public void setOrderIds(List<Integer> orderIds) {
+            this.orderIds = orderIds;
+        }
+
+        public int getAdminId() {
+            return adminId;
+        }
+
+        public void setAdminId(int adminId) {
+            this.adminId = adminId;
+        }
+
+        public int getVehicleId() {
+            return vehicleId;
+        }
+
+        public void setVehicleId(int vehicleId) {
+            this.vehicleId = vehicleId;
+        }
+
+        public int getDriverId() {
+            return driverId;
+        }
+
+        public void setDriverId(int driverId) {
+            this.driverId = driverId;
+        }
+
+        public double getTotalWeight() {
+            return totalWeight;
+        }
+
+        public void setTotalWeight(double totalWeight) {
+            this.totalWeight = totalWeight;
+        }
+
+        public LocalDate getShippingDate() {
+            return shippingDate;
+        }
+
+        public void setShippingDate(LocalDate shippingDate) {
+            this.shippingDate = shippingDate;
+        }
+
+        public int getCityId() {
+            return cityId;
+        }
+
+        public void setCityId(int cityId) {
+            this.cityId = cityId;
+        }
     }
-    //get
+
+    // get
     @GetMapping
-    
+
     public ResponseEntity<List<Shipment>> getAllShipments() {
-        logger.info("Getting all shipments" );
+        logger.info("Getting all shipments");
         try {
             List<Shipment> shipments = shipmentService.getAllShipments();
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/{shipment_id}")
-    public ResponseEntity<Shipment> getShipmentById(@PathVariable int shipment_id) {
-        logger.info("Getting a shipment  by id"+shipment_id );
+    @GetMapping("/{shipmentId}")
+    public ResponseEntity<Shipment> getShipmentById(@PathVariable int shipmentId) {
+        logger.info("Getting a shipment  by id" + shipmentId);
         try {
-            Optional<Shipment> shipment = shipmentService.getShipmentById(shipment_id);
+            Optional<Shipment> shipment = shipmentService.getShipmentById(shipmentId);
             return shipment.map(
-                            value -> ResponseEntity.status(HttpStatus.OK).body(value))
+                    value -> ResponseEntity.status(HttpStatus.OK).body(value))
                     .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting a shipment: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
     }
 
-    @GetMapping("/driver/{driver_id}")
-    public ResponseEntity<List<Shipment>> getAllShipmentsByDriverId(@PathVariable int driver_id) {
-        logger.info("Getting all shipments  by driver: " + driver_id);
+    @GetMapping("/driver/{driverId}")
+    public ResponseEntity<List<Shipment>> getAllShipmentsByDriverId(@PathVariable int driverId) {
+        logger.info("Getting all shipments  by driver: " + driverId);
         try {
-            List<Shipment> shipments = shipmentService.getAllShipmentsByDriverId(driver_id);
+            List<Shipment> shipments = shipmentService.getAllShipmentsByDriverId(driverId);
             if (shipments.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting all shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/city/{city_id}")
-    public ResponseEntity<List<Shipment>> getAllShipmentsByCityId(@PathVariable int city_id) {
-        logger.info("Getting all shipments  by city: " + city_id);
+    @GetMapping("/city/{cityId}")
+    public ResponseEntity<List<Shipment>> getAllShipmentsByCityId(@PathVariable int cityId) {
+        logger.info("Getting all shipments  by city: " + cityId);
         try {
-            List<Shipment> shipments = shipmentService.getAllShipmentsByCityId(city_id);
+            List<Shipment> shipments = shipmentService.getAllShipmentsByCityId(cityId);
             if (shipments.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting all shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/admin/{admin_id}")
-    public ResponseEntity<List<Shipment>> getAllShipmentsByAdminId(@PathVariable int admin_id) {
-        logger.info("Getting all shipments  by admin: " + admin_id);
+    @GetMapping("/admin/{adminId}")
+    public ResponseEntity<List<Shipment>> getAllShipmentsByAdminId(@PathVariable int adminId) {
+        logger.info("Getting all shipments  by admin: " + adminId);
         try {
 
-
-            List<Shipment> shipments = shipmentService.getAllShipmentsByAdminId(admin_id);
+            List<Shipment> shipments = shipmentService.getAllShipmentsByAdminId(adminId);
             if (shipments.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting all shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/vehicle/{vehicle_id}")
-    public ResponseEntity<List<Shipment>> getAllShipmentsByVehicleId(@PathVariable int vehicle_id) {
-        logger.info("Getting all shipments  by vehicle_id" + vehicle_id);
+    @GetMapping("/vehicle/{vehicleId}")
+    public ResponseEntity<List<Shipment>> getAllShipmentsByVehicleId(@PathVariable int vehicleId) {
+        logger.info("Getting all shipments  by vehicleId" + vehicleId);
         try {
-            List<Shipment> shipments = shipmentService.getAllShipmentsByVehicle_id(vehicle_id);
+            List<Shipment> shipments = shipmentService.getAllShipmentsByVehicleId(vehicleId);
             if (shipments.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting all shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @GetMapping("/complete/{isComplete}")
-    public  ResponseEntity<List<Shipment>> getAllShipmentsByIs_complete(@PathVariable boolean isComplete) {
+    public ResponseEntity<List<Shipment>> getAllShipmentsByIsComplete(@PathVariable boolean isComplete) {
         logger.info("Getting all shipments  by IsComplete:" + isComplete);
         try {
             List<Shipment> shipments = shipmentService.getAllShipmentsByIsComplete(isComplete);
@@ -159,143 +195,137 @@ public class ShipmentController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
             return ResponseEntity.status(HttpStatus.OK).body(shipments);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting all shipments: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
-    @GetMapping("/{shipment_id}/orders")
-    public ResponseEntity<List<Order>> getAllOrdersInShipment(@PathVariable int shipment_id) {
-        logger.info("Getting all orders  by shipment_id" + shipment_id);
+    @GetMapping("/{shipmentId}/orders")
+    public ResponseEntity<List<Order>> getAllOrdersInShipment(@PathVariable int shipmentId) {
+        logger.info("Getting all orders  by shipmentId" + shipmentId);
         try {
-            Optional<Shipment > shipment= shipmentService.getShipmentById(shipment_id);
-            if(shipment.isEmpty()){
+            Optional<Shipment> shipment = shipmentService.getShipmentById(shipmentId);
+            if (shipment.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
             }
-                List<Order> orderList = shipmentService.getAllOrdersInShipment(shipment.get());
-                return ResponseEntity.status(HttpStatus.OK).body(orderList);
+            List<Order> orderList = shipmentService.getAllOrdersInShipment(shipment.get());
+            return ResponseEntity.status(HttpStatus.OK).body(orderList);
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             logger.severe("Error getting orders: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
-
     }
 
-    //post
+    // post
     @PostMapping
-    public ResponseEntity<?> createShipment(@RequestBody ShipmentRequest shipmentRequest ) {
+    public ResponseEntity<?> createShipment(@RequestBody ShipmentRequest shipmentRequest) {
         logger.info("create a shipment ");
 
         try {
-           Shipment createdShipment = shipmentService.createShipment(
+            Shipment createdShipment = shipmentService.createShipment(
                     shipmentRequest.getOrderIds(),
                     shipmentRequest.getAdminId(),
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),
                     shipmentRequest.getShippingDate(),
-                   shipmentRequest.getCityId()
+                    shipmentRequest.getCityId()
 
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(createdShipment);
-          }
-        catch (IllegalArgumentException e) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-          }
-        catch (Exception e) {
-          logger.severe("Error creating shipment: " + e.getMessage());
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error creating shipment: " + e.getCause().getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            logger.severe("Error creating shipment: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error creating shipment: " + e.getCause().getMessage());
+        }
     }
-}
-    //update
-    @PutMapping("/update/{shipment_id}")
-    public ResponseEntity<?> updateShipment(@PathVariable int shipment_id,@RequestBody ShipmentRequest shipmentRequest ) {
-        logger.info("update a shipment number" + shipment_id);
+
+    // update
+    @PutMapping("/update/{shipmentId}")
+    public ResponseEntity<?> updateShipment(@PathVariable int shipmentId,
+            @RequestBody ShipmentRequest shipmentRequest) {
+        logger.info("update a shipment number" + shipmentId);
 
         try {
             Shipment updatedShipment = shipmentService.updateShipmentById(
                     shipmentRequest.getOrderIds(),
-                    //shipmentRequest.getAdminId(),
-                    shipment_id,
+                    // shipmentRequest.getAdminId(),
+                    shipmentId,
                     shipmentRequest.getVehicleId(),
                     shipmentRequest.getDriverId(),
                     shipmentRequest.getTotalWeight(),
                     shipmentRequest.getShippingDate(),
                     shipmentRequest.getCityId());
             return ResponseEntity.status(HttpStatus.OK).body(updatedShipment);
-          }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-           }
-        catch (Exception e) {
+        } catch (Exception e) {
             logger.severe("Error updating shipment: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error updating shipment: " + e.getCause().getMessage());
         }
     }
 
-
-    @PatchMapping("/{shipment_id}/complete")
-    public ResponseEntity<?>  markShipmentAsComplete (@PathVariable int shipment_id) {
-        logger.info("manually mark a shipment"+ shipment_id+ "as complete ");
-         /*
-        admin authentication
+    @PatchMapping("/{shipmentId}/complete")
+    public ResponseEntity<?> markShipmentAsComplete(@PathVariable int shipmentId) {
+        logger.info("manually mark a shipment" + shipmentId + "as complete ");
+        /*
+         * admin authentication
          */
-        try{
-        Shipment updatedShipment = shipmentService.markShipmentAsComplete(shipment_id);
+        try {
+            Shipment updatedShipment = shipmentService.markShipmentAsComplete(shipmentId);
             if (updatedShipment == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Shipment not found with id: " + shipment_id);
+                        .body("Shipment not found with id: " + shipmentId);
             }
             return ResponseEntity.ok(updatedShipment);
-    }
-         catch (Exception e) {
-        logger.severe("Error marking shipment: " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error: " + e.getMessage());
-    }
-}
-    @PatchMapping("/{shipment_id}/driver/{driver_id}")
-    public ResponseEntity<?>  assignDriverToShipment (@PathVariable int shipment_id, @PathVariable int driver_id) {
-        logger.info("Assign driver:" + driver_id +" to shipment "+ shipment_id );
-         /*
-        admin authentication
-         */
-        try{
-        Shipment  updatedShipment = shipmentService.assignDriverToShipment(shipment_id, driver_id);
-            if (updatedShipment == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("Shipment not found with id: " + shipment_id);
-            }
-            return ResponseEntity.ok(updatedShipment);
+        } catch (Exception e) {
+            logger.severe("Error marking shipment: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
         }
-        catch (Exception e){
-        logger.severe("Error assign driver to  shipment: " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();}
-    }
-    //delete
-    @DeleteMapping("/{shipment_id}")
-    public ResponseEntity<?> deleteShipmentById(@PathVariable int shipment_id) {
-        logger.info("delete a shipment number" + shipment_id);
-         /*
-        admin authentication
-         */
-        try{
-        if (!shipmentService.deleteShipmentById(shipment_id)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("shipment not found");
-        }
-        return ResponseEntity.ok("Shipment deleted successfully");
-    }
-        catch (Exception e){
-        logger.severe("Error deleting shipment: " + e.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();}
     }
 
+    @PatchMapping("/{shipmentId}/driver/{driverId}")
+    public ResponseEntity<?> assignDriverToShipment(@PathVariable int shipmentId, @PathVariable int driverId) {
+        logger.info("Assign driver:" + driverId + " to shipment " + shipmentId);
+        /*
+         * admin authentication
+         */
+        try {
+            Shipment updatedShipment = shipmentService.assignDriverToShipment(shipmentId, driverId);
+            if (updatedShipment == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("Shipment not found with id: " + shipmentId);
+            }
+            return ResponseEntity.ok(updatedShipment);
+        } catch (Exception e) {
+            logger.severe("Error assign driver to  shipment: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    // delete
+    @DeleteMapping("/{shipmentId}")
+    public ResponseEntity<?> deleteShipmentById(@PathVariable int shipmentId) {
+        logger.info("delete a shipment number" + shipmentId);
+        /*
+         * admin authentication
+         */
+        try {
+            if (!shipmentService.deleteShipmentById(shipmentId)) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("shipment not found");
+            }
+            return ResponseEntity.ok("Shipment deleted successfully");
+        } catch (Exception e) {
+            logger.severe("Error deleting shipment: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }

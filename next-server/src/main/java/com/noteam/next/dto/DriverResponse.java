@@ -1,10 +1,10 @@
 package com.noteam.next.dto;
 
 public record DriverResponse(
-		String name,
-		String email,
-		String social_security_number,
-		boolean is_busy,
-		String image,
-		int age) {
+        String name,
+        String email,
+        String socialSecurityNumber,
+        boolean isBusy,
+        String image,
+        int age) {
 }

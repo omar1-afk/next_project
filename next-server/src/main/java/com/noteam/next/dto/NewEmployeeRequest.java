@@ -1,6 +1,6 @@
 package com.noteam.next.dto;
 
-// Register new user 
+// Register new user
 public class NewEmployeeRequest {
     private String name;
     private Integer age;

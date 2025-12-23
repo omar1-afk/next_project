@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping("/api/v1/vehicles")
+@RequestMapping("/api/v1/vehicle")
 public class VehicleController {
 
     private static final Logger logger = Logger.getLogger(VehicleController.class.getName());
@@ -41,13 +41,13 @@ public class VehicleController {
 
             if (available != null) {
                 vehicles = vehicles.stream()
-                        .filter(v -> v.isAvailable() == available)
+                        .filter(v -> v.getIsAvailable() == available)
                         .toList();
             }
 
             if (used != null) {
                 vehicles = vehicles.stream()
-                        .filter(v -> v.isUsed() == used)
+                        .filter(v -> v.getIsUsed() == used)
                         .toList();
             }
 

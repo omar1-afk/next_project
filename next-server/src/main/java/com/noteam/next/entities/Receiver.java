@@ -9,13 +9,12 @@ public class Receiver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // for Auto-increment
-    @Column(name = "receiver_id")
-    private Integer receiverId;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "socialSecurityNumber", nullable = false, unique = true) // Enforces the UNIQUE constraint
+    @Column(name = "social_security_number", nullable = false, unique = true) // Enforces the UNIQUE constraint
     private String socialSecurityNumber;
 
     @Column(name = "phone", nullable = false)
@@ -27,15 +26,15 @@ public class Receiver {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "updatedAt", nullable = false)
+    @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     // Constructor
     public Receiver() {
     }
 
-    public Integer getReceiverId() {
-        return receiverId;
+    public Integer getId() {
+        return id;
     }
 
     // public void setReceiverId(Integer receiverId) { (we don't need to set the

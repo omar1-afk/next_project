@@ -22,7 +22,7 @@ public class Order {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "city_id",nullable = false)
+    @JoinColumn(name = "city_id", nullable = false)
     private City city;
     @Column(nullable = false)
     private String region;
@@ -39,26 +39,30 @@ public class Order {
     @Column(nullable = false)
     private int weight;
     @ManyToOne
-    @JoinColumn(name = "shipment_id",nullable = true)
+    @JoinColumn(name = "shipment_id", nullable = true)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JsonIgnoreProperties("orderList")
     Shipment shipment;
     @ManyToOne
-    @JoinColumn(name="receiver_id",nullable = true)
+    @JoinColumn(name = "receiver_id", nullable = true)
     Receiver receiver;
     @ManyToOne
-    @JoinColumn(name="sender_id",nullable = true)
+    @JoinColumn(name = "sender_id", nullable = true)
     Sender sender;
     @Column(name = "boxes_count")
     int boxesCount;
-    @Column(name = "created_at",updatable = false)
+    @Column(name = "created_at", updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
-    @Column(name = "updated_at",nullable = false)
+    @Column(name = "updated_at", nullable = false)
     @LastModifiedDate
     private LocalDateTime updatedAt;
-    public Order(){}
-    public Order( City city, String region, String address, boolean flameable, boolean breakable, int price, State state, int weight, Shipment shipment, Receiver receiver, Sender sender, int boxesCount) {
+
+    public Order() {
+    }
+
+    public Order(City city, String region, String address, boolean flameable, boolean breakable, int price, State state,
+            int weight, Shipment shipment, Receiver receiver, Sender sender, int boxesCount) {
         this.city = city;
         this.region = region;
         this.address = address;
@@ -73,11 +77,10 @@ public class Order {
         this.boxesCount = boxesCount;
     }
 
-
-
     public Integer getId() {
         return id;
     }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -85,6 +88,7 @@ public class Order {
     public City getCity() {
         return city;
     }
+
     public void setCity(City city) {
         this.city = city;
     }
@@ -92,6 +96,7 @@ public class Order {
     public String getRegion() {
         return region;
     }
+
     public void setRegion(String region) {
         this.region = region;
     }
@@ -99,6 +104,7 @@ public class Order {
     public String getAddress() {
         return address;
     }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -106,6 +112,7 @@ public class Order {
     public boolean isFlameable() {
         return flameable;
     }
+
     public void setFlameable(boolean flameable) {
         this.flameable = flameable;
     }
@@ -113,6 +120,7 @@ public class Order {
     public boolean isBreakable() {
         return breakable;
     }
+
     public void setBreakable(boolean breakable) {
         this.breakable = breakable;
     }
@@ -120,6 +128,7 @@ public class Order {
     public int getPrice() {
         return price;
     }
+
     public void setPrice(int price) {
         this.price = price;
     }
@@ -127,6 +136,7 @@ public class Order {
     public State getState() {
         return state;
     }
+
     public void setState(State state) {
         this.state = state;
     }
@@ -134,6 +144,7 @@ public class Order {
     public int getWeight() {
         return weight;
     }
+
     public void setWeight(int weight) {
         this.weight = weight;
     }
@@ -141,6 +152,7 @@ public class Order {
     public Receiver getReceiver() {
         return receiver;
     }
+
     public void setReceiver(Receiver receiver) {
         this.receiver = receiver;
     }
@@ -148,12 +160,18 @@ public class Order {
     public Sender getSender() {
         return sender;
     }
+
     public void setSender(Sender sender) {
         this.sender = sender;
     }
 
-    public int getBoxesCount() { return boxesCount; }
-    public void setBoxesCount(int boxesCount) { this.boxesCount = boxesCount; }
+    public int getBoxesCount() {
+        return boxesCount;
+    }
+
+    public void setBoxesCount(int boxesCount) {
+        this.boxesCount = boxesCount;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

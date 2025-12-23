@@ -12,17 +12,17 @@ import java.util.logging.Logger;
 public class AdminServices {
     @Autowired
     private AdminRepository adminRepository;
-    private  static final Logger logger = Logger.getLogger(DriverService.class.getName());
+    private static final Logger logger = Logger.getLogger(DriverService.class.getName());
 
     // get
-    public Optional<Admin> getAdminById(int admin_id){
-        logger.info("Getting the Admin by id: " + admin_id);
-        return adminRepository.findById(admin_id);
+    public Optional<Admin> getAdminById(int adminId) {
+        logger.info("Getting the Admin by id: " + adminId);
+        return adminRepository.findById(adminId);
     }
-    public Optional<Admin> getAdminByEmail(String email){
+
+    public Optional<Admin> getAdminByEmail(String email) {
         logger.info("Getting the Admin by email: " + email);
         return adminRepository.findByEmail(email);
     }
-
 
 }

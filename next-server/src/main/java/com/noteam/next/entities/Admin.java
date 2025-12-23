@@ -15,7 +15,7 @@ import com.noteam.next.roles.Authorities;
 public class Admin implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer admin_id = Integer.valueOf(0);
+    private Integer id = Integer.valueOf(0);
 
     @Column(name = "name", nullable = false)
     private String name = "mm";
@@ -27,7 +27,7 @@ public class Admin implements User {
     private String image = "I";
 
     @Column(name = "social_security_number", nullable = false)
-    private String social_security_number = "S";
+    private String socialSecurityNumber = "S";
 
     @Column(name = "email", nullable = false)
     private String email = ".COM";
@@ -36,10 +36,10 @@ public class Admin implements User {
     private String password = "Password";
 
     @Column(nullable = false, name = "created_at")
-    private LocalDateTime created_at = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
-    private LocalDateTime updated_at = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
     // public Integer getAdmin_id() {
     // return id;
@@ -75,12 +75,12 @@ public class Admin implements User {
         this.image = image;
     }
 
-    public String getSocial_security_number() {
-        return social_security_number;
+    public String getSocialSecurityNumber() {
+        return socialSecurityNumber;
     }
 
-    public void setSocial_security_number(String social_security_number) {
-        this.social_security_number = social_security_number;
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
+        this.socialSecurityNumber = socialSecurityNumber;
     }
 
     public String getEmail() {
@@ -99,20 +99,20 @@ public class Admin implements User {
         this.password = password;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreated_at(LocalDateTime created_at) {
-        this.created_at = created_at;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getUpdated_at() {
-        return updated_at;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(LocalDateTime updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     public String getUsername() {
@@ -120,7 +120,7 @@ public class Admin implements User {
     }
 
     public Integer getId() {
-        return admin_id;
+        return id;
     }
 
     @Override
