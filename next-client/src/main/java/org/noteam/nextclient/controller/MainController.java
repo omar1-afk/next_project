@@ -223,6 +223,7 @@ public class MainController implements Initializable {
                     getClass().getResource("/org/noteam/nextclient/scene/shipments-view.fxml"));
             Parent root = loader.load();
             ShipmentController shipmentController = loader.getController();
+//            shipmentController.setAdminController();
             viewPane.getChildren().removeAll();
             viewPane.getChildren().add(root);
         } catch (IOException e) {

@@ -11,5 +11,5 @@ public class AdminController {
     public Admin getAdmin() {
         return admin;
     }
-    public void setAdmin(Admin admin) {}
+//    public void setAdmin(Admin admin) {}
 }

@@ -25,6 +25,10 @@ import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.State;
+import org.noteam.nextclient.models.City;
+import org.noteam.nextclient.models.Country;
+import org.noteam.nextclient.models.Receiver;
+import org.noteam.nextclient.models.Sender;
 import org.noteam.nextclient.scene.DataEntryWindow;
 import org.noteam.nextclient.utils.ApiUtil;
 import org.noteam.nextclient.utils.SqlUtil;
@@ -94,38 +98,7 @@ public class OrderController implements Initializable {
 //        );
         setOrderTableView(SqlUtil.getOrders(null,null,"All"));
     }
-  public static boolean createOrder(Order order) {
-    HttpURLConnection connection = null;
-    try {
-      Gson gson = new Gson();
-      JsonObject json = new JsonObject();
-      json.addProperty(SqlUtil.JsonFieldConstants.ADDRESS, order.address());
-      json.addProperty(SqlUtil.JsonFieldConstants.REGION, order.region());
-      json.addProperty(SqlUtil.JsonFieldConstants.FLAMABLE, order.flameable());
-      json.addProperty(SqlUtil.JsonFieldConstants.BREAKABLE, order.breakable());
-      json.addProperty(SqlUtil.JsonFieldConstants.ORDER_PRICE, order.price());
-      json.addProperty(SqlUtil.JsonFieldConstants.ORDER_WEIGHT, order.weight());
-      json.addProperty(SqlUtil.JsonFieldConstants.STATE, order.state().toString());
-      json.addProperty(SqlUtil.JsonFieldConstants.SHIPMENT_ID,order.shipment());
-      json.addProperty(SqlUtil.JsonFieldConstants.SENDER_ID,order.sender());
-      json.addProperty(SqlUtil.JsonFieldConstants.RECEIVER_ID,order.receiver());;
-      connection = ApiUtil.fetchApi(
-        "/api/v1/order", ApiUtil.RequestMethod.POST, json
-      );
-      if (connection.getResponseCode() != 200) {
-        // System.out.println("Error creating a shipment" + connection.getResponseCode());
-        return false;
-      }
-      return true;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return false;
-    } finally {
-      if (connection != null) {
-        connection.disconnect();
-      }
-    }
-  }
+
     public void setOrderTableView(List<Order> orderList){
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
         weightCol.setCellValueFactory(new PropertyValueFactory<>("Weight"));
@@ -448,9 +421,27 @@ public class OrderController implements Initializable {
           currentStage.close();
         }
         public void  onCreateOrderBtn(){
+          Sender sender = new Sender(null,senderNameFeild.getText(),senderScnFeild.getText(),senderPhoneFeild.getText(),crnFeild.getText(),senderEmailFeild.getText());
+          SqlUtil.createSender(sender);
+          Receiver receiver = new Receiver(null,receiverNameFeild.getText(),senderScnFeild.getText(),senderPhoneFeild.getText(),senderEmailFeild.getText());
+          SqlUtil.createSender(sender);
+          SqlUtil.createReceiver(receiver);
+          List<Country>countries=SqlUtil.getAllCountries();
+          Country country = countries.getFirst();
 
-//          Order newOrder = new org.noteam.nextclient.models.Order(null,boxesNumberFeild.getText(),weightFeild.getText(),priceFeild.getText(),isBreakable.isSelected(),isFlammable.isSelected()
-//                              ,addressFeild.getText(),city,country,receiver,sender,null);
+
+          Order newOrder = new Order(0,country.getCities().get(3).getName()
+            ,3
+            ,regionFeild.getText()
+            ,addressFeild.getText()
+            ,isFlammable.isSelected()
+            ,isBreakable.isSelected()
+            ,Integer.parseInt(priceFeild.getText())
+            ,State.PICKED
+            ,Integer.parseInt(weightFeild.getText())
+            ,0,
+            receiver.getEmail()
+            ,sender.getEmail(),Integer.parseInt(boxesNumberFeild.getText()),LocalDate.now());
        }
     }
 

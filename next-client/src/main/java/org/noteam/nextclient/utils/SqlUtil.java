@@ -545,7 +545,7 @@ public class SqlUtil {
     }
 
     public static boolean updateDriver(int id, String name, int age, String email, String password, String ssn) {
-        com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        JsonObject json = new JsonObject();
         json.addProperty("name", name);
         json.addProperty("age", age);
         json.addProperty("email", email);
@@ -554,18 +554,18 @@ public class SqlUtil {
         json.addProperty("image", ""); // Pass empty or current image string
         json.addProperty("isBusy", false);
 
-        java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver/" + id, ApiUtil.RequestMethod.PUT,
+        HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver/" + id, ApiUtil.RequestMethod.PUT,
                 json);
         try {
             return connection != null && connection.getResponseCode() == 200;
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
     }
 
     public static boolean createNewDriver(String name, int age, String email, String password, String ssn) {
-        com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        JsonObject json = new JsonObject();
         json.addProperty("name", name);
         json.addProperty("age", age);
         json.addProperty("email", email);
@@ -575,10 +575,10 @@ public class SqlUtil {
         json.addProperty("isBusy", false);
 
         // @PostMapping: /api/v1/driver
-        java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver", ApiUtil.RequestMethod.POST, json);
+        HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/driver", ApiUtil.RequestMethod.POST, json);
         try {
             return connection != null && connection.getResponseCode() == 200;
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -586,7 +586,7 @@ public class SqlUtil {
 
     // Create a New Vehicle -----------
     public static boolean createVehicle(String plate, int weight, String type) {
-        com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        JsonObject json = new JsonObject();
         // Use "licensePlate" and "weightLimit" to match your Server Entity
         json.addProperty("licensePlate", plate);
         json.addProperty("weightLimit", weight);
@@ -595,10 +595,10 @@ public class SqlUtil {
         json.addProperty("isUsed", false);
 
         // POST /api/v1/vehicle
-        java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicle", ApiUtil.RequestMethod.POST, json);
+        HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicle", ApiUtil.RequestMethod.POST, json);
         try {
             return connection != null && (connection.getResponseCode() == 200 || connection.getResponseCode() == 201);
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -606,17 +606,17 @@ public class SqlUtil {
 
     // Update an Existing Vehicle -------------
     public static boolean updateVehicle(int id, String plate, int weight, String type) {
-        com.google.gson.JsonObject json = new com.google.gson.JsonObject();
+        JsonObject json = new JsonObject();
         json.addProperty("licensePlate", plate);
         json.addProperty("weightLimit", weight);
         json.addProperty("type", type.toUpperCase());
 
         // PUT /api/v1/vehicle/{id}
-        java.net.HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicle/" + id, ApiUtil.RequestMethod.PUT,
+        HttpURLConnection connection = ApiUtil.fetchApi("/api/v1/vehicle/" + id, ApiUtil.RequestMethod.PUT,
                 json);
         try {
             return connection != null && connection.getResponseCode() == 200;
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
@@ -701,15 +701,15 @@ public class SqlUtil {
                     cityId = city.get("id").getAsInt();
                     cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
                 }
-                int receiverId = 0;
+                String receiverEmail = null;
                 if (!jsonObject.get("receiver").getAsJsonObject().isJsonNull()) {
                     JsonObject receiver = jsonObject.get("receiver").getAsJsonObject();
-                    receiverId = receiver.get(JsonFieldConstants.ID).getAsInt();
+                    receiverEmail = receiver.get("email").getAsString();
                 }
-                int senderId = 0;
+                String senderEmail =null;
                 if (!jsonObject.get("sender").getAsJsonObject().isJsonNull()) {
                     JsonObject sender = jsonObject.get("sender").getAsJsonObject();
-                    senderId = sender.get(JsonFieldConstants.ID).getAsInt();
+                    senderEmail = sender.get("email").getAsString();
                 }
                 String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
                 String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
@@ -729,8 +729,8 @@ public class SqlUtil {
                         orderState,
                         orderWeight,
                         shipmentId,
-                        receiverId,
-                        senderId,
+                        receiverEmail,
+                        senderEmail,
                         box,
                         LocalDate.now());
                 orders.add(order);
@@ -810,4 +810,65 @@ public class SqlUtil {
             }
         }
     }
+  public static boolean createSender(Sender sender) {
+    HttpURLConnection connection = null;
+    try {
+      Gson gson = new Gson();
+      JsonObject json = new JsonObject();
+      json.addProperty(JsonFieldConstants.ID, sender.getSenderId());
+      json.addProperty(JsonFieldConstants.DRIVER_NAME, sender.getName());
+      json.addProperty("email", sender.getEmail());
+      json.addProperty("phone", sender.getPhone());
+      json.addProperty("socialSecurityNumber", sender.getSocialSecurityNumber());
+      json.addProperty("commercialRegisterNumber",sender.getCommercialRegisterNumber());
+      connection = ApiUtil.fetchApi(
+        "/api/v1/sender", ApiUtil.RequestMethod.POST, json);
+      if (connection.getResponseCode() != 200) {
+        // System.out.println("Error creating a shipment" +
+        // connection.getResponseCode());
+        return false;
+      }
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
+  }
+
+  public static boolean createNewOrder(Order order) {
+    HttpURLConnection connection = null;
+    try {
+      Gson gson = new Gson();
+      JsonObject json = new JsonObject();
+      json.addProperty(JsonFieldConstants.ADDRESS, order.address());
+      json.addProperty(JsonFieldConstants.REGION, order.region());
+      json.addProperty(JsonFieldConstants.FLAMABLE, order.flameable());
+      json.addProperty(JsonFieldConstants.BREAKABLE, order.breakable());
+      json.addProperty(JsonFieldConstants.ORDER_PRICE, order.price());
+      json.addProperty(JsonFieldConstants.ORDER_WEIGHT, order.weight());
+      json.addProperty(JsonFieldConstants.STATE, order.state().toString());
+      json.addProperty(JsonFieldConstants.SHIPMENT_ID,order.shipment());
+      json.addProperty("receiverEmail",order.receiverEmail());
+      json.addProperty("senderEmail" ,order.senderEmail());;
+      connection = ApiUtil.fetchApi(
+        "/api/v1/order", ApiUtil.RequestMethod.POST, json
+      );
+      if (connection.getResponseCode() != 200) {
+        // System.out.println("Error creating a shipment" + connection.getResponseCode());
+        return false;
+      }
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
+  }
 }

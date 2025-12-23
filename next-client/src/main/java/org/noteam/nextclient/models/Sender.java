@@ -11,11 +11,18 @@ public class Sender {
 
   private String phone;
 
-  private String commercial_register_number;
+  private String commercialRegisterNumber;
 
   private String email;
 
-
+  public Sender(Integer senderId, String name, String socialSecurityNumber, String phone, String commercialRegisterNumber, String email) {
+    this.senderId = senderId;
+    this.name = name;
+    this.socialSecurityNumber = socialSecurityNumber;
+    this.phone = phone;
+    this.commercialRegisterNumber = commercialRegisterNumber;
+    this.email = email;
+  }
 
   public Integer getSenderId() {
     return senderId;
@@ -50,12 +57,12 @@ public class Sender {
     this.phone = phone;
   }
 
-  public String getCommercial_register_number() {
-    return commercial_register_number;
+  public String getCommercialRegisterNumber() {
+    return commercialRegisterNumber;
   }
 
-  public void setCommercial_register_number(String commercial_register_number) {
-    this.commercial_register_number = commercial_register_number;
+  public void setCommercialRegisterNumber(String commercialRegisterNumber) {
+    this.commercialRegisterNumber = commercialRegisterNumber;
   }
 
   public String getEmail() {

@@ -33,16 +33,16 @@ public class OrderService {
     //Create new order
     public boolean createOrder(OrderRequest request) {
         Optional<City> cityOptional= cityRepository.findById(request.cityId());
-        Optional<Sender> senderOptional= senderRepository.findById(request.senderId());
-        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiverId());
+        Sender sender= senderRepository.findAllByEmail(request.senderEmail()).getFirst() ;
+        Receiver receiver= receiverRepository.findAllByEmail(request.receiverEmail()).getFirst();
         if (cityOptional.isEmpty() ) {
             log.severe("City id " + request.cityId() + " does not exist");
         }
-        if (senderOptional.isEmpty() ) {
-            log.severe("Sender id " + request.senderId() + " does not exist");
+        if (sender==null ) {
+            log.severe("Sender email " + request.senderEmail() + " does not exist");
         }
-        if (receiverOptional.isEmpty() ) {
-            log.severe("Receiver id " + request.receiverId() + " does not exist");
+        if (receiver==null ) {
+            log.severe("Receiver email" + request.senderEmail() + " does not exist");
         }
         int maxWeight = 250;
         if (request.weight() > maxWeight) {
@@ -51,8 +51,6 @@ public class OrderService {
         } else {
             log.info("Order service: Creating new order...");
             City city = cityOptional.get();
-            Sender sender = senderOptional.get();
-            Receiver receiver = receiverOptional.get();
             Order newOrder = new Order(city, request.region()
                     , request.address(), request.flameable(), request.breakable()
                     , request.price(), request.state(), request.weight()
@@ -100,57 +98,57 @@ public class OrderService {
     }
     //-------------------------------------------------------------------------------------------------------
     //update order
-    public int updateOrderById(int id,OrderRequest request) {
-        Optional<City> cityOptional= cityRepository.findById(request.cityId());
-        Optional<Sender> senderOptional= senderRepository.findById(request.senderId());
-        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiverId());
-        Optional <Shipment> shipmentOptional = shipmentRepository.findById(id);
-        int maxWeight = 250;
-        Optional<Order> orderOptional= getOrderById(id);
-        if(orderOptional.isEmpty()){
-            log.info("Order service: The Order with id: "+id+" is not found!");
-            return -1;
-        }
-        if(senderOptional.isEmpty()){
-            log.info("Order service: The Sender with id: "+id+" is not found!");
-        }
-        if(receiverOptional.isEmpty()){
-            log.info("Order service: The Receiver with id: "+id+" is not found!");
-        }
-        if(cityOptional.isEmpty()){
-            log.info("Order service: The City with id: "+id+" is not found!");
-        }
-        if (shipmentOptional.isEmpty()){
-            log.info("Order service: The Shipment with id: "+id+" is not found!");
-        }
-        else if (request.weight() > maxWeight) {
-            log.info("Order service: Error: Invalid weight (more than " + maxWeight + ")!");
-            return 0;
-        } else {
-            log.info("Order service: Updating the order with id: "+id);
-            City city = cityOptional.get();
-            Sender sender = senderOptional.get();
-            Receiver receiver = receiverOptional.get();
-            Order order = orderOptional.get();
-            Shipment shipment = shipmentOptional.get();
-            order.setCity(city);
-            order.setRegion(request.region());
-            order.setAddress(request.address());
-            order.setFlameable(request.flameable());
-            order.setBreakable(request.breakable());
-            order.setPrice(request.price());
-            order.setState(request.state());
-            order.setWeight(request.weight());
-            order.setBoxesCount(request.boxesCount());
-            order.setReceiver(receiver);
-            order.setSender(sender);
-            order.setShipment(shipment);
-
-            orderRepository.save(order);
-            return 1;
-        }
-        return 0;
-    }
+//    public int updateOrderById(int id,OrderRequest request) {
+//        Optional<City> cityOptional= cityRepository.findById(request.cityId());
+//        Optional<Sender> senderOptional= senderRepository.findById(request.senderId());
+//        Optional<Receiver> receiverOptional= receiverRepository.findById(request.receiverId());
+//        Optional <Shipment> shipmentOptional = shipmentRepository.findById(id);
+//        int maxWeight = 250;
+//        Optional<Order> orderOptional= getOrderById(id);
+//        if(orderOptional.isEmpty()){
+//            log.info("Order service: The Order with id: "+id+" is not found!");
+//            return -1;
+//        }
+//        if(senderOptional.isEmpty()){
+//            log.info("Order service: The Sender with id: "+id+" is not found!");
+//        }
+//        if(receiverOptional.isEmpty()){
+//            log.info("Order service: The Receiver with id: "+id+" is not found!");
+//        }
+//        if(cityOptional.isEmpty()){
+//            log.info("Order service: The City with id: "+id+" is not found!");
+//        }
+//        if (shipmentOptional.isEmpty()){
+//            log.info("Order service: The Shipment with id: "+id+" is not found!");
+//        }
+//        else if (request.weight() > maxWeight) {
+//            log.info("Order service: Error: Invalid weight (more than " + maxWeight + ")!");
+//            return 0;
+//        } else {
+//            log.info("Order service: Updating the order with id: "+id);
+//            City city = cityOptional.get();
+//            Sender sender = senderOptional.get();
+//            Receiver receiver = receiverOptional.get();
+//            Order order = orderOptional.get();
+//            Shipment shipment = shipmentOptional.get();
+//            order.setCity(city);
+//            order.setRegion(request.region());
+//            order.setAddress(request.address());
+//            order.setFlameable(request.flameable());
+//            order.setBreakable(request.breakable());
+//            order.setPrice(request.price());
+//            order.setState(request.state());
+//            order.setWeight(request.weight());
+//            order.setBoxesCount(request.boxesCount());
+//            order.setReceiver(receiver);
+//            order.setSender(sender);
+//            order.setShipment(shipment);
+//
+//            orderRepository.save(order);
+//            return 1;
+//        }
+//        return 0;
+//    }
     //----------------------------------------------------------------------------------------------------------
     //delete order
     public boolean deleteOrderById(int id){

@@ -18,6 +18,14 @@ public class Receiver {
   public Receiver() {
   }
 
+  public Receiver(Integer receiverId, String name, String socialSecurityNumber, String phone, String email) {
+    this.receiverId = receiverId;
+    this.name = name;
+    this.socialSecurityNumber = socialSecurityNumber;
+    this.phone = phone;
+    this.email = email;
+  }
+
   public Integer getReceiverId() {
     return receiverId;
   }
