@@ -75,6 +75,7 @@ public class LoginController {
             try {
                 HttpURLConnection con = ApiUtil.fetchApi("/api/v1/login",
                         ApiUtil.RequestMethod.POST, data);
+                if(con==null)return;
                 if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
                     String body = ApiUtil.readResponse(con);
                     Gson gson = new Gson();

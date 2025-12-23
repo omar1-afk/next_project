@@ -1,13 +1,13 @@
 package org.noteam.nextclient.utils;
 
 import com.google.gson.*;
+import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.OrderTable;
 import org.noteam.nextclient.dto.State;
 import org.noteam.nextclient.dto.shipment.ShipmentCreateDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentDisplayDTO;
 import org.noteam.nextclient.dto.shipment.ShipmentUpdateDTO;
 import org.noteam.nextclient.models.*;
-import org.noteam.nextclient.models.Driver;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -29,13 +29,13 @@ public class SqlUtil {
       public static final String ORDER_WEIGHT = "weight";
       public static final String ORDER_PRICE = "price";
       public static final String CITY  = "city";
-      public static final String CITY_ID = "id";
+      public static final String CITY_ID = "city_id";
       public static final String CITY_NAME = "name";
       public static final String COUNTRY  = "country";
       public static final String COUNTRY_ID = "id";
       public static final String COUNTRY_NAME = "name";
       public static final String VEHICLE= "vehicle";
-      public static final String VEHICLE_ID = "vehicleId";
+      public static final String VEHICLE_ID = "vehicle_id";
       public static final String DRIVER_ID = "driver_id";
       public static final String DRIVER_NAME = "name";
       public static final String DRIVER= "driver";
@@ -44,20 +44,21 @@ public class SqlUtil {
       public static final String REGION="region";
       public static final String BREAKABLE = "breakable";
       public static final String DRIVER_EMAIL = "email";
-      public static final String FLAMABLE = "flamable";
+      public static final String FLAMABLE = "flameable";
       public static final String STATE =  "state";
       public static final String DRIVER_AGE = "age";
       public static final String DRIVER_SSN = "social_security_number";
       public static final String ADDRESS = "address";
       public static final String DRIVER_IS_BUSY = "isbusy";
       public static final String SENDER_ID = "senderId";
-      public static final String RECEIVER_ID = "receiver_id";
-      public static final String  BOX_COUNT="boxCount";
+      public static final String RECEIVER_ID = "receiverId";
+      public static final String  BOX_COUNT="boxesCount";
       public static final String V_LICENSE_PLATE = "licensePlate";
       public static final String V_WEIGHT_LIMIT = "weightLimit";
       public static final String V_IS_AVAILABLE = "available";
       public static final String V_IS_USED = "used";
       public static final String V_TYPE = "type";
+
 
     }
 
@@ -168,8 +169,11 @@ public class SqlUtil {
                         ordersIds.add(orderId);
                     }
                 }
-                JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN).getAsJsonObject();
-                int adminId = adminObject.get(JsonFieldConstants.ADMIN_ID).getAsInt();
+              int adminId = 0;
+              if(shipmentObject.get(JsonFieldConstants.ADMIN_ID)!=null){
+                JsonObject adminObject = shipmentObject.get(JsonFieldConstants.ADMIN_ID).getAsJsonObject();
+                adminId = adminObject.get(JsonFieldConstants.ADMIN_ID).getAsInt();
+              }
                 int totalWeight = shipmentObject.get(JsonFieldConstants.TOTAL_WEIGHT).getAsInt();
                 String shippingDate = shipmentObject.get(JsonFieldConstants.SHIPPING_DATE).getAsString();
                 Country country = new Country(countryId, countryName);
@@ -434,7 +438,7 @@ public class SqlUtil {
             json.addProperty(JsonFieldConstants.TOTAL_WEIGHT, updateDTO.getTotalWeight());
 
             connection = ApiUtil.fetchApi(
-                    "/api/v1/shipment/update" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
+                    "/api/v1/shipment/update/" + updateDTO.getShipmentId(), ApiUtil.RequestMethod.PUT, json);
             if (connection.getResponseCode() != 200) {
                 // System.out.println("Error updating shipment" + connection.getResponseCode());
                 return false;
@@ -681,22 +685,51 @@ public class SqlUtil {
         int orderId = jsonObject.get(JsonFieldConstants.ORDER_ID).getAsInt();
         int orderWeight = jsonObject.get(JsonFieldConstants.ORDER_WEIGHT).getAsInt();
         int orderPrice = jsonObject.get(JsonFieldConstants.ORDER_PRICE).getAsInt();
+        int shipmentId=0;
+        if (jsonObject.get("shipment").getAsJsonObject().isJsonNull()){
         JsonObject shipment=jsonObject.get("shipment").getAsJsonObject();
-        int shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
-        JsonObject city=jsonObject.get("city").getAsJsonObject();
-        int cityId = city.get(JsonFieldConstants.CITY_ID).getAsInt();
-        String cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
+        shipmentId = shipment.get(JsonFieldConstants.SHIPMENT_ID).getAsInt();
+        }
+        int cityId=0;
+        String cityName=null;
+        if (!jsonObject.get("city").getAsJsonObject().isJsonNull()){
+          JsonObject city = jsonObject.get("city").getAsJsonObject();
+           cityId = city.get("id").getAsInt();
+           cityName = city.get(JsonFieldConstants.CITY_NAME).getAsString();
+        }
+        int receiverId=0;
+        if (!jsonObject.get("receiver").getAsJsonObject().isJsonNull()){
         JsonObject receiver=jsonObject.get("receiver").getAsJsonObject();
-        int receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
-        JsonObject sender=jsonObject.get("sender").getAsJsonObject();
-        int senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+            receiverId = receiver.get(JsonFieldConstants.RECEIVER_ID).getAsInt();
+        }
+        int senderId=0;
+        if (!jsonObject.get("sender").getAsJsonObject().isJsonNull()){
+          JsonObject sender = jsonObject.get("sender").getAsJsonObject();
+          senderId = sender.get(JsonFieldConstants.SENDER_ID).getAsInt();
+        }
         String region = jsonObject.get(JsonFieldConstants.REGION).getAsString();
         String address = jsonObject.get(JsonFieldConstants.ADDRESS).getAsString();
         State orderState = State.valueOf(jsonObject.get(JsonFieldConstants.STATE).getAsString());
         int box= jsonObject.get(JsonFieldConstants.BOX_COUNT).getAsInt();
         boolean flamable= jsonObject.get(JsonFieldConstants.FLAMABLE).getAsBoolean();
         boolean breakable= jsonObject.get(JsonFieldConstants.BREAKABLE).getAsBoolean();
-        Order order= new Order(orderId,cityName,cityId,region,address,flamable,breakable,orderPrice,orderState,orderWeight,shipmentId,receiverId,senderId,box,LocalDate.now());
+        Order order= new Order(
+          orderId,
+          cityName,
+          cityId,
+          region,
+          address,
+          flamable,
+          breakable,
+          orderPrice,
+          orderState,
+          orderWeight,
+          shipmentId,
+          receiverId,
+          senderId,
+          box,
+          LocalDate.now()
+        );
         orders.add(order);
       }
       return orders;

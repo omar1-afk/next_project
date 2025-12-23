@@ -22,14 +22,14 @@ public class ShipmentController {
 
     private static final Logger logger = Logger.getLogger(ShipmentController.class.getName());
     public static class ShipmentRequest {
-        private int shipmentId;
+        private int shipment_id;
         private List<Integer> orderIds;
-        private int adminId;
-        private int vehicleId;
-        private int driverId;
-        private double totalWeight;
-        private LocalDate shippingDate;
-        private int cityId;
+        private int admin_id;
+        private int vehicle_id;
+        private int driver_id;
+        private double total_weight;
+        private LocalDate shipping_date;
+        private int city_id;
 
 
         // Getters and setters

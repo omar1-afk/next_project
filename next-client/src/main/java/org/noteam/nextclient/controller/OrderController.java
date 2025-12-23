@@ -397,8 +397,9 @@ public class OrderController implements Initializable {
         public BorderPane getOrderDetailsPopup() {
             return orderDetailsPopup;
         }
-        public void onCancelOrderBtnClick(){
-
+        public void onCancelOrderBtnClick(MouseEvent event){
+          Stage currentStage=(Stage)((Node)event.getSource()).getScene().getWindow();
+          currentStage.close();
         }
         public void  onCreateOrderBtn(){
 

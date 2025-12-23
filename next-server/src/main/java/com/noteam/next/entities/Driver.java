@@ -15,7 +15,7 @@ import com.noteam.next.roles.Authorities;
 public class Driver implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer driver_id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -45,7 +45,7 @@ public class Driver implements User {
     private LocalDateTime updated_at;
 
     public Integer getDriver_id() {
-        return id;
+        return driver_id;
     }
 
     // public void setDriver_id(Integer driver_id) { (we don't need to set the
@@ -130,7 +130,7 @@ public class Driver implements User {
     }
 
     public Integer getId() {
-        return id;
+        return driver_id;
     }
 
     @Override

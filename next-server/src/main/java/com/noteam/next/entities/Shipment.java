@@ -45,7 +45,7 @@ public class Shipment {
     @ManyToOne
     @JoinColumn(name="city_id")
     private City city;
-    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shipment", cascade = CascadeType.ALL)
     private List<Order> orderList;
 
 
