@@ -61,7 +61,7 @@ public class DriverService {
         driver.setSocial_security_number(social_security_number);
         driver.setEmail(email);
         driver.setPassword(authService.hashPassword(password));
-        driver.setIsbusy(false);
+        driver.setIsBusy(false);
         driver.setCreated_at(LocalDateTime.now());
         driver.setUpdated_at(LocalDateTime.now());
         return driverRepository.save(driver);
@@ -82,7 +82,7 @@ public class DriverService {
             driver.setSocial_security_number(social_security_number);
             driver.setEmail(email);
             driver.setPassword(password);
-            driver.setIsbusy(false);
+            driver.setIsBusy(false);
             driver.setUpdated_at(LocalDateTime.now());
             driverRepository.save(driver);
             return 1;

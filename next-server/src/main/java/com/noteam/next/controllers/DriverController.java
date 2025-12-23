@@ -99,7 +99,7 @@ public class DriverController {
                     newDriver.getName(),
                     newDriver.getEmail(),
                     newDriver.getSocial_security_number(),
-                    newDriver.getIsbusy(),
+                    newDriver.getIsBusy(),
                     newDriver.getImage(),
                     newDriver.getAge());
             return ResponseEntity.status(HttpStatus.OK).body(body);
@@ -120,7 +120,7 @@ public class DriverController {
                 driver.getPassword(),
                 driver.getSocial_security_number(),
                 driver.getImage(),
-                driver.getIsbusy());
+                driver.getIsBusy());
         if (result == 0) {
             return ResponseEntity.notFound().build();
         } else {
