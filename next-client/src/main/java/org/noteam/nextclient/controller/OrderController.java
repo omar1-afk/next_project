@@ -1,5 +1,7 @@
 package org.noteam.nextclient.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -24,9 +26,11 @@ import javafx.stage.Stage;
 import org.noteam.nextclient.dto.Order;
 import org.noteam.nextclient.dto.State;
 import org.noteam.nextclient.scene.DataEntryWindow;
+import org.noteam.nextclient.utils.ApiUtil;
 import org.noteam.nextclient.utils.SqlUtil;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -90,6 +94,38 @@ public class OrderController implements Initializable {
 //        );
         setOrderTableView(SqlUtil.getOrders(null,null,"All"));
     }
+  public static boolean createOrder(Order order) {
+    HttpURLConnection connection = null;
+    try {
+      Gson gson = new Gson();
+      JsonObject json = new JsonObject();
+      json.addProperty(SqlUtil.JsonFieldConstants.ADDRESS, order.address());
+      json.addProperty(SqlUtil.JsonFieldConstants.REGION, order.region());
+      json.addProperty(SqlUtil.JsonFieldConstants.FLAMABLE, order.flameable());
+      json.addProperty(SqlUtil.JsonFieldConstants.BREAKABLE, order.breakable());
+      json.addProperty(SqlUtil.JsonFieldConstants.ORDER_PRICE, order.price());
+      json.addProperty(SqlUtil.JsonFieldConstants.ORDER_WEIGHT, order.weight());
+      json.addProperty(SqlUtil.JsonFieldConstants.STATE, order.state().toString());
+      json.addProperty(SqlUtil.JsonFieldConstants.SHIPMENT_ID,order.shipment());
+      json.addProperty(SqlUtil.JsonFieldConstants.SENDER_ID,order.sender());
+      json.addProperty(SqlUtil.JsonFieldConstants.RECEIVER_ID,order.receiver());;
+      connection = ApiUtil.fetchApi(
+        "/api/v1/order", ApiUtil.RequestMethod.POST, json
+      );
+      if (connection.getResponseCode() != 200) {
+        // System.out.println("Error creating a shipment" + connection.getResponseCode());
+        return false;
+      }
+      return true;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return false;
+    } finally {
+      if (connection != null) {
+        connection.disconnect();
+      }
+    }
+  }
     public void setOrderTableView(List<Order> orderList){
         orderIdCol.setCellValueFactory(new PropertyValueFactory<>("OrderID"));
         weightCol.setCellValueFactory(new PropertyValueFactory<>("Weight"));
@@ -126,6 +162,7 @@ public class OrderController implements Initializable {
         cerateOrderIcon.setFill(Color.WHITE);
 //        syncOrderBtn.setStyle("-fx-background-color: #F1F1F1; -fx-background-radius: 8px; -fx-font-weight: bold;");
     }
+
     @FXML
     public void onSyncOrderBtnCLick(){
       orderTable.getItems().clear();
@@ -362,7 +399,11 @@ public class OrderController implements Initializable {
         @FXML
         TextField countryFeild;
         @FXML
+        ContextMenu countryMenu;
+        @FXML
         TextField cityFeild;
+        @FXML
+        ContextMenu cityMenu;
         @FXML
         TextField regionFeild;
         @FXML
@@ -408,7 +449,9 @@ public class OrderController implements Initializable {
         }
         public void  onCreateOrderBtn(){
 
-        }
+//          Order newOrder = new org.noteam.nextclient.models.Order(null,boxesNumberFeild.getText(),weightFeild.getText(),priceFeild.getText(),isBreakable.isSelected(),isFlammable.isSelected()
+//                              ,addressFeild.getText(),city,country,receiver,sender,null);
+       }
     }
 
 }
