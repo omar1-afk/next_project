@@ -67,24 +67,23 @@ public class DriverService {
         return driverRepository.save(driver);
     }
 
-    public int updatedriver(int driver_id, String name, int age, String image, String social_security_number,
-            String email, String password, Boolean isbusy) {
-        Optional<Driver> driverOptional = getDriverById(driver_id);
+    public int updatedriver(int id, Driver driver) {
+        Optional<Driver> driverOptional = getDriverById(id);
         if (driverOptional.isEmpty()) {
-            logger.info("Driver service: The driver with id: " + driver_id + " is not found!");
+            logger.info("Driver service: The driver with id: " + id + " is not found!");
             return 0;
         } else {
-            logger.info("updating driver by id : " + driver_id);
-            Driver driver = new Driver();
-            driver.setName(name);
-            driver.setAge(age);
-            driver.setImage(image);
-            driver.setSocialSecurityNumber(social_security_number);
-            driver.setEmail(email);
-            driver.setPassword(password);
-            driver.setIsBusy(false);
-            driver.setUpdatedAt(LocalDateTime.now());
-            driverRepository.save(driver);
+            Driver newDriver = driverOptional.get();
+            logger.info("updating driver by id : " + id);
+            newDriver.setName(driver.getName());
+            newDriver.setAge(driver.getAge());
+            newDriver.setImage(driver.getImage());
+            newDriver.setSocialSecurityNumber(driver.getSocialSecurityNumber());
+            newDriver.setEmail(driver.getEmail());
+            newDriver.setPassword(authService.hashPassword(driver.getPassword()));
+            newDriver.setIsBusy(driver.getIsBusy());
+            newDriver.setUpdatedAt(LocalDateTime.now());
+            driverRepository.save(newDriver);
             return 1;
         }
     }
