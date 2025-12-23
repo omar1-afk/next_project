@@ -7,5 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SenderRepository extends JpaRepository<Sender, Integer> {
-  List<Sender> findAllByEmail(String email);
+    List<Sender> findAllByEmail(String email);
+
+    Sender findByEmail(String email);
 }

@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
 
 import com.noteam.next.models.User;
@@ -12,6 +15,7 @@ import com.noteam.next.roles.Authorities;
 
 @Entity
 @Table(name = "drivers")
+@EntityListeners(AuditingEntityListener.class)
 public class Driver implements User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +43,11 @@ public class Driver implements User {
     private Boolean isBusy;
 
     @Column(name = "created_at", nullable = false)
+    @CreatedDate
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", nullable = false)
+    @LastModifiedDate
     private LocalDateTime updatedAt;
 
     // public void setid(Integer id) { (we don't need to set the
